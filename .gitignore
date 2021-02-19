@@ -14,7 +14,7 @@
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
+#*.dll
 
 # Fortran module files
 *.mod
@@ -30,3 +30,15 @@
 *.exe
 *.out
 *.app
+build/msvs2019/.vs/
+build/msvs2019/x64/
+bin/Qt5Cored.dll
+bin/Qt5Guid.dll
+bin/Qt5Widgetsd.dll
+sources/moc/
+bin/PDL_log.log
+bin/plugins/platforms/qwindows.dll
+bin/plugins/platforms/qwindowsd.dll
+bin/plugins/styles/qwindowsvistastyle.dll
+bin/plugins/styles/qwindowsvistastyled.dll
+sources/PDLab-make-moc.cmd

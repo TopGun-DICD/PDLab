@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\moc">
+      <UniqueIdentifier>{4c778f12-4f5c-428f-80fb-25de245b0e67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Console">
+      <UniqueIdentifier>{cb2c77eb-48d6-45a6-b7e4-4f000a609b78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Console">
+      <UniqueIdentifier>{a0ead1b1-6f01-4bf8-ad96-1b4ab5204db4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\FlowItems">
+      <UniqueIdentifier>{6504c62c-9c2a-4f31-ba13-f08e0281b824}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FlowItems">
+      <UniqueIdentifier>{e9639a45-17c2-4390-a58a-f68b11ee8f4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Dialogs">
+      <UniqueIdentifier>{983bd13e-9318-4a46-a938-dd8bf794bf29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dialogs">
+      <UniqueIdentifier>{aabc4c7f-a8f1-4b24-b792-c295e1901360}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\sources\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\MainWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\ConsoleWidget.cpp">
+      <Filter>Source Files\Console</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\LuaCodeEditor.cpp">
+      <Filter>Source Files\Console</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\FlowItemsListWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\FlowWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\FlowSceneEventFilter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\FlowItems\FlowItem.cpp">
+      <Filter>Source Files\FlowItems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\FlowItems\FlowItem_Import.cpp">
+      <Filter>Source Files\FlowItems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\FlowItems\FlowItemConnection.cpp">
+      <Filter>Source Files\FlowItems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\FlowItems\FlowItemPort.cpp">
+      <Filter>Source Files\FlowItems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\Logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\Dialogs\About.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\FlowItems\FlowItem_Edit.cpp">
+      <Filter>Source Files\FlowItems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\FlowItems\FlowItem_Export.cpp">
+      <Filter>Source Files\FlowItems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\UserFlowItemsManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\FlowItems\FlowItem_Extract.cpp">
+      <Filter>Source Files\FlowItems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\FlowItems\FlowItem_Heal.cpp">
+      <Filter>Source Files\FlowItems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\FlowItems\FlowItem_Map.cpp">
+      <Filter>Source Files\FlowItems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\FlowItems\FlowItem_User.cpp">
+      <Filter>Source Files\FlowItems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\moc\moc_FlowItemsListWidget.cpp">
+      <Filter>Source Files\moc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\moc\moc_FlowSceneEventFilter.cpp">
+      <Filter>Source Files\moc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\moc\moc_FlowWidget.cpp">
+      <Filter>Source Files\moc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\moc\moc_LuaCodeEditor.cpp">
+      <Filter>Source Files\moc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\moc\moc_MainWindow.cpp">
+      <Filter>Source Files\moc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\Dialogs\Import.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\moc\moc_Import.cpp">
+      <Filter>Source Files\moc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\FlowItems\LayoutLoader.cpp">
+      <Filter>Source Files\FlowItems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\Dialogs\Extract.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\moc\moc_Extract.cpp">
+      <Filter>Source Files\moc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\Dialogs\Map.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\moc\moc_Map.cpp">
+      <Filter>Source Files\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\sources\MainWindow.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\ConsoleWidget.hpp">
+      <Filter>Header Files\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\LuaCodeEditor.hpp">
+      <Filter>Header Files\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\FlowItemsListWidget.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\Types.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\FlowWidget.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\FlowSceneEventFilter.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\FlowItems\FlowItem.hpp">
+      <Filter>Header Files\FlowItems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\FlowItems\FlowItemConnection.hpp">
+      <Filter>Header Files\FlowItems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\FlowItems\FlowItemPort.hpp">
+      <Filter>Header Files\FlowItems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\Logger.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\Dialogs\About.hpp">
+      <Filter>Header Files\Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\UserFlowItemsManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\FlowItems\FlowItem_Import.hpp">
+      <Filter>Header Files\FlowItems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\FlowItems\FlowItem_Export.hpp">
+      <Filter>Header Files\FlowItems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\FlowItems\FlowItem_Edit.hpp">
+      <Filter>Header Files\FlowItems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\FlowItems\FlowItem_User.hpp">
+      <Filter>Header Files\FlowItems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\FlowItems\FlowItem_Extract.hpp">
+      <Filter>Header Files\FlowItems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\FlowItems\FlowItem_Heal.hpp">
+      <Filter>Header Files\FlowItems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\FlowItems\FlowItem_Map.hpp">
+      <Filter>Header Files\FlowItems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\Dialogs\Import.hpp">
+      <Filter>Header Files\Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\Common.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\FlowItems\LayoutLoader.hpp">
+      <Filter>Header Files\FlowItems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\Dialogs\Extract.hpp">
+      <Filter>Header Files\Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\Dialogs\Map.hpp">
+      <Filter>Header Files\Dialogs</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
