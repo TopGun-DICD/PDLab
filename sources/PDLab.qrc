@@ -3,26 +3,27 @@
 	<qresource prefix="/toolbar">
 		<file alias="console.png">../resources/icon-view-console.png</file>
 		<file alias="items.png">../resources/icon-view-items.png</file>
+		<file alias="layout.png">../resources/icon-view-layout.png</file>
 		<file alias="run.png">../resources/icon-flow-run.png</file>
 		<file alias="runto.png">../resources/icon-flow-runto.png</file>
 		<file alias="stop.png">../resources/icon-flow-stop.png</file>
 		<file alias="reset.png">../resources/icon-flow-reset.png</file>
 	</qresource>
 	<qresource prefix="/pages">
-		<file alias="console.png">../resources/icon-console.png</file>
+		<file alias="console.png">../resources/icon-console2.png</file>
 		<file alias="items.png">../resources/icon-items.png</file>
 		<file alias="lua.png">../resources/icon-lua.png</file>
 		<file alias="flow.png">../resources/icon-flow.png</file>
 	</qresource>
 	<qresource prefix="/flowitembuttons">
-		<file alias="run.png">../resources/flowbtn-runto.png</file>
-		<file alias="settings.png">../resources/flowbtn-settings.png</file>
+		<file alias="run.png">../resources/flowbtn-runto2.png</file>
+		<file alias="settings.png">../resources/flowbtn-settings2.png</file>
 		<file alias="view.png">../resources/flowbtn-view.png</file>
 	</qresource>
 	<qresource prefix="/dialogs">
 		<file alias="logo.png">../resources/logo.png</file>
 	</qresource>
 	<qresource prefix="/other">
-		<file alias="background.png">../resources/background.png</file>
+		<file alias="background.png">../resources/background2.png</file>
 	</qresource>
 </RCC>

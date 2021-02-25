@@ -38,6 +38,8 @@
     <ClCompile Include="..\..\sources\FlowItems\LayoutLoader.cpp" />
     <ClCompile Include="..\..\sources\FlowSceneEventFilter.cpp" />
     <ClCompile Include="..\..\sources\FlowWidget.cpp" />
+    <ClCompile Include="..\..\sources\Helper.cpp" />
+    <ClCompile Include="..\..\sources\LayoutViewer\LayoutViewer.cpp" />
     <ClCompile Include="..\..\sources\Logger.cpp" />
     <ClCompile Include="..\..\sources\LuaCodeEditor.cpp" />
     <ClCompile Include="..\..\sources\main.cpp" />
@@ -47,6 +49,7 @@
     <ClCompile Include="..\..\sources\moc\moc_FlowSceneEventFilter.cpp" />
     <ClCompile Include="..\..\sources\moc\moc_FlowWidget.cpp" />
     <ClCompile Include="..\..\sources\moc\moc_Import.cpp" />
+    <ClCompile Include="..\..\sources\moc\moc_LayoutViewer.cpp" />
     <ClCompile Include="..\..\sources\moc\moc_LuaCodeEditor.cpp" />
     <ClCompile Include="..\..\sources\moc\moc_MainWindow.cpp" />
     <ClCompile Include="..\..\sources\moc\moc_Map.cpp" />
@@ -73,6 +76,8 @@
     <ClInclude Include="..\..\sources\FlowItems\LayoutLoader.hpp" />
     <ClInclude Include="..\..\sources\FlowSceneEventFilter.hpp" />
     <ClInclude Include="..\..\sources\FlowWidget.hpp" />
+    <ClInclude Include="..\..\sources\Helper.hpp" />
+    <ClInclude Include="..\..\sources\LayoutViewer\LayoutViewer.hpp" />
     <ClInclude Include="..\..\sources\Logger.hpp" />
     <ClInclude Include="..\..\sources\LuaCodeEditor.hpp" />
     <ClInclude Include="..\..\sources\MainWindow.hpp" />
@@ -145,6 +150,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>D:\Qt\Qt5.14.1\5.14.1\msvc2017_64\include;D:\Qt\Qt5.14.1\5.14.1\msvc2017_64\include\QtCore;D:\Qt\Qt5.14.1\5.14.1\msvc2017_64\include\QtGui;D:\Qt\Qt5.14.1\5.14.1\msvc2017_64\include\QtWidgets;C:\Users\Дмитрий Булах\source\repos\PDLab\bin\development\headers;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Qt\Qt5.14.1\5.14.1\msvc2017_64\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>..\..\bin\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -184,7 +192,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>Qt5Cored.lib;Qt5Guid.lib;Qt5Widgetsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Qt5Cored.lib;Qt5Guid.lib;Qt5Widgetsd.lib;libGLESv2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -201,6 +209,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;libGLESv2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -34,6 +34,12 @@
     <Filter Include="Source Files\Dialogs">
       <UniqueIdentifier>{aabc4c7f-a8f1-4b24-b792-c295e1901360}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\LayoutViewer">
+      <UniqueIdentifier>{653770fb-3671-45bc-b868-6a875dd5d867}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\LayoutViewer">
+      <UniqueIdentifier>{3b3b2509-8aa0-43d0-9966-f85989cb6cd6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\sources\main.cpp">
@@ -132,6 +138,15 @@
     <ClCompile Include="..\..\sources\moc\moc_Map.cpp">
       <Filter>Source Files\moc</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\sources\LayoutViewer\LayoutViewer.cpp">
+      <Filter>Source Files\LayoutViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\moc\moc_LayoutViewer.cpp">
+      <Filter>Source Files\moc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\Helper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\sources\MainWindow.hpp">
@@ -208,6 +223,12 @@
     </ClInclude>
     <ClInclude Include="..\..\sources\Dialogs\Map.hpp">
       <Filter>Header Files\Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\LayoutViewer\LayoutViewer.hpp">
+      <Filter>Header Files\LayoutViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\Helper.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

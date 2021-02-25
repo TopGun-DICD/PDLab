@@ -35,12 +35,13 @@ public:
   virtual bool OpenResultsEventHandler() = 0;
   virtual bool ResetEventHandler() = 0;
   virtual bool ShowPropertesEventHandler() = 0;
+  //virtual bool AppendContextMenuItems() = 0;
 
   virtual QString GetInfoString() = 0;
   virtual QString GetItemTypeAsString() = 0;
 public:
-  void AddInputPort();
-  void AddOutputPort();
+  void AddInputPort(PortDataType dataType);
+  void AddOutputPort(PortDataType dataType);
 
   bool OnHandleEvent_Execute();
   bool OnHandleEvent_Reset();

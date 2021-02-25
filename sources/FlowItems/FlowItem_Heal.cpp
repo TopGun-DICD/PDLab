@@ -7,8 +7,8 @@
 #include "FlowItemConnection.hpp"
 
 FlowItem_Heal::FlowItem_Heal(BasicLogger *logger) : FlowItem(FlowItemType::heal, QString("HEAL"), logger, LayoutOwnershipMode::make_copy) {
-  AddInputPort();
-  AddOutputPort();
+  AddInputPort(PortDataType::layout);
+  AddOutputPort(PortDataType::layout);
   titleBgColor = QColor(139, 55, 78);
   //bottomString = QString("KLayout");
 }

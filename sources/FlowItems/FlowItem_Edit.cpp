@@ -20,7 +20,7 @@
 const QString flowItemName("EDIT");
 
 FlowItem_Edit::FlowItem_Edit(BasicLogger *logger) : FlowItem(FlowItemType::editdata, flowItemName, logger, LayoutOwnershipMode::make_new) {
-  AddOutputPort();
+  AddOutputPort(PortDataType::layout);
   titleBgColor = QColor(255, 0, 0);
   bottomString = QString("KLayout");
 }

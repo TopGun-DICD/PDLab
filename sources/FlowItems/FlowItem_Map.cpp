@@ -8,8 +8,8 @@
 #include "../Dialogs/Map.hpp"
 
 FlowItem_Map::FlowItem_Map(BasicLogger *logger) : FlowItem(FlowItemType::editdata, QString("MAP"), logger, LayoutOwnershipMode::make_link) {
-  AddInputPort();
-  AddOutputPort();
+  AddInputPort(PortDataType::layout);
+  AddOutputPort(PortDataType::layout);
   titleBgColor = QColor(246, 168, 0);
 }
 

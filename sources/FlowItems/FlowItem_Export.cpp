@@ -15,7 +15,7 @@
 #include "FlowItemConnection.hpp"
 
 FlowItem_Export::FlowItem_Export(BasicLogger *logger) : FlowItem(FlowItemType::importdata, QString("EXPORT"), logger, LayoutOwnershipMode::make_nothing) {
-  AddInputPort();
+  AddInputPort(PortDataType::layout);
   titleBgColor = QColor(255, 0, 0);
 }
 

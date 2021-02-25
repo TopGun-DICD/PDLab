@@ -42,3 +42,9 @@ bin/plugins/platforms/qwindowsd.dll
 bin/plugins/styles/qwindowsvistastyle.dll
 bin/plugins/styles/qwindowsvistastyled.dll
 sources/PDLab-make-moc.cmd
+bin/PDLab.iobj
+bin/PDLab.ipdb
+bin/PDLab.pdb
+bin/Qt5Core.dll
+bin/Qt5Gui.dll
+bin/Qt5Widgets.dll

@@ -49,7 +49,7 @@ FlowItemsListWidget::FlowItemsListWidget(QWidget *parent) : QTreeWidget(parent) 
 
   // Category : I/O
   QTreeWidgetItem *p_catIO = new QTreeWidgetItem;
-  CategoryButton* p_btnIO = new CategoryButton(tr("Import/Export"), this, p_catIO);
+  CategoryButton* p_btnIO = new CategoryButton(tr("Layout Import/Export"), this, p_catIO);
   addTopLevelItem(p_catIO);
   setItemWidget(p_catIO, 0, p_btnIO);
 
@@ -175,10 +175,6 @@ FlowItemsListWidget::FlowItemsListWidget(QWidget *parent) : QTreeWidget(parent) 
   p_itemLayoutOperations->setDisabled(true);
   p_catLayoutOps->addChild(p_itemLayoutOperations);
   setItemWidget(p_itemLayoutOperations, 0, p_lstLayoutOps);
-
-
-
-
 
   painter.end();
 

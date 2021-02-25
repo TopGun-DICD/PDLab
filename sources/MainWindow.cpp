@@ -14,6 +14,7 @@
 #include "Dialogs/About.hpp"
 #include "Common.hpp"
 #include "FlowItems/LayoutLoader.hpp"
+#include "Helper.hpp"
 
 
 MainWindow::MainWindow(Logger *logger) : QMainWindow(nullptr), p_logger(logger) {
@@ -27,9 +28,13 @@ MainWindow::MainWindow(Logger *logger) : QMainWindow(nullptr), p_logger(logger) 
   InitMenubar();
   InitToolbar();
   InitStatusbar();
+
+  Helper::Init();
+  Helper::GetInstance()->AssignMainWindow(this);
 }
 
 MainWindow::~MainWindow() {
+  Helper::Free();
   p_logger->AssignConsoleWidget(nullptr);
   delete p_userFlowsManager;
   p_userFlowsManager = nullptr;
@@ -52,6 +57,12 @@ void MainWindow::InitActions() {
   p_actViewConsole->setText(tr("Console"));
   p_actViewConsole->setCheckable(true);
   p_actViewConsole->setChecked(true);
+
+  p_actViewLayout = p_dockLayout->toggleViewAction();
+  p_actViewLayout->setIcon(QPixmap(":/toolbar/layout.png"));
+  p_actViewLayout->setText(tr("Layout"));
+  p_actViewLayout->setCheckable(true);
+  p_actViewLayout->setChecked(false);
 
   // Menu "Flow"
   p_actFlowRun = new QAction(QPixmap(":/toolbar/run.png"), tr("Run Flow"), this);
@@ -84,6 +95,8 @@ void MainWindow::InitMenubar() {
   
   p_menuView->addAction(p_actViewFlowItems);
   p_menuView->addAction(p_actViewConsole);
+  p_menuView->addSeparator();
+  p_menuView->addAction(p_actViewLayout);
 
   p_menuFlow->addAction(p_actFlowRun);
   p_menuFlow->addAction(p_actFlowRunTo);
@@ -112,6 +125,14 @@ void MainWindow::InitToolbar() {
   p_toolBar->addAction(p_actFlowStop);
   p_toolBar->addAction(p_actFlowReset);
 
+  p_toolBar->addSeparator();
+
+  //QWidget *w = new QWidget;
+  //w->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+  //p_toolBar->addWidget(w);
+
+  p_toolBar->addAction(p_actViewLayout);
+
   addToolBar(Qt::TopToolBarArea, p_toolBar);
 }
 
@@ -132,7 +153,7 @@ void MainWindow::InitMainUI() {
   p_dockConsole->setWidget(p_console);
 
   p_logger->EnableFileLogging(LogFormat::text);
-  p_logger->Log("--- Physical Design Lab v0.0.1.3 ---");
+  p_logger->Log(QString("--- Physical Design Lab %1 ---").arg(VERSION_STRING));
   QDateTime dt = QDateTime::currentDateTime();
   p_logger->Log(QString("Log started on %2 %1").arg(dt.time().toString()).arg(dt.date().toString()));
 
@@ -153,6 +174,18 @@ void MainWindow::InitMainUI() {
   p_tabFlowItems->addTab(p_itemsListWidget, QPixmap(":/pages/items.png"), tr("Standard items"));
   p_userItemsListWidget = new UserFlowItemsListWidget(p_dockFlowItems, p_userFlowsManager);
   p_tabFlowItems->addTab(p_userItemsListWidget, tr("User items"));
+
+  // Layout Viewer
+  p_dockLayout = new QDockWidget(tr("Layout Viewer"), this);
+  addDockWidget(Qt::RightDockWidgetArea, p_dockLayout);
+  p_dockLayout->setMinimumWidth(400);
+  //p_dockLayout->resize(400, 300);
+  p_dockLayout->setFeatures(QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
+  p_dockLayout->setAllowedAreas(Qt::RightDockWidgetArea);
+  
+  p_layoutViewer = new LayoutViewer(p_dockLayout);
+  p_dockLayout->setWidget(p_layoutViewer);
+  p_dockLayout->hide();
 
   // Central tab widget
   QTabWidget* p_tabFlows = new QTabWidget(this);
@@ -184,6 +217,10 @@ void MainWindow::OnMenu_Flow_Reset() {
       p_flowItem->OnHandleEvent_Reset();
     p_item->update();
   }
+
+  p_dockLayout->hide();
+  p_layoutViewer->AssignLayout(nullptr);
+  p_layoutViewer->update();
 }
 
 void MainWindow::OnMenu_Help_About() {
@@ -191,5 +228,15 @@ void MainWindow::OnMenu_Help_About() {
   dlg.exec();
 }
 
-
+void MainWindow::ShowLayout(Layout *layout) {
+  if (!layout) {
+    p_logger->Warning("Was asked to open layout viewer but layout is nullptr. Operation ignored.");
+    return;
+  }
+  p_layoutViewer->AssignLayout(layout);
+  if (p_dockLayout->isHidden())
+    p_dockLayout->show();
+  
+  p_layoutViewer->update();
+}
 

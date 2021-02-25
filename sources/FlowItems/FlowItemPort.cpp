@@ -5,8 +5,9 @@
 
 #include "FlowItem.hpp"
 #include "FlowItemConnection.hpp"
+#include "../Common.hpp"
 
-FlowItemPort::FlowItemPort(FlowItem *parent, PortDirection dir) : QGraphicsPathItem(parent), p_layout(nullptr), p_owner(parent), direction(dir) {
+FlowItemPort::FlowItemPort(FlowItem *parent, PortDirection dir, PortDataType data) : QGraphicsPathItem(parent), p_layout(nullptr), p_owner(parent), direction(dir), dataType(data) {
   QPainterPath p;
   p.addRoundedRect(-PORT_RADIUS, -PORT_RADIUS, 2.0 * PORT_RADIUS, 2.0 * PORT_RADIUS, 2, 2);
   setPath(p);
@@ -55,11 +56,36 @@ void FlowItemPort::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
   Q_UNUSED(option)
   Q_UNUSED(widget)
 
-  painter->setPen(QPen(Qt::darkRed));
-  if (connections.empty())
-    painter->setBrush(Qt::red);
-  else
-    painter->setBrush(Qt::darkRed);
+  switch (dataType) {
+    case PortDataType::layout:
+      painter->setPen(QPen(PIN_COLOR_LAYOUT_CONNECTED));
+      if (connections.empty())
+        painter->setBrush(PIN_COLOR_LAYOUT_EMPTY);
+      else
+        painter->setBrush(PIN_COLOR_LAYOUT_CONNECTED);
+      break;
+    case PortDataType::lef:
+      painter->setPen(QPen(PIN_COLOR_LEF_CONNECTED));
+      if (connections.empty())
+        painter->setBrush(PIN_COLOR_LEF_EMPTY);
+      else
+        painter->setBrush(PIN_COLOR_LEF_CONNECTED);
+      break;
+    case PortDataType::def:
+      painter->setPen(QPen(PIN_COLOR_DEF_CONNECTED));
+      if (connections.empty())
+        painter->setBrush(PIN_COLOR_DEF_EMPTY);
+      else
+        painter->setBrush(PIN_COLOR_DEF_CONNECTED);
+      break;
+    case PortDataType::verilog:
+      painter->setPen(QPen(PIN_COLOR_VERILOG_CONNECTED));
+      if (connections.empty())
+        painter->setBrush(PIN_COLOR_VERILOG_EMPTY);
+      else
+        painter->setBrush(PIN_COLOR_VERILOG_CONNECTED);
+      break;
+  }
 
   painter->drawPath(path());
 

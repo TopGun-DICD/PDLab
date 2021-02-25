@@ -2,7 +2,8 @@
 
 class FlowItem_Import : public FlowItem {
   QString         fileName,
-                  fileShortName;
+                  fileShortName,
+                  techFileName;
   __int64         fileSize;
 public:
   FlowItem_Import(BasicLogger *logger);

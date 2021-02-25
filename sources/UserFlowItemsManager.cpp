@@ -96,8 +96,11 @@ FlowItem *UserFlowItemInfo::GetFlowItem() {
 
 UserFlowItemsManager::UserFlowItemsManager(BasicLogger *logger) {
   QDir directory("modules");
-  QStringList dllnames = directory.entryList(QStringList() << "*.dll" << "*.DLL", QDir::Files);
-
+#if defined _DEBUG
+  QStringList dllnames = directory.entryList(QStringList() << "*d.dll", QDir::Files);
+#else
+  QStringList dllnames = directory.entryList(QStringList() << "*m.dll", QDir::Files);
+#endif
   int totalDlls = 0;
   
   logger->Log(QString("\nStarting 'modules' directory files processing (found %1 libraries in 'modules' directory.)...").arg(dllnames.length()));

@@ -13,6 +13,7 @@ private:
   QGraphicsView      *p_parentView;
   QGraphicsScene     *p_scene;
   FlowItemConnection *p_connection;
+  double              zIndex;
 public:
   FlowSceneEventFilter(QWidget *parent, BasicLogger *logger);
 public:
@@ -24,4 +25,5 @@ private:
   bool OnMousePress(QObject *object, QGraphicsSceneMouseEvent *event);
   bool OnMouseMove(QObject *object, QGraphicsSceneMouseEvent *event);
   bool OnMouseRelease(QObject *object, QGraphicsSceneMouseEvent *event);
+  bool OnKeyPress(QObject *object, QKeyEvent *event);
 };

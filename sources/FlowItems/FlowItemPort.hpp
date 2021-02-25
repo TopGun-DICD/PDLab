@@ -23,7 +23,7 @@ public:
   PortDirection   direction;
   PortDataType    dataType;
 public:
-  FlowItemPort(FlowItem *parent, PortDirection dir);
+  FlowItemPort(FlowItem *parent, PortDirection dir, PortDataType data = PortDataType::undefined);
  ~FlowItemPort();
 public:
   bool IsConnectedWith(FlowItemPort *port);

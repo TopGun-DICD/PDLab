@@ -13,10 +13,11 @@
 #include "../Logger.hpp"
 #include "FlowItemPort.hpp"
 #include "FlowItemConnection.hpp"
+#include "../Helper.hpp"
 
 FlowItem_Extract::FlowItem_Extract(BasicLogger *logger) : FlowItem(FlowItemType::extract, QString("EXTRACT"), logger, LayoutOwnershipMode::make_copy) {
-  AddInputPort();
-  AddOutputPort();
+  AddInputPort(PortDataType::layout);
+  AddOutputPort(PortDataType::layout);
   titleBgColor = QColor(246, 168, 0);
 }
 
@@ -53,29 +54,40 @@ bool FlowItem_Extract::ExecuteEventHandler() {
   if (dlg.exec() == QDialog::Rejected)
     return false;
 
-  //for (int i = 0; i < layersInfo.selected.size(); ++i)
-  //  p_logger->Log(QString("Layer %1").arg(layersInfo.selected[i]));
-
   //TODO: ¬ыставить make_none и не удал€ть элементы, а вручную формировать только нужные - думаю, это будет быстрее
+  Element *p_element = nullptr;
   for (int i = 0; i < p_resultLayout->libraries[0]->elements.size(); ++i) {
-    for (int j = 0; j < p_resultLayout->libraries[0]->elements[i]->items.size(); ++j) {
-      GeometryItem *p_item = p_resultLayout->libraries[0]->elements[i]->items[j];
+    p_element = p_resultLayout->libraries[0]->elements[i];
+    for (int j = 0; j < p_element->items.size(); ++j) {
+      Geometry *p_geometry = p_element->items[j];
       bool leaveItem = false;
-      for (int k = 0; k < layersInfo.selected.size(); ++k)
-        if (p_item->layer == layersInfo.selected[k]) {
-          leaveItem = true;
-          break;
-        }
+      if (p_geometry->type == GeometryType::reference) {
+        Geometry_Reference *p_ref = static_cast<Geometry_Reference *>(p_geometry);
+        for(size_t l = 0; l < p_ref->referenceTo->items.size(); ++l)
+          for (int k = 0; k < layersInfo.selected.size(); ++k) {
+            if (p_ref->referenceTo->items[l]->layer == layersInfo.selected[k]) {
+              leaveItem = true;
+              break;
+            }
+          }
+      }
+      else {
+        for (int k = 0; k < layersInfo.selected.size(); ++k)
+          if (p_geometry->layer == layersInfo.selected[k]) {
+            leaveItem = true;
+            break;
+          }
+      }
       if (leaveItem)
         continue;
-      delete p_item;
-      p_item = nullptr;
-      p_resultLayout->libraries[0]->elements[i]->items.erase(p_resultLayout->libraries[0]->elements[i]->items.begin() + j);
+      delete p_geometry;
+      p_geometry = nullptr;
+      p_element->items.erase(p_element->items.begin() + j);
       --j;
     }
-    if (!p_resultLayout->libraries[0]->elements[i]->items.empty())
+    if (!p_element->items.empty())
       continue;
-    delete p_resultLayout->libraries[0]->elements[i];
+    delete p_element;
     p_resultLayout->libraries[0]->elements.erase(p_resultLayout->libraries[0]->elements.begin() + i);
     --i;
   }
@@ -99,6 +111,9 @@ bool FlowItem_Extract::ExecuteEventHandler() {
 
 bool FlowItem_Extract::OpenResultsEventHandler() {
   p_logger->Log("'EXTRACT-OPENRESULTS' was called");
+
+  Helper::GetInstance()->ShowLayout(p_resultLayout);
+
   return true;
 }
 

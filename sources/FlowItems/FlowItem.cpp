@@ -6,6 +6,8 @@
 #include <QPen>
 #include <QPainter>
 #include <QGraphicsSceneMouseEvent> 
+#include <QMenu>
+
 #include <ctime>
 
 #include "FlowItemConnection.hpp"
@@ -206,8 +208,8 @@ bool FlowItem::OnHandleEvent_Reset() {
   return retCode;
 }
 
-void FlowItem::AddInputPort() {
-  FlowItemPort *p_port = new FlowItemPort(this, PortDirection::input);
+void FlowItem::AddInputPort(PortDataType dataType) {
+  FlowItemPort *p_port = new FlowItemPort(this, PortDirection::input, dataType);
   inputPorts.push_back(p_port);
   p_port->setPos(QPointF(p_port->pos().x(), p_port->pos().y() - ITEM_HEIGHT / 2 - PORT_RADIUS));
 
@@ -219,12 +221,12 @@ void FlowItem::AddInputPort() {
   }
 }
 
-void FlowItem::AddOutputPort() {
+void FlowItem::AddOutputPort(PortDataType dataType) {
   if (!outputPorts.empty()) {
     p_logger->Warning("You can have only one output for an item. Operation ignored.");
     return;
   }
-  FlowItemPort *p_port = new FlowItemPort(this, PortDirection::output);
+  FlowItemPort *p_port = new FlowItemPort(this, PortDirection::output, dataType);
   outputPorts.push_back(p_port);
   p_port->setPos(QPointF(p_port->pos().x(), p_port->pos().y() + ITEM_HEIGHT / 2 + PORT_RADIUS));  
 }
@@ -278,6 +280,22 @@ void FlowItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 }
 
 void FlowItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event) {
-  setSelected(true);
+  //setSelected(true);
+  QMenu contextMenu;
+  QAction *p_actRunTo   = contextMenu.addAction("Execute Item");
+  QAction *p_actDelete  = contextMenu.addAction("Delete Item");
+  // AppendContextMenuItems(&menu);
+  QAction *result = contextMenu.exec(event->screenPos());
+  
+
+  if (result == p_actRunTo) {
+
+  }
+  else if (result == p_actDelete) {
+
+  }
+  else {
+    // ExecuteContextMenuAction(result);
+  }
 }
 

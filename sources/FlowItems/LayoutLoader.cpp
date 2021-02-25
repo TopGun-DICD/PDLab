@@ -6,7 +6,11 @@ LayoutLoader *LayoutLoader::p_instance = nullptr;
 
 LayoutLoader::LayoutLoader(BasicLogger *logger) : p_logger(logger), func_CreateLayout(nullptr), func_ReadLayout(nullptr), func_ClearLayout(nullptr), func_CopyLayout(nullptr), func_FreeLayout(nullptr) {
   std::clock_t timeA = std::clock();
+#if defined _DEBUG
+  layoutLibrary.setFileName("PDLab_DLL_Layoutd.dll");
+#else
   layoutLibrary.setFileName("PDLab_DLL_Layout.dll");
+#endif
   if (!layoutLibrary.load()) {
     p_logger->Error(QString("\tCan't load library 'PDLab_DLL_Layout.dll'"));
     return;

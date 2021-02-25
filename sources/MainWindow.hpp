@@ -10,6 +10,7 @@
 #include "FlowWidget.hpp"
 #include "Logger.hpp"
 #include "UserFlowItemsManager.hpp"
+#include "LayoutViewer/LayoutViewer.hpp"
 
 class MainWindow : public QMainWindow {
   Q_OBJECT
@@ -21,14 +22,17 @@ private:
   UserFlowItemsListWidget  *p_userItemsListWidget;
   FlowWidget               *p_activeFlowWidget;
   UserFlowItemsManager     *p_userFlowsManager;
+  LayoutViewer             *p_layoutViewer;
   // Dowck widgets
   QDockWidget              *p_dockFlowItems,
-                           *p_dockConsole;
+                           *p_dockConsole,
+                           *p_dockLayout;
   // Actions
   QAction    *p_actFileNew,
              *p_actFileExit,
              *p_actViewFlowItems,
              *p_actViewConsole,
+             *p_actViewLayout,
              *p_actFlowRun,
              *p_actFlowRunTo,
              *p_actFlowStop,
@@ -52,4 +56,6 @@ private slots:
   void OnMenu_Flow_Stop();
   void OnMenu_Flow_Reset();
   void OnMenu_Help_About();
+public:
+  void ShowLayout(Layout *layout);
 };

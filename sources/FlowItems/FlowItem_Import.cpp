@@ -3,6 +3,7 @@
 #include <QFileInfo>
 #include <QDateTime>
 #include <QFileDialog>
+#include <QTextStream>
 
 #include <ctime>
 
@@ -11,9 +12,10 @@
 #include "FlowItemConnection.hpp"
 #include "../Dialogs/Import.hpp"
 #include "LayoutLoader.hpp"
+#include "../Helper.hpp"
 
 FlowItem_Import::FlowItem_Import(BasicLogger *logger) : FlowItem(FlowItemType::importdata, QString("IMPORT"), logger, LayoutOwnershipMode::make_new) {
-  AddOutputPort();
+  AddOutputPort(PortDataType::layout);
   titleBgColor = QColor(255, 0, 0);
 }
 
@@ -41,6 +43,9 @@ bool FlowItem_Import::DropEventHandler() {
 
   bottomString = fi.fileName();
 
+  if (!dlg.p_fileMapping->text().isEmpty())
+    techFileName = dlg.p_fileMapping->text();
+
   return true;
 }
 
@@ -57,19 +62,71 @@ bool FlowItem_Import::ExecuteEventHandler() {
   p_logger->Log(QString("Input file '%1' (GDSII format) readed successfully.").arg(fileName));
   p_logger->Log(QString("Layout read in %2 ms.").arg(timeC - timeB));
 
+  if (!techFileName.isEmpty()) {
+    QFile techFile;
+    techFile.setFileName(techFileName);
+    if (!techFile.open(QFile::ReadOnly)) {
+      p_logger->Error(QString("Can't open tech file '%1'. Layers will not be mapped.").arg(techFileName));
+      return true;
+    }
+
+    QTextStream in(&techFile);
+    QString line;
+    while (!in.atEnd()) {
+
+      in >> line;
+      while (line != "layerDefinitions(" && !in.atEnd())
+        in >> line;
+      if (in.atEnd())
+        break;
+
+      in >> line;
+      while (line != "techLayers(" && !in.atEnd())
+        in >> line;
+      if (in.atEnd())
+        break;
+
+      while (line != ")" && !in.atEnd()) {
+        line = in.readLine().trimmed();
+        if (line[0] == ';')
+          continue;
+        if (line.isEmpty())
+          continue;
+        QStringList tokens = line.split(' ', QString::SkipEmptyParts);
+        if (tokens.size() != 5)
+          continue;
+        if (tokens.at(0) != "(" || tokens.at(4) != ")")
+          continue;
+        QString layerName = tokens.at(1);
+        int     layerId   = tokens.at(2).toInt();
+
+        for (size_t i = 0; i < p_resultLayout->libraries[0]->layers.size(); ++i)
+          if (p_resultLayout->libraries[0]->layers[i].layer == layerId)
+            p_resultLayout->libraries[0]->layers[i].name = layerName.toStdString();
+      }
+      if (in.atEnd())
+        break;
+
+    }
+
+    techFile.close();
+  }
+
   return true;
 }
 
 bool FlowItem_Import::OpenResultsEventHandler() {
   p_logger->Log("'IMPORT-OPENRESULTS' was called");
+
+  Helper::GetInstance()->ShowLayout(p_resultLayout);
+
   return true;
 }
 
 bool FlowItem_Import::ResetEventHandler() {
   p_logger->Log("'IMPORT-RESET' was called");
 
-  //LayoutLoader::GetInstance()->FreeLayout(&outputPorts[0]->p_layout);
-
+  
   return true;
 }
 
