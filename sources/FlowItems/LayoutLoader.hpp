@@ -14,6 +14,7 @@ private:
   Func_ReadLayout       func_ReadLayout;
   Func_ClearLayout      func_ClearLayout;
   Func_CopyLayout       func_CopyLayout;
+  Func_WriteLayout      func_WriteLayout;
   Func_FreeLayout       func_FreeLayout;
 private:
   LayoutLoader(BasicLogger *logger);
@@ -27,5 +28,6 @@ public:
   void ReadLayoutFromFile(QString fileName, Layout *layout);
   void ClearLayout(Layout *layout);
   void CopyLayout(Layout *src, Layout *dst);
+  bool WriteLayout(Layout *layout, std::wstring fileName, FileFormat format);
   void FreeLayout(Layout **layout);
 };

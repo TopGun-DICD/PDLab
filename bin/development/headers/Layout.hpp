@@ -111,11 +111,13 @@ struct Layout {
 typedef Layout *(*Func_CreateLayout)  (std::wstring);
 typedef void    (*Func_ReadLayout)    (std::wstring, Layout *);
 typedef void    (*Func_ClearLayout)   (Layout *);
-typedef void    (*Func_CopyLayout)    (Layout *src, Layout *dst);
+typedef void    (*Func_CopyLayout)    (Layout *, Layout *);
+typedef bool    (*Func_WriteLayout)   (Layout *, std::wstring, FileFormat);
 typedef void    (*Func_FreeLayout)    (Layout **);
 
 __declspec(dllexport) Layout *CreateLayoutFromFile(std::wstring fileName);
 __declspec(dllexport) void    ReadLayoutFromFile(std::wstring fileName, Layout *layout);
 __declspec(dllexport) void    ClearLayout(Layout *layout);
 __declspec(dllexport) void    CopyLayout(Layout *src, Layout *dst);
+__declspec(dllexport) bool    WriteLayout(Layout *layout, std::wstring fileName, FileFormat format);
 __declspec(dllexport) void    FreeLayout(Layout **layout);

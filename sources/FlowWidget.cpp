@@ -4,6 +4,7 @@
 #include <QMimeData>
 #include <QDropEvent>
 #include <QLibrary>
+#include <QMenu>
 
 #include "Types.hpp"
 #include "Logger.hpp"
@@ -15,6 +16,8 @@
 #include "FlowItems/FlowItem_Map.hpp"
 #include "FlowItems/FlowItem_Extract.hpp"
 // Layout Operations
+#include "FlowItems/FlowItem_AND.hpp"
+#include "FlowItems/FlowItem_OR.hpp"
 #include "FlowItems/FlowItem_Heal.hpp"
 
 FlowScene::FlowScene(QWidget *parent, Logger *logger) : p_logger(logger) {
@@ -58,10 +61,11 @@ FlowWidget::FlowWidget(QWidget *parent, Logger *logger, UserFlowItemsManager *ma
   p_eventFilter->AssignGraphicsScene(p_scene);
 
   setDragMode(QGraphicsView::RubberBandDrag);
+  
+  centerPoint = mapToScene(geometry().center());
 }
 
 FlowWidget::~FlowWidget() {
-  //TODO: Вот тут нужно сделать так, чтобы все элементы p_scene стали unselected, иначе вылетает лог
   p_scene->clearSelection();
 
   p_scene->removeEventFilter(p_eventFilter);
@@ -123,9 +127,16 @@ void FlowWidget::dropEvent(QDropEvent *event) {
       p_item = new FlowItem_Extract(p_logger);
       break;
     // Layout Operations
+    case FlowItemType::AND:
+      p_item = new FlowItem_AND(p_logger);
+      break;
+    case FlowItemType::OR:
+      p_item = new FlowItem_OR(p_logger);
+      break;
     case FlowItemType::heal:
       p_item = new FlowItem_Heal(p_logger);
       break;
+    // All other cases
     case FlowItemType::userdefined: {
       if (userItemId < 4131 || userItemId > 4141) {
         p_logger->Error("User-defined flow item has incorrect ID.");
@@ -166,4 +177,65 @@ void FlowWidget::dropEvent(QDropEvent *event) {
   }
 }
 
+void FlowWidget::resizeEvent(QResizeEvent *event) {
+  centerOn(centerPoint);
+}
 
+QGraphicsItem *FlowWidget::GetItemAtXY(const QPointF &pos) {
+  QList<QGraphicsItem*> items = p_scene->items(QRectF(pos - QPointF(1, 1), QSize(3, 3)));
+
+  foreach(QGraphicsItem * p_item, items)
+    if (p_item->type() > QGraphicsItem::UserType)
+      return p_item;
+
+  return nullptr;
+}
+
+void FlowWidget::contextMenuEvent(QContextMenuEvent *event) {
+  QGraphicsItem *p_item = p_scene->focusItem();
+  if (!p_item)
+    return;
+  if (p_item->type() != FlowItem::Type)
+    return;
+
+  FlowItem *p_flowItem = static_cast<FlowItem *>(p_item);
+  p_flowItem->setSelected(true);
+
+  QMenu contextMenu;
+  QAction *actRunTo = contextMenu.addAction("Execute Item");
+  actRunTo->setEnabled(false);
+  QAction *actReset = contextMenu.addAction("Reset");
+  if (p_flowItem->GetStatus() != FlowItemStatus::completed)
+    actReset->setEnabled(false);
+  QAction *actViewExternal = contextMenu.addAction("View in external viewer");
+  contextMenu.addSeparator();
+  QAction *actDisconnect = contextMenu.addAction("Disconnect");
+  QAction *actComment = contextMenu.addAction("Comment");
+  actComment->setEnabled(false);
+  contextMenu.addSeparator();
+  QAction *actDelete = contextMenu.addAction("Delete item");
+  
+  QAction *result = contextMenu.exec(event->globalPos());
+
+  if (result == actRunTo) {
+  }
+  if (result == actReset) {
+    p_flowItem->OnHandleEvent_Reset();
+    return;
+  }
+  if (result == actViewExternal) {
+  }
+  if (result == actDisconnect) {
+    p_flowItem->Disconnect();
+    return;
+  }
+  if (result == actComment) {
+  }
+  if (result == actDelete) {
+    p_scene->removeItem(p_flowItem);
+    delete p_flowItem;
+    p_flowItem = nullptr;
+    return;
+  }
+
+}

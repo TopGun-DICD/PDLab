@@ -42,16 +42,16 @@ public:
 public:
   void AddInputPort(PortDataType dataType);
   void AddOutputPort(PortDataType dataType);
+  void Disconnect();
 
   bool OnHandleEvent_Execute();
   bool OnHandleEvent_Reset();
 
   int type() const { return QGraphicsItem::UserType + 1; }
-  FlowItemType FlowType() { return itemType; }
+  FlowItemType GetItemType() { return itemType; }
   FlowItemStatus GetStatus() { return itemStatus; }
 private:
   QVariant itemChange(GraphicsItemChange change, const QVariant &value);
   void mousePressEvent(QGraphicsSceneMouseEvent *event);
-  void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 };

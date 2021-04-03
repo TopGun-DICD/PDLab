@@ -95,24 +95,23 @@ FlowItem *UserFlowItemInfo::GetFlowItem() {
 }
 
 UserFlowItemsManager::UserFlowItemsManager(BasicLogger *logger) {
-  QDir directory("modules");
 #if defined _DEBUG
-  QStringList dllnames = directory.entryList(QStringList() << "*d.dll", QDir::Files);
+  QDir directory("modulesd");
 #else
-  QStringList dllnames = directory.entryList(QStringList() << "*m.dll", QDir::Files);
+  QDir directory("modules");
 #endif
+  QStringList dllnames = directory.entryList(QStringList() << "*.dll", QDir::Files);
   int totalDlls = 0;
   
   logger->Log(QString("\nStarting 'modules' directory files processing (found %1 libraries in 'modules' directory.)...").arg(dllnames.length()));
 
   foreach(QString dllname, dllnames) {
-    //logger->Log(dllname);
     ++totalDlls;
 
     logger->Log(QString("Processing library '%1' [%2 of %3]...").arg(dllname).arg(totalDlls).arg(dllnames.length()));
     
     UserFlowItemInfo *p_ufii = new UserFlowItemInfo(logger);
-    if (!p_ufii->LoadFromLibrary("modules/" + dllname)) {
+    if (!p_ufii->LoadFromLibrary(directory.dirName() +  "/" + dllname)) {
       delete p_ufii;
       p_ufii = nullptr;
       continue;

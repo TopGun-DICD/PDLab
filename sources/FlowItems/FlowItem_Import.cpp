@@ -133,6 +133,33 @@ bool FlowItem_Import::ResetEventHandler() {
 bool FlowItem_Import::ShowPropertesEventHandler() {
   p_logger->Log("'IMPORT-PROPERTIES' was called");
 
+  Dlg_Import dlg(nullptr);
+  dlg.p_fileLayout->setText(fileName);
+  if (!techFileName.isEmpty())
+    dlg.p_fileMapping->setText(fileName);
+  if (!dlg.exec())
+    return false;
+
+  fileName = dlg.p_fileLayout->text();
+
+  QFileInfo fi(fileName);
+  topString = "???";
+  QString fileSuffix = fi.suffix().toLower();
+  if (fileSuffix == "gds" || fileSuffix == "gdsii")
+    topString = "GDSII";
+  if (fileSuffix == "msk")
+    topString = "MSK";
+  fileShortName = fi.fileName();
+  fileSize = fi.size();
+
+  bottomString = fi.fileName();
+
+  if (!dlg.p_fileMapping->text().isEmpty())
+    techFileName = dlg.p_fileMapping->text();
+
+  return true;
+
+
   return true;
 }
 

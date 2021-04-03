@@ -46,6 +46,8 @@ bool FlowItem_Extract::ExecuteEventHandler() {
   for (int i = 0; i < p_resultLayout->libraries[0]->layers.size(); ++i) {
     LayerInfo li;
     li.id = QString::number(p_resultLayout->libraries[0]->layers[i].layer);
+    if (!p_resultLayout->libraries[0]->layers[i].name.empty())
+      li.name = QString(" [ %1 ]").arg(p_resultLayout->libraries[0]->layers[i].name.c_str());
     li.selected = false;
     layersInfo.layers.push_back(li);
   } 

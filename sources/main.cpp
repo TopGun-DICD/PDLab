@@ -6,10 +6,13 @@
 #include "FlowItems/LayoutLoader.hpp"
 #include "Logger.hpp"
 
+#if defined(_WIN32)
 int __stdcall WinMain(HINSTANCE, HINSTANCE, char*, int) {
   int     argc = 0;
   char  **argv = nullptr;
-
+#else
+int main(int argc, char **argv) {
+#endif
   QResource::registerResource("PDLab.rcc");
 
   QStringList paths = QCoreApplication::libraryPaths();
@@ -28,9 +31,9 @@ int __stdcall WinMain(HINSTANCE, HINSTANCE, char*, int) {
 
   int retCode = app.exec();
 
+  LayoutLoader::Free();
   delete p_logger;
   p_logger = nullptr;
-  LayoutLoader::Free();
 
   return retCode;
 }

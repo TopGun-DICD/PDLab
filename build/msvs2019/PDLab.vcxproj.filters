@@ -147,6 +147,18 @@
     <ClCompile Include="..\..\sources\Helper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\sources\FlowItems\FlowItem_AND.cpp">
+      <Filter>Source Files\FlowItems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\FlowItems\FlowItem_OR.cpp">
+      <Filter>Source Files\FlowItems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\Dialogs\Export.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\moc\moc_Export.cpp">
+      <Filter>Source Files\moc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\sources\MainWindow.hpp">
@@ -229,6 +241,15 @@
     </ClInclude>
     <ClInclude Include="..\..\sources\Helper.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\FlowItems\FlowItem_AND.hpp">
+      <Filter>Header Files\FlowItems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\FlowItems\FlowItem_OR.hpp">
+      <Filter>Header Files\FlowItems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\Dialogs\Export.hpp">
+      <Filter>Header Files\Dialogs</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

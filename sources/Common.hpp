@@ -6,8 +6,9 @@
 // = 1 - Flow operations
 // = 2 - User Flow operations separated from main application (implemented in dlls)
 // = 3 - Layout viewer
-// ? 4 - Verlog, LEF, DEF, separate inputs and outputs
-#define VERSION_STRING              QString("v0.0.3.3")
+// ? 4 - External layout viewer
+// ? 5 - Verlog, LEF, DEF, separate inputs and outputs
+#define VERSION_STRING              QString("v0.0.3.11")
 
 // https://www.canva.com/colors/color-palette-generator/
 // https://www.canva.com/colors/color-palettes/retro-punch/

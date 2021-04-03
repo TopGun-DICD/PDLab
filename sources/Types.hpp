@@ -12,6 +12,9 @@ enum class FlowItemType {
   map,
   extract,
   // Layout operations
+  AND,
+  OR,
+  NOT,
   heal,
 };
 

@@ -32,6 +32,10 @@ public:
 class FlowItemsListWidget : public QTreeWidget {
 public:
   FlowItemsListWidget(QWidget *parent);
+private:
+  void FillSection_LayoutIO(QPainter &painter, QPixmap &px, QFontMetrics &fm);
+  void FillSection_LayerOperations(QPainter &painter, QPixmap &px, QFontMetrics &fm);
+  void FillSection_LayoutOperations(QPainter &painter, QPixmap &px, QFontMetrics &fm);
 };
 
 class ItemsListWidget : public QListWidget {

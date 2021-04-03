@@ -13,8 +13,11 @@
 #include "../Logger.hpp"
 #include "FlowItemPort.hpp"
 #include "FlowItemConnection.hpp"
+#include "../Dialogs/Export.hpp"
+#include "LayoutLoader.hpp"
+#include "../Helper.hpp"
 
-FlowItem_Export::FlowItem_Export(BasicLogger *logger) : FlowItem(FlowItemType::importdata, QString("EXPORT"), logger, LayoutOwnershipMode::make_nothing) {
+FlowItem_Export::FlowItem_Export(BasicLogger *logger) : FlowItem(FlowItemType::importdata, QString("EXPORT"), logger, LayoutOwnershipMode::make_link) {
   AddInputPort(PortDataType::layout);
   titleBgColor = QColor(255, 0, 0);
 }
@@ -25,12 +28,41 @@ FlowItem_Export::~FlowItem_Export() {
 
 bool FlowItem_Export::DropEventHandler() {
   p_logger->Log("'EXPORT-DROP' was called");
-  
+
+  Dlg_Export dlg(nullptr);
+  if (!dlg.exec())
+    return false;
+
+  fileName = dlg.p_fileLayout->text();
+
+  QFileInfo fi(fileName);
+  topString = "???";
+  QString fileSuffix = fi.suffix().toLower();
+  if (fileSuffix == "gds" || fileSuffix == "gdsii")
+    topString = "GDSII";
+  if (fileSuffix == "msk")
+    topString = "MSK";
+  fileShortName = fi.fileName();
+  //fileSize = fi.size();
+
+  bottomString = fi.fileName();
+
   return true;
 }
 
 bool FlowItem_Export::ExecuteEventHandler() {
   p_logger->Log("'EXPORT-EXECUTE' was called");
+
+  std::clock_t timeB = std::clock();
+  bool retCode = LayoutLoader::GetInstance()->WriteLayout(p_resultLayout, fileName.toStdWString(), FileFormat::GDSII_bin);
+  std::clock_t timeC = std::clock();
+  if (!retCode) {
+    p_logger->Error(QString("Failed to write layout to '%1'").arg(fileName));
+    return false;
+  }
+  p_logger->Log(QString("Output file '%1' (GDSII format) written successfully.").arg(fileName));
+  p_logger->Log(QString("Layout writing took %2 ms.").arg(timeC - timeB));
+
 
   return true;
 }

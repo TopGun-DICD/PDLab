@@ -5,7 +5,8 @@
 #include <QListWidget>
 
 struct LayerInfo {
-  QString id;
+  QString id,
+          name;
   bool    selected;
 };
 

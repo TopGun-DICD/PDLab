@@ -37,13 +37,22 @@ FlowItemsListWidget::FlowItemsListWidget(QWidget *parent) : QTreeWidget(parent) 
   setIndentation(0);
   //setVerticalScrollMode()
   
-
-  QListWidgetItem *p_item = nullptr;
   QPixmap px(QSize(100, 25));
   QPainter painter(&px);
-  painter.setPen(QColor(255, 255, 255, 255));
   QFontMetrics fm(painter.font());
 
+  FillSection_LayoutIO(painter, px, fm);
+  FillSection_LayerOperations(painter, px, fm);
+  FillSection_LayoutOperations(painter, px, fm);
+
+  painter.end();
+
+  expandAll();
+}
+
+void FlowItemsListWidget::FillSection_LayoutIO(QPainter &painter, QPixmap &px, QFontMetrics &fm) {
+  QListWidgetItem *p_item = nullptr;
+  painter.setPen(QColor(255, 255, 255, 255));
   int tw = 0;
   int th = fm.height();
 
@@ -57,7 +66,7 @@ FlowItemsListWidget::FlowItemsListWidget(QWidget *parent) : QTreeWidget(parent) 
   p_lstIO->show();
   p_lstIO->setFixedHeight(66);
   p_lstIO->setFrameShape(QFrame::Shape::NoFrame);
-  
+
   p_lstIO->setViewMode(QListWidget::IconMode);
   p_lstIO->setIconSize(QSize(100, 25));
   p_lstIO->setResizeMode(QListView::Adjust);
@@ -74,8 +83,10 @@ FlowItemsListWidget::FlowItemsListWidget(QWidget *parent) : QTreeWidget(parent) 
   p_item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled);
   p_lstIO->addItem(p_item);
   p_lstIO->setItemWidget(p_item, new CustomListItem(FlowItemType::importdata, px, tr("Import")));
+  // End of I/O : Import
 
   // I/O : Edit
+  /*
   p_item = new QListWidgetItem;
   px.fill(QColor(255, 0, 0));
   tw = fm.horizontalAdvance(tr("EDIT"));
@@ -84,6 +95,8 @@ FlowItemsListWidget::FlowItemsListWidget(QWidget *parent) : QTreeWidget(parent) 
   p_item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled);
   p_lstIO->addItem(p_item);
   p_lstIO->setItemWidget(p_item, new CustomListItem(FlowItemType::editdata, px, tr("Edit")));
+  */
+  // End of I/O : Edit
 
   // I/O : Export
   p_item = new QListWidgetItem;
@@ -94,15 +107,23 @@ FlowItemsListWidget::FlowItemsListWidget(QWidget *parent) : QTreeWidget(parent) 
   p_item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled);
   p_lstIO->addItem(p_item);
   p_lstIO->setItemWidget(p_item, new CustomListItem(FlowItemType::exportdata, px, tr("Export")));
+  // End of I/O : Export
 
   QTreeWidgetItem *p_itemIOOperations = new QTreeWidgetItem;
   p_itemIOOperations->setDisabled(true);
   p_catIO->addChild(p_itemIOOperations);
   setItemWidget(p_itemIOOperations, 0, p_lstIO);
+}
 
-  // Category : Layers operations
+void FlowItemsListWidget::FillSection_LayerOperations(QPainter &painter, QPixmap &px, QFontMetrics &fm) {
+  QListWidgetItem *p_item = nullptr;
+  painter.setPen(QColor(255, 255, 255, 255));
+  int tw = 0;
+  int th = fm.height();
+
+  // Category : Layer Operations
   QTreeWidgetItem *p_catLayersOps = new QTreeWidgetItem;
-  CategoryButton* p_btnLayersOps = new CategoryButton(tr("Layer operations"), this, p_catLayersOps);
+  CategoryButton* p_btnLayersOps = new CategoryButton(tr("Layer Operations"), this, p_catLayersOps);
   addTopLevelItem(p_catLayersOps);
   setItemWidget(p_catLayersOps, 0, p_btnLayersOps);
 
@@ -118,7 +139,7 @@ FlowItemsListWidget::FlowItemsListWidget(QWidget *parent) : QTreeWidget(parent) 
   p_lstLayersOps->verticalScrollBar()->setVisible(false);
   p_lstLayersOps->setAcceptDrops(false);
 
-  // Layers operations : Map
+  // Layer Operations : Map
   p_item = new QListWidgetItem;
   px.fill(QColor(246, 168, 0));
   tw = fm.horizontalAdvance(tr("MAP"));
@@ -127,8 +148,9 @@ FlowItemsListWidget::FlowItemsListWidget(QWidget *parent) : QTreeWidget(parent) 
   p_item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled);
   p_lstLayersOps->addItem(p_item);
   p_lstLayersOps->setItemWidget(p_item, new CustomListItem(FlowItemType::map, px, tr("Map")));
+  // End of Layer Operations : Map
 
-  // Layers operations : Extract
+  // Layer Operations : Extract
   p_item = new QListWidgetItem;
   px.fill(QColor(246, 168, 0));
   tw = fm.horizontalAdvance(tr("EXTRACT"));
@@ -137,15 +159,23 @@ FlowItemsListWidget::FlowItemsListWidget(QWidget *parent) : QTreeWidget(parent) 
   p_item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled);
   p_lstLayersOps->addItem(p_item);
   p_lstLayersOps->setItemWidget(p_item, new CustomListItem(FlowItemType::extract, px, tr("Extract")));
+  // End of Layer Operations : Extract
 
   QTreeWidgetItem *p_itemLayerOperations = new QTreeWidgetItem;
   p_itemLayerOperations->setDisabled(true);
   p_catLayersOps->addChild(p_itemLayerOperations);
   setItemWidget(p_itemLayerOperations, 0, p_lstLayersOps);
+}
 
-  // Category : Layout operations
+void FlowItemsListWidget::FillSection_LayoutOperations(QPainter &painter, QPixmap &px, QFontMetrics &fm) {
+  QListWidgetItem *p_item = nullptr;
+  painter.setPen(QColor(255, 255, 255, 255));
+  int tw = 0;
+  int th = fm.height();
+
+  // Category : Layout Operations
   QTreeWidgetItem *p_catLayoutOps = new QTreeWidgetItem;
-  CategoryButton* p_btnLayoutOps = new CategoryButton(tr("Layout operations"), this, p_catLayoutOps);
+  CategoryButton* p_btnLayoutOps = new CategoryButton(tr("Layout Operations"), this, p_catLayoutOps);
   addTopLevelItem(p_catLayoutOps);
   setItemWidget(p_catLayoutOps, 0, p_btnLayoutOps);
 
@@ -161,7 +191,32 @@ FlowItemsListWidget::FlowItemsListWidget(QWidget *parent) : QTreeWidget(parent) 
   p_lstLayoutOps->verticalScrollBar()->setVisible(false);
   p_lstLayoutOps->setAcceptDrops(false);
 
-  // Layout operations : Map
+  // Layout Operations : AND
+  /*
+  p_item = new QListWidgetItem;
+  px.fill(QColor(139, 55, 78));
+  tw = fm.horizontalAdvance(tr("AND"));
+  painter.drawText(50 - tw / 2, 10 + th / 2, tr("AND"));
+  p_item->setIcon(px);
+  p_item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled);
+  p_lstLayoutOps->addItem(p_item);
+  p_lstLayoutOps->setItemWidget(p_item, new CustomListItem(FlowItemType::AND, px, tr("AND")));
+  */
+  // End of Layout Operations : AND
+
+  // Layout Operations : OR
+  p_item = new QListWidgetItem;
+  px.fill(QColor(139, 55, 78));
+  tw = fm.horizontalAdvance(tr("OR"));
+  painter.drawText(50 - tw / 2, 10 + th / 2, tr("OR"));
+  p_item->setIcon(px);
+  p_item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled);
+  p_lstLayoutOps->addItem(p_item);
+  p_lstLayoutOps->setItemWidget(p_item, new CustomListItem(FlowItemType::OR, px, tr("OR")));
+  // End of Layout Operations : OR
+
+  // Layout Operations : Heal
+  /*
   p_item = new QListWidgetItem;
   px.fill(QColor(139, 55, 78));
   tw = fm.horizontalAdvance(tr("HEAL"));
@@ -170,15 +225,14 @@ FlowItemsListWidget::FlowItemsListWidget(QWidget *parent) : QTreeWidget(parent) 
   p_item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled);
   p_lstLayoutOps->addItem(p_item);
   p_lstLayoutOps->setItemWidget(p_item, new CustomListItem(FlowItemType::heal, px, tr("Heal")));
+  */
+  // End of Layout Operations : Heal
 
   QTreeWidgetItem *p_itemLayoutOperations = new QTreeWidgetItem;
   p_itemLayoutOperations->setDisabled(true);
   p_catLayoutOps->addChild(p_itemLayoutOperations);
   setItemWidget(p_itemLayoutOperations, 0, p_lstLayoutOps);
 
-  painter.end();
-
-  expandAll();
 }
 
 /***** Items List Widget *****/

@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\sources\ConsoleWidget.cpp" />
     <ClCompile Include="..\..\sources\Dialogs\About.cpp" />
+    <ClCompile Include="..\..\sources\Dialogs\Export.cpp" />
     <ClCompile Include="..\..\sources\Dialogs\Extract.cpp" />
     <ClCompile Include="..\..\sources\Dialogs\Import.cpp" />
     <ClCompile Include="..\..\sources\Dialogs\Map.cpp" />
@@ -28,12 +29,14 @@
     <ClCompile Include="..\..\sources\FlowItems\FlowItem.cpp" />
     <ClCompile Include="..\..\sources\FlowItems\FlowItemConnection.cpp" />
     <ClCompile Include="..\..\sources\FlowItems\FlowItemPort.cpp" />
+    <ClCompile Include="..\..\sources\FlowItems\FlowItem_AND.cpp" />
     <ClCompile Include="..\..\sources\FlowItems\FlowItem_Edit.cpp" />
     <ClCompile Include="..\..\sources\FlowItems\FlowItem_Export.cpp" />
     <ClCompile Include="..\..\sources\FlowItems\FlowItem_Extract.cpp" />
     <ClCompile Include="..\..\sources\FlowItems\FlowItem_Heal.cpp" />
     <ClCompile Include="..\..\sources\FlowItems\FlowItem_Import.cpp" />
     <ClCompile Include="..\..\sources\FlowItems\FlowItem_Map.cpp" />
+    <ClCompile Include="..\..\sources\FlowItems\FlowItem_OR.cpp" />
     <ClCompile Include="..\..\sources\FlowItems\FlowItem_User.cpp" />
     <ClCompile Include="..\..\sources\FlowItems\LayoutLoader.cpp" />
     <ClCompile Include="..\..\sources\FlowSceneEventFilter.cpp" />
@@ -44,6 +47,7 @@
     <ClCompile Include="..\..\sources\LuaCodeEditor.cpp" />
     <ClCompile Include="..\..\sources\main.cpp" />
     <ClCompile Include="..\..\sources\MainWindow.cpp" />
+    <ClCompile Include="..\..\sources\moc\moc_Export.cpp" />
     <ClCompile Include="..\..\sources\moc\moc_Extract.cpp" />
     <ClCompile Include="..\..\sources\moc\moc_FlowItemsListWidget.cpp" />
     <ClCompile Include="..\..\sources\moc\moc_FlowSceneEventFilter.cpp" />
@@ -59,6 +63,7 @@
     <ClInclude Include="..\..\sources\Common.hpp" />
     <ClInclude Include="..\..\sources\ConsoleWidget.hpp" />
     <ClInclude Include="..\..\sources\Dialogs\About.hpp" />
+    <ClInclude Include="..\..\sources\Dialogs\Export.hpp" />
     <ClInclude Include="..\..\sources\Dialogs\Extract.hpp" />
     <ClInclude Include="..\..\sources\Dialogs\Import.hpp" />
     <ClInclude Include="..\..\sources\Dialogs\Map.hpp" />
@@ -66,12 +71,14 @@
     <ClInclude Include="..\..\sources\FlowItems\FlowItem.hpp" />
     <ClInclude Include="..\..\sources\FlowItems\FlowItemConnection.hpp" />
     <ClInclude Include="..\..\sources\FlowItems\FlowItemPort.hpp" />
+    <ClInclude Include="..\..\sources\FlowItems\FlowItem_AND.hpp" />
     <ClInclude Include="..\..\sources\FlowItems\FlowItem_Edit.hpp" />
     <ClInclude Include="..\..\sources\FlowItems\FlowItem_Export.hpp" />
     <ClInclude Include="..\..\sources\FlowItems\FlowItem_Extract.hpp" />
     <ClInclude Include="..\..\sources\FlowItems\FlowItem_Heal.hpp" />
     <ClInclude Include="..\..\sources\FlowItems\FlowItem_Import.hpp" />
     <ClInclude Include="..\..\sources\FlowItems\FlowItem_Map.hpp" />
+    <ClInclude Include="..\..\sources\FlowItems\FlowItem_OR.hpp" />
     <ClInclude Include="..\..\sources\FlowItems\FlowItem_User.hpp" />
     <ClInclude Include="..\..\sources\FlowItems\LayoutLoader.hpp" />
     <ClInclude Include="..\..\sources\FlowSceneEventFilter.hpp" />
@@ -144,14 +151,14 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\Qt\Qt5.14.1\5.14.1\msvc2017_64\include;D:\Qt\Qt5.14.1\5.14.1\msvc2017_64\include\QtCore;D:\Qt\Qt5.14.1\5.14.1\msvc2017_64\include\QtGui;D:\Qt\Qt5.14.1\5.14.1\msvc2017_64\include\QtWidgets;C:\Users\Дмитрий Булах\source\repos\PDLab\bin\development\headers;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Qt\Qt5.14.1\5.14.1\msvc2017_64\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;C:\Users\Дмитрий Булах\source\repos\PDLab\bin\development\headers;$(IncludePath)</IncludePath>
+    <LibraryPath>$(QTDIR)\lib;$(LibraryPath)</LibraryPath>
     <OutDir>..\..\bin\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>D:\Qt\Qt5.14.1\5.14.1\msvc2017_64\include;D:\Qt\Qt5.14.1\5.14.1\msvc2017_64\include\QtCore;D:\Qt\Qt5.14.1\5.14.1\msvc2017_64\include\QtGui;D:\Qt\Qt5.14.1\5.14.1\msvc2017_64\include\QtWidgets;C:\Users\Дмитрий Булах\source\repos\PDLab\bin\development\headers;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Qt\Qt5.14.1\5.14.1\msvc2017_64\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;C:\Users\Дмитрий Булах\source\repos\PDLab\bin\development\headers;$(IncludePath)</IncludePath>
+    <LibraryPath>$(QTDIR)\lib;$(LibraryPath)</LibraryPath>
     <OutDir>..\..\bin\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

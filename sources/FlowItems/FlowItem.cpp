@@ -32,16 +32,7 @@ FlowItem::FlowItem(FlowItemType type, QString title, BasicLogger *logger, Layout
 }
 
 FlowItem::~FlowItem() {
-  foreach(FlowItemPort *port, inputPorts) {
-    delete port;
-    port = nullptr;
-  }
-  inputPorts.clear();
-  foreach(FlowItemPort *port, outputPorts) {
-    delete port;
-    port = nullptr;
-  }
-  outputPorts.clear();
+  Disconnect();
 
   switch (layoutOwnershipMode) {
     case LayoutOwnershipMode::make_new:
@@ -196,14 +187,15 @@ bool FlowItem::OnHandleEvent_Reset() {
     itemStatus = FlowItemStatus::unknown;
     update();
 
-    //TODO: Сделать подготовку для уничтожения топологии на выходе
+    //TODO: Если модуль Export - уходить (у него нет outPorts[0])
 
-    foreach(FlowItemConnection * connection, outputPorts[0]->connections) {
-      if (connection->p_portB)
-        if (connection->p_portB->GetOwner())
-          if (connection->p_portB->GetOwner()->GetStatus() == FlowItemStatus::completed)
-            connection->p_portB->GetOwner()->OnHandleEvent_Reset();
-    }
+    if(!outputPorts.empty())
+      foreach(FlowItemConnection * connection, outputPorts[0]->connections) {
+        if (connection->p_portB)
+          if (connection->p_portB->GetOwner())
+            if (connection->p_portB->GetOwner()->GetStatus() == FlowItemStatus::completed)
+              connection->p_portB->GetOwner()->OnHandleEvent_Reset();
+      }
   }
   return retCode;
 }
@@ -231,11 +223,18 @@ void FlowItem::AddOutputPort(PortDataType dataType) {
   p_port->setPos(QPointF(p_port->pos().x(), p_port->pos().y() + ITEM_HEIGHT / 2 + PORT_RADIUS));  
 }
 
-/*Layout *FlowItem::GetMyLayout() {
-  if (outputPorts.empty())
-    return nullptr;
-  return outputPorts[0]->p_layout;
-}*/
+void FlowItem::Disconnect() {
+  foreach(FlowItemPort * port, inputPorts) {
+    delete port;
+    port = nullptr;
+  }
+  inputPorts.clear();
+  foreach(FlowItemPort * port, outputPorts) {
+    delete port;
+    port = nullptr;
+  }
+  outputPorts.clear();
+}
 
 QVariant FlowItem::itemChange(GraphicsItemChange change, const QVariant &value) {
   if (!scene())
@@ -245,6 +244,10 @@ QVariant FlowItem::itemChange(GraphicsItemChange change, const QVariant &value) 
   switch (change) {
     case ItemPositionChange:
       newPos = value.toPointF();
+	    //https://www.walletfox.com/course/qgraphicsitemsnaptogrid.php
+      //newPos.setX(round(newPos.x() / 20)*20);
+      //newPos.setY(round(newPos.y() / 20)*20);
+      //return newPos;
       break;
     /*
     case ItemSelectedChange:
@@ -271,7 +274,8 @@ void FlowItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     }
     // Check if "Properties" button was clicked
     if (itemPoint.x() >= pointBtnOptions.x() && itemPoint.x() <= pointBtnOptions.x() + 16 && itemPoint.y() >= pointBtnOptions.y() && itemPoint.y() <= pointBtnOptions.y() + 16) {
-      ShowPropertesEventHandler();
+      if (ShowPropertesEventHandler())
+        OnHandleEvent_Reset();
       event->ignore();
       return;
     }
@@ -279,23 +283,4 @@ void FlowItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
   QGraphicsItem::mousePressEvent(event);
 }
 
-void FlowItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event) {
-  //setSelected(true);
-  QMenu contextMenu;
-  QAction *p_actRunTo   = contextMenu.addAction("Execute Item");
-  QAction *p_actDelete  = contextMenu.addAction("Delete Item");
-  // AppendContextMenuItems(&menu);
-  QAction *result = contextMenu.exec(event->screenPos());
-  
-
-  if (result == p_actRunTo) {
-
-  }
-  else if (result == p_actDelete) {
-
-  }
-  else {
-    // ExecuteContextMenuAction(result);
-  }
-}
 

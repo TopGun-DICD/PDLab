@@ -40,6 +40,12 @@ LayoutLoader::LayoutLoader(BasicLogger *logger) : p_logger(logger), func_CreateL
     layoutLibrary.unload();
     return;
   }
+  func_WriteLayout = (Func_WriteLayout)layoutLibrary.resolve("WriteLayout");
+  if (!func_WriteLayout) {
+    p_logger->Error(QString("\tLibrary 'PDLab_DLL_Layout.dll' does not contain required function to write layout."));
+    layoutLibrary.unload();
+    return;
+  }
   func_FreeLayout = (Func_FreeLayout)layoutLibrary.resolve("FreeLayout");
   if (!func_FreeLayout) {
     p_logger->Error(QString("\tLibrary 'PDLab_DLL_Layout.dll' does not contain required functions to free layout."));
@@ -119,6 +125,18 @@ void LayoutLoader::CopyLayout(Layout *src, Layout *dst) {
     return;
   }
   func_CopyLayout(src, dst);
+}
+
+bool LayoutLoader::WriteLayout(Layout *layout, std::wstring fileName, FileFormat format) {
+  if (!layoutLibrary.isLoaded()) {
+    p_logger->Error("PDLab_DLL_Layout.dll is not loaded but 'WriteLayout' function called.");
+    return false;
+  }
+  if (!func_CopyLayout) {
+    p_logger->Error("func_WriteLayout is NULL but 'WriteLayout' function called.");
+    return false;
+  }
+  return func_WriteLayout(layout, fileName, format);
 }
 
 void LayoutLoader::FreeLayout(Layout **layout) {

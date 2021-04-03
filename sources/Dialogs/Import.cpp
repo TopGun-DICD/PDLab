@@ -49,12 +49,14 @@ Dlg_Import::Dlg_Import(QWidget *parent) : QDialog(parent) {
   p_hLayout->addWidget(new QLabel("Layers mask", this));
   p_maskLayers = new QLineEdit(this);
   p_maskLayers->setText("*");
+  p_maskLayers->setEnabled(false);
   p_hLayout->addWidget(p_maskLayers, 1);
   p_vLayout->addLayout(p_hLayout);
 
   p_hLayout = new QHBoxLayout;
   p_hLayout->setContentsMargins(10, 0, 10, 10);
   p_cbConvertBoundaries = new QCheckBox("Convert boundaries to boxes if possible", this);
+  p_cbConvertBoundaries->setEnabled(false);
   p_hLayout->addWidget(p_cbConvertBoundaries);
   p_vLayout->addLayout(p_hLayout);
 

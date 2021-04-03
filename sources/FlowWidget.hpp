@@ -24,6 +24,7 @@ class FlowWidget : public QGraphicsView {
 private:
   Logger *p_logger;
   UserFlowItemsManager *p_manager;
+  QPointF centerPoint;
 public:
   FlowScene *p_scene;
   FlowSceneEventFilter *p_eventFilter;
@@ -31,6 +32,10 @@ public:
   FlowWidget(QWidget *parent, Logger *logger, UserFlowItemsManager *manager);
  ~FlowWidget();
 private:
+  QGraphicsItem *GetItemAtXY(const QPointF &pos);
+private:
   void dragEnterEvent(QDragEnterEvent* event);
   void dropEvent(QDropEvent* event);
+  void resizeEvent(QResizeEvent * event);
+  void contextMenuEvent(QContextMenuEvent *event);
 };

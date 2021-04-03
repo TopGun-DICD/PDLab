@@ -2,6 +2,7 @@
 
 #include <QGraphicsItem>
 #include <QGraphicsSceneMouseEvent>
+#include <QMenu>
 
 #include "FlowItems/FlowItemConnection.hpp"
 #include "FlowItems/FlowItemPort.hpp"
@@ -73,7 +74,7 @@ bool FlowSceneEventFilter::OnMousePress(QObject *object, QGraphicsSceneMouseEven
       if (p_item->type() == FlowItem::Type) {
         zIndex += 0.01;
         p_item->setZValue(zIndex);
-        p_logger->Log(QString("Z-Index was set to %1").arg(zIndex));
+        //p_logger->Log(QString("Z-Index was set to %1").arg(zIndex));
       }
       break;
     /*
@@ -167,11 +168,13 @@ bool FlowSceneEventFilter::OnKeyPress(QObject *object, QKeyEvent *event) {
 
   switch (event->key()) {
     case Qt::Key_F5:
-      p_logger->Log("Running flow");
+      //p_logger->Log("Running the flow");
       break;
     case Qt::Key_Delete:
-      p_logger->Log("Deleting items");
       selectedItems = p_scene->selectedItems();
+      if (selectedItems.empty())
+        break;
+      //p_logger->Log("Deleting items");
       foreach(QGraphicsItem * item, selectedItems)
         delete item;
       break;

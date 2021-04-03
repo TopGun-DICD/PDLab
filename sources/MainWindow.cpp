@@ -15,6 +15,8 @@
 #include "Common.hpp"
 #include "FlowItems/LayoutLoader.hpp"
 #include "Helper.hpp"
+#include "FlowItems/FlowItemConnection.hpp"
+#include "FlowItems/FlowItemPort.hpp"
 
 
 MainWindow::MainWindow(Logger *logger) : QMainWindow(nullptr), p_logger(logger) {
@@ -65,16 +67,16 @@ void MainWindow::InitActions() {
   p_actViewLayout->setChecked(false);
 
   // Menu "Flow"
-  p_actFlowRun = new QAction(QPixmap(":/toolbar/run.png"), tr("Run Flow"), this);
+  p_actFlowRun = new QAction(QPixmap(":/toolbar/run.png"), tr("Run"), this);
   connect(p_actFlowRun, SIGNAL(triggered()), SLOT(OnMenu_Flow_Run()));
 
-  p_actFlowRunTo = new QAction(QPixmap(":/toolbar/runto.png"), tr("Run Flow To"), this);
+  p_actFlowRunTo = new QAction(QPixmap(":/toolbar/runto.png"), tr("Run To"), this);
   connect(p_actFlowRunTo, SIGNAL(triggered()), SLOT(OnMenu_Flow_RunTo()));
 
-  p_actFlowStop = new QAction(QPixmap(":/toolbar/stop.png"), tr("Stop Flow"), this);
+  p_actFlowStop = new QAction(QPixmap(":/toolbar/stop.png"), tr("Stop"), this);
   connect(p_actFlowStop, SIGNAL(triggered()), SLOT(OnMenu_Flow_Stop()));
 
-  p_actFlowReset = new QAction(QPixmap(":/toolbar/reset.png"), tr("Reset Flow"), this);
+  p_actFlowReset = new QAction(QPixmap(":/toolbar/reset.png"), tr("Reset"), this);
   connect(p_actFlowReset, SIGNAL(triggered()), SLOT(OnMenu_Flow_Reset()));
 
   // Menu "Tools"
@@ -126,10 +128,6 @@ void MainWindow::InitToolbar() {
   p_toolBar->addAction(p_actFlowReset);
 
   p_toolBar->addSeparator();
-
-  //QWidget *w = new QWidget;
-  //w->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-  //p_toolBar->addWidget(w);
 
   p_toolBar->addAction(p_actViewLayout);
 
@@ -199,6 +197,36 @@ void MainWindow::OnMenu_File_Exit() {
 }
 
 void MainWindow::OnMenu_Flow_Run() {
+  QList <FlowItem *>  levelItems;
+
+  // Search for input items
+  foreach(QGraphicsItem * p_item, p_activeFlowWidget->items()) {
+    if (p_item->type() != FlowItem::Type)
+      continue;
+    FlowItem *p_flowItem = static_cast<FlowItem *>(p_item);
+    if (p_flowItem->GetItemType() != FlowItemType::importdata && p_flowItem->GetItemType() != FlowItemType::editdata)
+      continue;
+    levelItems.push_back(p_flowItem);
+  }
+
+  if (levelItems.empty()) {
+    p_logger->Warning("No input flow items found. Can't run this flow.");
+    return;
+  }
+
+  while (!levelItems.empty()) {
+    FlowItem *p_flowItem = levelItems.front();
+    if(p_flowItem->GetStatus() != FlowItemStatus::completed)
+      if (!p_flowItem->OnHandleEvent_Execute()) {
+        p_logger->Error("Flow run aborted.");
+        return;
+      }
+    if (!p_flowItem->outputPorts.empty())
+      for (int i = 0; i < p_flowItem->outputPorts[0]->connections.size(); ++i)
+        levelItems.push_back(p_flowItem->outputPorts[0]->connections[i]->p_portB->GetOwner());
+    p_flowItem->update();
+    levelItems.removeFirst();
+  }
 }
 
 void MainWindow::OnMenu_Flow_RunTo() {
