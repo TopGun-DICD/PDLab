@@ -32,7 +32,16 @@ FlowItem::FlowItem(FlowItemType type, QString title, BasicLogger *logger, Layout
 }
 
 FlowItem::~FlowItem() {
-  Disconnect();
+  foreach(FlowItemPort * port, inputPorts) {
+    delete port;
+    port = nullptr;
+  }
+  inputPorts.clear();
+  foreach(FlowItemPort * port, outputPorts) {
+    delete port;
+    port = nullptr;
+  }
+  outputPorts.clear();
 
   switch (layoutOwnershipMode) {
     case LayoutOwnershipMode::make_new:
@@ -93,7 +102,7 @@ bool FlowItem::OnHandleEvent_Execute() {
       switch (layoutOwnershipMode) {
         case LayoutOwnershipMode::make_copy:
           if (inputPorts.empty()) {
-            p_logger->Warning(QString("Flow item '%1' has no input port but LayoutOwnershipMode was set to 'COPY'").arg(this->titleString));
+            p_logger->Error(QString("Flow item '%1' has no input port but LayoutOwnershipMode was set to 'COPY'").arg(this->titleString));
             return false;
           }
           foreach (FlowItemPort *port, inputPorts) {
@@ -102,14 +111,22 @@ bool FlowItem::OnHandleEvent_Execute() {
             p_logger->Error(QString("Flow item '%1' has one of the inputs which is not connected").arg(this->titleString));
             return false;
           }
-          if (!inputPorts[0]->GetLayout()) {
-            p_logger->Error(QString("Flow item '%1' has nullptr layout at the input").arg(this->titleString));
-            return false;
+          for (int i = 0; i < inputPorts.size(); ++i) {
+            if (inputPorts[i]->connections[0]->p_portA->GetOwner()->GetStatus() == FlowItemStatus::completed)
+              continue;
+            if (!inputPorts[i]->connections[0]->p_portA->GetOwner()->OnHandleEvent_Execute()) {
+              p_logger->Error("Flow run stopped.");
+              return false;
+            }
           }
-          if (inputPorts[0]->GetLayout()->libraries.empty()) {
-            p_logger->Error(QString("Flow item '%1' has empty layout at the input").arg(titleString));
-            return false;
-          }
+          //if (!inputPorts[0]->GetLayout()) {
+          //  p_logger->Error(QString("Flow item '%1' has nullptr layout at the input").arg(this->titleString));
+          //  return false;
+          //}
+          //if (inputPorts[0]->GetLayout()->libraries.empty()) {
+          //  p_logger->Error(QString("Flow item '%1' has empty layout at the input").arg(titleString));
+          //  return false;
+          //}
           if (p_resultLayout) {
             delete p_resultLayout;
             p_resultLayout = nullptr;
@@ -135,14 +152,22 @@ bool FlowItem::OnHandleEvent_Execute() {
             p_logger->Error(QString("Flow item '%1' has one of the inputs which is not connected").arg(this->titleString));
             return false;
           }
-          if (!inputPorts[0]->GetLayout()) {
-            p_logger->Error(QString("Flow item '%1' has nullptr layout at the input").arg(this->titleString));
-            return false;
+          for (int i = 0; i < inputPorts.size(); ++i) {
+            if (inputPorts[i]->connections[0]->p_portA->GetOwner()->GetStatus() == FlowItemStatus::completed)
+              continue;
+            if (!inputPorts[i]->connections[0]->p_portA->GetOwner()->OnHandleEvent_Execute()) {
+              p_logger->Error("Flow run stopped.");
+              return false;
+            }
           }
-          if (inputPorts[0]->GetLayout()->libraries.empty()) {
-            p_logger->Error(QString("Flow item '%1' has empty layout at the input").arg(titleString));
-            return false;
-          }
+          //if (!inputPorts[0]->GetLayout()) {
+          //  p_logger->Error(QString("Flow item '%1' has nullptr layout at the input").arg(this->titleString));
+          //  return false;
+          //}
+          //if (inputPorts[0]->GetLayout()->libraries.empty()) {
+          //  p_logger->Error(QString("Flow item '%1' has empty layout at the input").arg(titleString));
+          //  return false;
+          //}
           p_resultLayout = inputPorts[0]->GetLayout();
           break;
         case LayoutOwnershipMode::make_new:
@@ -151,6 +176,7 @@ bool FlowItem::OnHandleEvent_Execute() {
             p_resultLayout = nullptr;
           }
           p_resultLayout = new Layout;
+          p_resultLayout->fileFormat = FileFormat::undefined;
           break;
       }
 
@@ -186,8 +212,6 @@ bool FlowItem::OnHandleEvent_Reset() {
   if (retCode) {
     itemStatus = FlowItemStatus::unknown;
     update();
-
-    //TODO: Если модуль Export - уходить (у него нет outPorts[0])
 
     if(!outputPorts.empty())
       foreach(FlowItemConnection * connection, outputPorts[0]->connections) {
@@ -225,15 +249,20 @@ void FlowItem::AddOutputPort(PortDataType dataType) {
 
 void FlowItem::Disconnect() {
   foreach(FlowItemPort * port, inputPorts) {
-    delete port;
-    port = nullptr;
+    foreach(FlowItemConnection * p_connection, port->connections) {
+      delete p_connection;
+      p_connection = nullptr;
+    }
+    port->connections.clear();
   }
-  inputPorts.clear();
+  
   foreach(FlowItemPort * port, outputPorts) {
-    delete port;
-    port = nullptr;
-  }
-  outputPorts.clear();
+    foreach(FlowItemConnection * p_connection, port->connections) {
+      delete p_connection;
+      p_connection = nullptr;
+    }
+    port->connections.clear();
+  }  
 }
 
 QVariant FlowItem::itemChange(GraphicsItemChange change, const QVariant &value) {

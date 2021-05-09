@@ -8,7 +8,7 @@
 // = 3 - Layout viewer
 // ? 4 - External layout viewer
 // ? 5 - Verlog, LEF, DEF, separate inputs and outputs
-#define VERSION_STRING              QString("v0.0.3.11")
+#define VERSION_STRING              QString("v0.0.3.13")
 
 // https://www.canva.com/colors/color-palette-generator/
 // https://www.canva.com/colors/color-palettes/retro-punch/

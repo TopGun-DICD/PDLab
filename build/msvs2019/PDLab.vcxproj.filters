@@ -159,6 +159,12 @@
     <ClCompile Include="..\..\sources\moc\moc_Export.cpp">
       <Filter>Source Files\moc</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\sources\LogTextWidget.cpp">
+      <Filter>Source Files\Console</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\moc\moc_LogTextWidget.cpp">
+      <Filter>Source Files\moc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\sources\MainWindow.hpp">
@@ -251,5 +257,16 @@
     <ClInclude Include="..\..\sources\Dialogs\Export.hpp">
       <Filter>Header Files\Dialogs</Filter>
     </ClInclude>
+    <ClInclude Include="Resource.hpp">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\LogTextWidget.hpp">
+      <Filter>Header Files\Console</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

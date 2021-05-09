@@ -29,6 +29,9 @@ private:
                            *p_dockLayout;
   // Actions
   QAction    *p_actFileNew,
+             *p_actFileOpen,
+             *p_actFileSave,
+             *p_actFileSaveAs,
              *p_actFileExit,
              *p_actViewFlowItems,
              *p_actViewConsole,
@@ -50,6 +53,10 @@ private:
   void InitStatusbar();
   void InitMainUI();
 private slots:
+  void OnMenu_File_New();
+  void OnMenu_File_Open();
+  void OnMenu_File_Save();
+  void OnMenu_File_SaveAs();
   void OnMenu_File_Exit();
   void OnMenu_Flow_Run();
   void OnMenu_Flow_RunTo();

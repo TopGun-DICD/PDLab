@@ -44,6 +44,7 @@
     <ClCompile Include="..\..\sources\Helper.cpp" />
     <ClCompile Include="..\..\sources\LayoutViewer\LayoutViewer.cpp" />
     <ClCompile Include="..\..\sources\Logger.cpp" />
+    <ClCompile Include="..\..\sources\LogTextWidget.cpp" />
     <ClCompile Include="..\..\sources\LuaCodeEditor.cpp" />
     <ClCompile Include="..\..\sources\main.cpp" />
     <ClCompile Include="..\..\sources\MainWindow.cpp" />
@@ -54,6 +55,7 @@
     <ClCompile Include="..\..\sources\moc\moc_FlowWidget.cpp" />
     <ClCompile Include="..\..\sources\moc\moc_Import.cpp" />
     <ClCompile Include="..\..\sources\moc\moc_LayoutViewer.cpp" />
+    <ClCompile Include="..\..\sources\moc\moc_LogTextWidget.cpp" />
     <ClCompile Include="..\..\sources\moc\moc_LuaCodeEditor.cpp" />
     <ClCompile Include="..\..\sources\moc\moc_MainWindow.cpp" />
     <ClCompile Include="..\..\sources\moc\moc_Map.cpp" />
@@ -86,10 +88,15 @@
     <ClInclude Include="..\..\sources\Helper.hpp" />
     <ClInclude Include="..\..\sources\LayoutViewer\LayoutViewer.hpp" />
     <ClInclude Include="..\..\sources\Logger.hpp" />
+    <ClInclude Include="..\..\sources\LogTextWidget.hpp" />
     <ClInclude Include="..\..\sources\LuaCodeEditor.hpp" />
     <ClInclude Include="..\..\sources\MainWindow.hpp" />
     <ClInclude Include="..\..\sources\Types.hpp" />
     <ClInclude Include="..\..\sources\UserFlowItemsManager.hpp" />
+    <ClInclude Include="Resource.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

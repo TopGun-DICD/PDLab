@@ -22,6 +22,7 @@ int main(int argc, char **argv) {
   QCoreApplication::setLibraryPaths(paths);
 
   QApplication app(argc, argv);
+  app.setWindowIcon(QIcon(":/other/appicon.png"));
 
   Logger *p_logger = new Logger;
 

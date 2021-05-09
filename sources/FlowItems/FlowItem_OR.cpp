@@ -8,7 +8,7 @@
 #include "LayoutLoader.hpp"
 #include "../Helper.hpp"
 
-FlowItem_OR::FlowItem_OR(BasicLogger *logger) : FlowItem(FlowItemType::OR, QString("OR"), logger, LayoutOwnershipMode::make_copy) {
+FlowItem_OR::FlowItem_OR(BasicLogger *logger) : FlowItem(FlowItemType::OR, QString("OR"), logger, LayoutOwnershipMode::make_new) {
   AddInputPort(PortDataType::layout);
   AddInputPort(PortDataType::layout);
   AddOutputPort(PortDataType::layout);
@@ -25,6 +25,79 @@ bool FlowItem_OR::DropEventHandler() {
   return true;
 }
 
+void CopyAndFlattenLayoutElement(Element *dst, Element *src) {
+  dst->min = src->min;
+  dst->max = src->max;
+  //TODO: j -> i
+  for (size_t j = 0; j < src->items.size(); ++j) {
+
+    Geometry_Polygon   *p_polygon = nullptr;
+    Geometry_Path      *p_path = nullptr;
+    Geometry_Text      *p_text = nullptr;
+    Geometry_Box       *p_box = nullptr;
+    Geometry_Reference *p_ref = nullptr;
+
+    switch (src->items[j]->type) {
+    case GeometryType::polygon:
+      p_polygon = new Geometry_Polygon;
+      dst->items.push_back(p_polygon);
+      p_polygon->type = GeometryType::polygon;
+      p_polygon->layer = 1;
+      for (size_t l = 0; l < src->items[j]->properties.size(); ++l)
+        //TODO: Faster copying? p_polygon->properties = src->items[j]->properties???
+        p_polygon->properties.push_back(src->items[j]->properties[l]);
+      for (size_t l = 0; l < src->items[j]->coords.size(); ++l)
+        p_polygon->coords.push_back(src->items[j]->coords[l]);
+      p_polygon->dataType = static_cast<Geometry_Polygon *>(src->items[j])->dataType;
+      break;
+    case GeometryType::box:
+      p_box = new Geometry_Box;
+      dst->items.push_back(p_box);
+      p_box->type = GeometryType::box;
+      p_box->layer = 1;
+      for (size_t l = 0; l < src->items[j]->properties.size(); ++l)
+        p_box->properties.push_back(src->items[j]->properties[l]);
+      for (size_t l = 0; l < src->items[j]->coords.size(); ++l)
+        p_box->coords.push_back(src->items[j]->coords[l]);
+      p_box->boxType = static_cast<Geometry_Box *>(src->items[j])->boxType;
+      break;
+    case GeometryType::path:
+      p_path = new Geometry_Path;
+      dst->items.push_back(p_path);
+      p_path->type = GeometryType::path;
+      p_path->layer = 1;
+      for (size_t l = 0; l < src->items[j]->properties.size(); ++l)
+        p_path->properties.push_back(src->items[j]->properties[l]);
+      for (size_t l = 0; l < src->items[j]->coords.size(); ++l)
+        p_path->coords.push_back(src->items[j]->coords[l]);
+      p_path->dataType = static_cast<Geometry_Path *>(src->items[j])->dataType;
+      p_path->pathType = static_cast<Geometry_Path *>(src->items[j])->pathType;
+      p_path->width = static_cast<Geometry_Path *>(src->items[j])->width;
+      break;
+    case GeometryType::text:
+      p_text = new Geometry_Text;
+      dst->items.push_back(p_text);
+      p_text->type = GeometryType::text;
+      p_text->layer = 1;
+      for (size_t l = 0; l < src->items[j]->properties.size(); ++l)
+        p_text->properties.push_back(src->items[j]->properties[l]);
+      for (size_t l = 0; l < src->items[j]->coords.size(); ++l)
+        p_text->coords.push_back(src->items[j]->coords[l]);
+      p_text->textType = static_cast<Geometry_Text *>(src->items[j])->textType;
+      p_text->pathType = static_cast<Geometry_Text *>(src->items[j])->pathType;
+      p_text->width = static_cast<Geometry_Text *>(src->items[j])->width;
+      p_text->flagsPresentation = static_cast<Geometry_Text *>(src->items[j])->flagsPresentation;
+      p_text->flagsTransformation = static_cast<Geometry_Text *>(src->items[j])->flagsTransformation;
+      p_text->magnification = static_cast<Geometry_Text *>(src->items[j])->magnification;
+      p_text->stringValue = static_cast<Geometry_Text *>(src->items[j])->stringValue;
+      break;
+    case GeometryType::reference:
+      CopyAndFlattenLayoutElement(dst, static_cast<Geometry_Reference *>(src->items[j])->referenceTo);
+      break;
+    }
+  }
+}
+
 bool FlowItem_OR::ExecuteEventHandler() {
   p_logger->Log("'OR-EXECUTE' was called");
 
@@ -32,7 +105,59 @@ bool FlowItem_OR::ExecuteEventHandler() {
     p_logger->Error("Can't perform 'OR' operation. One or more ports are not connected.");
     return false;
   }
-  for (size_t i = 0; i < p_resultLayout->libraries[0]->elements.size(); ++i) {
+
+  Layout *p_layout1 = inputPorts[0]->GetLayout();
+  Layout *p_layout2 = inputPorts[1]->GetLayout();
+
+  if (!p_layout1 || !p_layout2) {
+    p_logger->Error("Can't perform 'OR' operation. At least one of the input layouts is NULL.");
+    return false;
+  }
+  double deltaPhysical = p_layout1->libraries[0]->units.physical - p_layout2->libraries[0]->units.physical;
+  double deltaUser = p_layout1->libraries[0]->units.user - p_layout2->libraries[0]->units.user;
+  if (fabs(deltaPhysical) > 1e-12 || fabs(deltaUser) > 1e-12) {
+    p_logger->Error("Can't perform 'OR' operation. Units in both layout are not identical. Don't know what to do :(");
+
+    return false;
+  }
+
+  p_resultLayout->libraries.push_back(new Library);
+  p_resultLayout->libraries[0]->name = "PDLAB.OR";
+  p_resultLayout->libraries[0]->units = p_layout1->libraries[0]->units;
+
+  Element *p_element = new Element;
+
+  p_resultLayout->libraries[0]->elements.push_back(p_element);
+  p_element->name = "OR_RESULT";
+  p_element->nested = false;
+
+  for (size_t i = 0; i < p_layout1->libraries[0]->elements.size(); ++i)
+    CopyAndFlattenLayoutElement(p_element, p_layout1->libraries[0]->elements[i]);
+  for (size_t i = 0; i < p_layout2->libraries[0]->elements.size(); ++i)
+    CopyAndFlattenLayoutElement(p_element, p_layout2->libraries[0]->elements[i]);
+
+  Layer l;
+  l.layer = 1;
+  p_resultLayout->libraries[0]->layers.push_back(l);
+  
+  //TODO: j -> i
+  for (size_t j = 0; j < p_resultLayout->libraries[0]->elements.size(); ++j) {
+    p_resultLayout->libraries[0]->min = p_resultLayout->libraries[0]->elements[j]->min;
+    p_resultLayout->libraries[0]->max = p_resultLayout->libraries[0]->elements[j]->max;
+
+    if (p_resultLayout->libraries[0]->min.x > p_resultLayout->libraries[0]->elements[j]->min.x)
+      p_resultLayout->libraries[0]->min.x = p_resultLayout->libraries[0]->elements[j]->min.x;
+    if (p_resultLayout->libraries[0]->min.y > p_resultLayout->libraries[0]->elements[j]->min.y)
+      p_resultLayout->libraries[0]->min.y = p_resultLayout->libraries[0]->elements[j]->min.y;
+    if (p_resultLayout->libraries[0]->max.x > p_resultLayout->libraries[0]->elements[j]->max.x)
+      p_resultLayout->libraries[0]->max.x = p_resultLayout->libraries[0]->elements[j]->max.x;
+    if (p_resultLayout->libraries[0]->max.y > p_resultLayout->libraries[0]->elements[j]->max.y)
+      p_resultLayout->libraries[0]->max.y = p_resultLayout->libraries[0]->elements[j]->max.y;
+  }
+
+
+  // Maybe this will be useful for merge?
+  /*for (size_t i = 0; i < p_resultLayout->libraries[0]->elements.size(); ++i) {
     for (size_t j = 0; j < p_resultLayout->libraries[0]->elements[i]->items.size(); ++j) {
       if (p_resultLayout->libraries[0]->elements[i]->items[j]->type == GeometryType::reference)
         continue;
@@ -139,7 +264,7 @@ bool FlowItem_OR::ExecuteEventHandler() {
         continue;
       p_resultLayout->libraries[0]->layers[0].items.push_back(p_resultLayout->libraries[0]->elements[i]->items[j]);
     }
-  }
+  }*/
 
   return true;
 }

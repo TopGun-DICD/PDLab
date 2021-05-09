@@ -38,7 +38,6 @@ Dlg_Import::Dlg_Import(QWidget *parent) : QDialog(parent) {
   p_vLayout->addLayout(p_hLayout);
 
   QWidget *horizontalLineWidget = new QWidget;
-  //horizontalLineWidget->setContentsMargins(0, 10, 0, 10);
   horizontalLineWidget->setFixedHeight(2);
   horizontalLineWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
   horizontalLineWidget->setStyleSheet(QString("background-color: #c0c0c0;"));
@@ -49,7 +48,7 @@ Dlg_Import::Dlg_Import(QWidget *parent) : QDialog(parent) {
   p_hLayout->addWidget(new QLabel("Layers mask", this));
   p_maskLayers = new QLineEdit(this);
   p_maskLayers->setText("*");
-  p_maskLayers->setEnabled(false);
+  //p_maskLayers->setEnabled(false);
   p_hLayout->addWidget(p_maskLayers, 1);
   p_vLayout->addLayout(p_hLayout);
 
@@ -86,7 +85,7 @@ void Dlg_Import::accept() {
 }
 
 void Dlg_Import::OnOpenLayoutClick() {
-  QString fileName = QFileDialog::getOpenFileName(nullptr, QString("Open Layout File"), ".", QString("GDSII Files (*.gds *.gdsii);;MSK Files(*.msk)"));
+  QString fileName = QFileDialog::getOpenFileName(nullptr, QString("Open Layout File"), ".", QString("GDSII Binary Files (*.gds *.gdsii);;GDSII ASCII Files (*.txt);;Microwind Files(*.msk)"));
   if (fileName.isEmpty())
     return;
   p_fileLayout->setText(fileName);

@@ -24,6 +24,7 @@
 		<file alias="logo.png">../resources/logo.png</file>
 	</qresource>
 	<qresource prefix="/other">
+		<file alias="appicon.png">../resources/Photomask-small.png</file>
 		<file alias="background.png">../resources/background2.png</file>
 	</qresource>
 </RCC>

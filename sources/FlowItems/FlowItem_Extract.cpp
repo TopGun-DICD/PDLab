@@ -19,6 +19,10 @@ FlowItem_Extract::FlowItem_Extract(BasicLogger *logger) : FlowItem(FlowItemType:
   AddInputPort(PortDataType::layout);
   AddOutputPort(PortDataType::layout);
   titleBgColor = QColor(246, 168, 0);
+
+  layersInfo.layers.clear();
+  layersInfo.selected.clear();
+  layersInfo.mask = "*";
 }
 
 FlowItem_Extract::~FlowItem_Extract() { 
@@ -33,16 +37,18 @@ bool FlowItem_Extract::DropEventHandler() {
 bool FlowItem_Extract::ExecuteEventHandler() {
   p_logger->Log("'EXTRACT-EXECUTE' was called");
 
-  if (!inputPorts[0]->IsConnected()) {
-    p_logger->Log("'EXTRACT-EXECUTE': input is not connected!");
-    return false;
-  }
-  if (!p_resultLayout) {
-    p_logger->Log("'EXTRACT-EXECUTE': input layout is nullptr");
-    return false;
-  }
+  // This check is performed by FlowItem::OnHandleEvent_Execute
+  //if (!inputPorts[0]->IsConnected()) {
+  //  p_logger->Log("'EXTRACT-EXECUTE': input is not connected!");
+  //  return false;
+  //}
+  // // It is not possible!
+  //if (!p_resultLayout) {
+  //  p_logger->Log("'EXTRACT-EXECUTE': input layout is nullptr");
+  //  return false;
+  //}
 
-  layersInfo.layers.clear();
+  //layersInfo.layers.clear();
   for (int i = 0; i < p_resultLayout->libraries[0]->layers.size(); ++i) {
     LayerInfo li;
     li.id = QString::number(p_resultLayout->libraries[0]->layers[i].layer);
@@ -122,11 +128,33 @@ bool FlowItem_Extract::OpenResultsEventHandler() {
 bool FlowItem_Extract::ResetEventHandler() {
   p_logger->Log("'EXTRACT-RESET' was called");
 
+  layersInfo.layers.clear();
+  layersInfo.selected.clear();
+  layersInfo.mask = "*";
+
   return true;
 }
 
 bool FlowItem_Extract::ShowPropertesEventHandler() {
   p_logger->Log("'EXTRACT-PROPERTIES' was called");
+
+  /*if (p_resultLayout) {
+    if (!p_resultLayout->libraries.empty()) {
+      for (int i = 0; i < p_resultLayout->libraries[0]->layers.size(); ++i) {
+        LayerInfo li;
+        li.id = QString::number(p_resultLayout->libraries[0]->layers[i].layer);
+        if (!p_resultLayout->libraries[0]->layers[i].name.empty())
+          li.name = QString(" [ %1 ]").arg(p_resultLayout->libraries[0]->layers[i].name.c_str());
+        li.selected = false;
+        layersInfo.layers.push_back(li);
+      }
+    }
+  }
+
+  Dlg_Extract dlg(nullptr, &layersInfo);
+  if (dlg.exec() == QDialog::Rejected)
+    return false;*/
+
 
   return true;
 }

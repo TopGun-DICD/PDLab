@@ -44,6 +44,14 @@ MainWindow::~MainWindow() {
 
 void MainWindow::InitActions() {
   // Menu "File"
+  p_actFileNew = new QAction(tr("New"), this);
+  connect(p_actFileNew, SIGNAL(triggered()), SLOT(OnMenu_File_New()));
+  p_actFileOpen = new QAction(tr("Open"), this);
+  connect(p_actFileOpen, SIGNAL(triggered()), SLOT(OnMenu_File_Open()));
+  p_actFileSave = new QAction(tr("Save"), this);
+  connect(p_actFileSave, SIGNAL(triggered()), SLOT(OnMenu_File_Save()));
+  p_actFileSaveAs = new QAction(tr("Save As..."), this);
+  connect(p_actFileSaveAs, SIGNAL(triggered()), SLOT(OnMenu_File_SaveAs()));
   p_actFileExit = new QAction(tr("Exit"), this);
   connect(p_actFileExit, SIGNAL(triggered()), SLOT(OnMenu_File_Exit()));
 
@@ -93,6 +101,12 @@ void MainWindow::InitMenubar() {
   QMenu *p_menuTools  = new QMenu(tr("Tools"));
   QMenu *p_menuHelp   = new QMenu(tr("Help"));
 
+  p_menuFile->addAction(p_actFileNew);
+  p_menuFile->addSeparator();
+  p_menuFile->addAction(p_actFileOpen);
+  p_menuFile->addAction(p_actFileSave);
+  p_menuFile->addAction(p_actFileSaveAs);
+  p_menuFile->addSeparator();
   p_menuFile->addAction(p_actFileExit);
   
   p_menuView->addAction(p_actViewFlowItems);
@@ -192,6 +206,22 @@ void MainWindow::InitMainUI() {
   setCentralWidget(p_tabFlows);
 }
 
+void MainWindow::OnMenu_File_New() {
+
+}
+
+void MainWindow::OnMenu_File_Open() {
+
+}
+
+void MainWindow::OnMenu_File_Save() {
+
+}
+
+void MainWindow::OnMenu_File_SaveAs() {
+
+}
+
 void MainWindow::OnMenu_File_Exit() {
   close();
 }
@@ -210,7 +240,7 @@ void MainWindow::OnMenu_Flow_Run() {
   }
 
   if (levelItems.empty()) {
-    p_logger->Warning("No input flow items found. Can't run this flow.");
+    p_logger->Error("No input flow items found. Can't run this flow.");
     return;
   }
 
@@ -230,6 +260,16 @@ void MainWindow::OnMenu_Flow_Run() {
 }
 
 void MainWindow::OnMenu_Flow_RunTo() {
+  QList<FlowItem *> selection = p_activeFlowWidget->GetSelectedItems();
+  if (selection.empty()) {
+    p_logger->Warning("Trying to execute 'RunTo' but there is no selected flow items");
+    return;
+  }
+  if (selection.size() > 1) {
+    p_logger->Warning("Only one flow item should be selected to execute 'RunTo'");
+    return;
+  }
+  selection[0]->OnHandleEvent_Execute();
 }
 
 void MainWindow::OnMenu_Flow_Stop() {

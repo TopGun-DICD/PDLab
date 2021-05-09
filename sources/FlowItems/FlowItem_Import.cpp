@@ -46,6 +46,26 @@ bool FlowItem_Import::DropEventHandler() {
   if (!dlg.p_fileMapping->text().isEmpty())
     techFileName = dlg.p_fileMapping->text();
 
+  /*
+  if (!dlg.p_maskLayers->text().isEmpty()) {
+    if (dlg.p_maskLayers->text().trimmed() == "*")
+      return true;
+    QStringList sl = dlg.p_maskLayers->text().split(',', QString::SkipEmptyParts);
+    for (int i = 0; i < sl.size(); ++i) {
+      int pos = sl[i].indexOf("-");
+      if (pos == -1)
+        layersToExtract.push_back(sl[i].trimmed());
+      else {
+        QStringList sl2 = sl[i].split('-', QString::SkipEmptyParts);
+        int n1 = sl2[0].toInt();
+        int n2 = sl2[1].toInt();
+        for (int j = n1; j <= n2; ++j)
+          layersToExtract.push_back(QString::number(j));
+      }
+    }
+  }
+  */
+
   return true;
 }
 

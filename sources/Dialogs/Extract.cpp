@@ -9,12 +9,12 @@
 #include <QFileInfo>
 
 Dlg_Extract::Dlg_Extract(QWidget *parent, LayersInfo *li) : QDialog(parent), p_maskEdit(nullptr), p_selectedLayers(nullptr), p_layersInfo(li) {
-  setWindowTitle(tr("Import Layout"));
+  setWindowTitle(tr("Extract Layers"));
   resize(QSize(300, 400));
 
   QVBoxLayout *p_vLayout = new QVBoxLayout(this);
   
-  if (!p_layersInfo->mask.isEmpty()) {
+  if (!p_layersInfo->mask.isEmpty() && p_layersInfo->mask != "*") {
     p_vLayout->addWidget(new QLabel("Layers mask:", this));
     p_maskEdit = new QLineEdit(p_layersInfo->mask, this);
     p_vLayout->addWidget(p_maskEdit);

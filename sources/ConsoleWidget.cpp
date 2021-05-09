@@ -13,7 +13,7 @@ ConsoleWidget::ConsoleWidget(QWidget* parent) : QWidget(parent) {
 
   QTabWidget* p_tabConsole = new QTabWidget(this);
   p_tabConsole->setTabPosition(QTabWidget::South);
-  p_console = new QTextEdit(p_tabConsole);
+  p_console = new LogTextWidget(false, p_tabConsole);
   p_console->setReadOnly(true);
   p_tabConsole->addTab(p_console, QPixmap(":/pages/console.png"), tr("Log"));
   p_luaConsole = new LuaCodeEditor(false, p_tabConsole);
@@ -33,7 +33,7 @@ ConsoleWidget::ConsoleWidget(QWidget* parent) : QWidget(parent) {
 }
 
 void ConsoleWidget::Echo(const QString& text) {
-  p_console->append(text);
+  p_console->appendPlainText(text);
 }
 
 void ConsoleWidget::Info(QString text) {

@@ -55,7 +55,7 @@ FlowWidget::FlowWidget(QWidget *parent, Logger *logger, UserFlowItemsManager *ma
   setScene(p_scene);
   p_scene->setSceneRect(QRectF(0.0, 0.0, 200.0, 200.0));
 
-  setBackgroundBrush(QPixmap(":/other/background.png"));
+  //setBackgroundBrush(QPixmap(":/other/background.png"));
 
   p_eventFilter = new FlowSceneEventFilter(this, p_logger);
   p_eventFilter->AssignGraphicsScene(p_scene);
@@ -175,6 +175,19 @@ void FlowWidget::dropEvent(QDropEvent *event) {
   else {
     event->acceptProposedAction();
   }
+}
+
+QList <FlowItem *>FlowWidget::GetSelectedItems() {
+  QList<FlowItem *> retValue;
+  
+  foreach(QGraphicsItem *item, p_scene->selectedItems()) {
+    if (item->type() != QGraphicsItem::UserType + 1)
+      continue;
+    retValue.push_back(static_cast<FlowItem *>(item));
+  }
+
+  //TODO: Return a pointer to a list? Return reference to a list?
+  return retValue;
 }
 
 void FlowWidget::resizeEvent(QResizeEvent *event) {

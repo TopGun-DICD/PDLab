@@ -1,5 +1,5 @@
 # PDLab
-Physical Design Laboratory Main Application
+Physical Design Laboratory
 
 ![PDLab interface](http://dima.pkims.ru/projects/pdlab/images/PDLab.png)
 

@@ -29,6 +29,8 @@ public:
   FlowScene *p_scene;
   FlowSceneEventFilter *p_eventFilter;
 public:
+  QList <FlowItem *> GetSelectedItems();
+public:
   FlowWidget(QWidget *parent, Logger *logger, UserFlowItemsManager *manager);
  ~FlowWidget();
 private:
