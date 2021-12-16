@@ -54,8 +54,8 @@ Dlg_Import::Dlg_Import(QWidget *parent) : QDialog(parent) {
 
   p_hLayout = new QHBoxLayout;
   p_hLayout->setContentsMargins(10, 0, 10, 10);
-  p_cbConvertBoundaries = new QCheckBox("Convert boundaries to boxes if possible", this);
-  p_cbConvertBoundaries->setEnabled(false);
+  p_cbConvertBoundaries = new QCheckBox("Convert boundaries (polygons) to boxes (rectangles) if possible", this);
+  p_cbConvertBoundaries->setEnabled(true);
   p_hLayout->addWidget(p_cbConvertBoundaries);
   p_vLayout->addLayout(p_hLayout);
 
@@ -85,7 +85,7 @@ void Dlg_Import::accept() {
 }
 
 void Dlg_Import::OnOpenLayoutClick() {
-  QString fileName = QFileDialog::getOpenFileName(nullptr, QString("Open Layout File"), ".", QString("GDSII Binary Files (*.gds *.gdsii);;GDSII ASCII Files (*.txt);;Microwind Files(*.msk)"));
+  QString fileName = QFileDialog::getOpenFileName(nullptr, QString("Open Layout File"), ".", QString("GDSII Binary Files (*.gds *.gdsii);;Microwind Files(*.msk)"));
   if (fileName.isEmpty())
     return;
   p_fileLayout->setText(fileName);

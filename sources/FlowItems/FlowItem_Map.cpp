@@ -6,11 +6,12 @@
 #include "FlowItemPort.hpp"
 #include "FlowItemConnection.hpp"
 #include "../Dialogs/Map.hpp"
+#include "../Config.hpp"
 
 FlowItem_Map::FlowItem_Map(BasicLogger *logger) : FlowItem(FlowItemType::editdata, QString("MAP"), logger, LayoutOwnershipMode::make_link) {
   AddInputPort(PortDataType::layout);
   AddOutputPort(PortDataType::layout);
-  titleBgColor = QColor(246, 168, 0);
+  titleBgColor = Config::Get()->colors.headerLayerOperations;
 }
 
 FlowItem_Map::~FlowItem_Map() {

@@ -16,10 +16,11 @@
 #include "../Dialogs/Export.hpp"
 #include "LayoutLoader.hpp"
 #include "../Helper.hpp"
+#include "../Config.hpp"
 
 FlowItem_Export::FlowItem_Export(BasicLogger *logger) : FlowItem(FlowItemType::importdata, QString("EXPORT"), logger, LayoutOwnershipMode::make_link) {
   AddInputPort(PortDataType::layout);
-  titleBgColor = QColor(255, 0, 0);
+  titleBgColor = Config::Get()->colors.headerImportExport;
 }
 
 FlowItem_Export::~FlowItem_Export() {

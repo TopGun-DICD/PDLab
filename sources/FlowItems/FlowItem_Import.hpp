@@ -3,9 +3,9 @@
 class FlowItem_Import : public FlowItem {
   QString         fileName,
                   fileShortName,
-                  techFileName;
+                  techFileName,
+                  selectedLayers;
   __int64         fileSize;
-  QStringList     layersToExtract;
 public:
   FlowItem_Import(BasicLogger *logger);
   virtual ~FlowItem_Import();

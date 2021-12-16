@@ -165,6 +165,9 @@
     <ClCompile Include="..\..\sources\moc\moc_LogTextWidget.cpp">
       <Filter>Source Files\moc</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\sources\Config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\sources\MainWindow.hpp">
@@ -230,9 +233,6 @@
     <ClInclude Include="..\..\sources\Dialogs\Import.hpp">
       <Filter>Header Files\Dialogs</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\sources\Common.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\sources\FlowItems\LayoutLoader.hpp">
       <Filter>Header Files\FlowItems</Filter>
     </ClInclude>
@@ -262,6 +262,9 @@
     </ClInclude>
     <ClInclude Include="..\..\sources\LogTextWidget.hpp">
       <Filter>Header Files\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\Config.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

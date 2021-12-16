@@ -16,7 +16,8 @@
 #define ITEM_WIDTH  140
 #define ITEM_HEIGHT 50
 
-QPoint pointBtnRun(ITEM_WIDTH/2 - 2 * (2 + 16), -5);
+QPoint pointBtnRun(ITEM_WIDTH/2 - 3 * (2 + 16), -5);
+QPoint pointBtnReset(ITEM_WIDTH/2 - 2 * (2 + 16), -5);
 QPoint pointBtnOptions(ITEM_WIDTH / 2 - 1 * (2 + 16), -5);
 
 FlowItem::FlowItem(FlowItemType type, QString title, BasicLogger *logger, LayoutOwnershipMode mode = LayoutOwnershipMode::make_nothing) : QGraphicsPathItem(nullptr), itemType(type), titleString(title), itemStatus(FlowItemStatus::unknown), p_logger(logger), layoutOwnershipMode(mode), p_resultLayout(nullptr) {
@@ -81,9 +82,11 @@ void FlowItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
   switch (itemStatus) {
     case FlowItemStatus::completed:
       painter->drawPixmap(pointBtnRun, QPixmap(":/flowitembuttons/view.png"));
+      painter->drawPixmap(pointBtnReset, QPixmap(":/flowitembuttons/reset_active.png"));
       break;
     default:
       painter->drawPixmap(pointBtnRun, QPixmap(":/flowitembuttons/run.png"));
+      painter->drawPixmap(pointBtnReset, QPixmap(":/flowitembuttons/reset_inactive.png"));
       break;
   }
   
@@ -298,6 +301,12 @@ void FlowItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     // Check if "Execute" button was clicked
     if (itemPoint.x() >= pointBtnRun.x() && itemPoint.x() <= pointBtnRun.x() + 16 && itemPoint.y() >= pointBtnRun.y() && itemPoint.y() <= pointBtnRun.y() + 16) {
       OnHandleEvent_Execute();
+      event->ignore();
+      return;
+    }
+    // Check if "Reset" button was clicked
+    if (itemPoint.x() >= pointBtnReset.x() && itemPoint.x() <= pointBtnReset.x() + 16 && itemPoint.y() >= pointBtnReset.y() && itemPoint.y() <= pointBtnReset.y() + 16) {
+      OnHandleEvent_Reset();
       event->ignore();
       return;
     }

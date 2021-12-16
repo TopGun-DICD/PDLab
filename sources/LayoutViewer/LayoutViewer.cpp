@@ -91,8 +91,8 @@ void LayoutViewer::DrawLayoutElement(QPainter &painter, Element *element, Coord 
       x2 = 0,
       y2 = 0;
 
-  Geometry_Path      *p_path  = nullptr;
-  Geometry_Reference *p_ref   = nullptr;
+  Path      *p_path  = nullptr;
+  Reference *p_ref   = nullptr;
 
   for (size_t j = 0; j < element->items.size(); ++j) {
     Geometry *p_geometry = element->items[j];
@@ -117,7 +117,7 @@ void LayoutViewer::DrawLayoutElement(QPainter &painter, Element *element, Coord 
         }
         break;
       case GeometryType::path:
-        p_path = static_cast<Geometry_Path *>(p_geometry);
+        p_path = static_cast<Path *>(p_geometry);
         for (size_t m = 1; m < p_path->coords.size(); ++m) {
           x1 = xPlus + (offset.x + p_path->coords[m - 1].x - p_layout->libraries[0]->min.x) * k + 5;
           y1 = H - (offset.y + p_path->coords[m - 1].y - p_layout->libraries[0]->min.y) * k - 5;
@@ -127,7 +127,7 @@ void LayoutViewer::DrawLayoutElement(QPainter &painter, Element *element, Coord 
         }
         break;
       case GeometryType::reference:
-        p_ref = static_cast<Geometry_Reference *>(p_geometry);
+        p_ref = static_cast<Reference *>(p_geometry);
         DrawLayoutElement(painter, p_ref->referenceTo, p_ref->coords[0]);
         break;
     }

@@ -55,7 +55,7 @@ FlowWidget::FlowWidget(QWidget *parent, Logger *logger, UserFlowItemsManager *ma
   setScene(p_scene);
   p_scene->setSceneRect(QRectF(0.0, 0.0, 200.0, 200.0));
 
-  //setBackgroundBrush(QPixmap(":/other/background.png"));
+  setBackgroundBrush(QPixmap(":/other/background.png"));
 
   p_eventFilter = new FlowSceneEventFilter(this, p_logger);
   p_eventFilter->AssignGraphicsScene(p_scene);

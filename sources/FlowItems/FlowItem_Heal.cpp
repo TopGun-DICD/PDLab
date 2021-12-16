@@ -5,11 +5,12 @@
 #include "../Logger.hpp"
 #include "FlowItemPort.hpp"
 #include "FlowItemConnection.hpp"
+#include "../Config.hpp"
 
 FlowItem_Heal::FlowItem_Heal(BasicLogger *logger) : FlowItem(FlowItemType::heal, QString("HEAL"), logger, LayoutOwnershipMode::make_copy) {
   AddInputPort(PortDataType::layout);
   AddOutputPort(PortDataType::layout);
-  titleBgColor = QColor(139, 55, 78);
+  titleBgColor = Config::Get()->colors.headerLayoutOperations;
   //bottomString = QString("KLayout");
 }
 

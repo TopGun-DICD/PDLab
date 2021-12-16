@@ -7,12 +7,13 @@
 #include "FlowItemConnection.hpp"
 #include "LayoutLoader.hpp"
 #include "../Helper.hpp"
+#include "../Config.hpp"
 
 FlowItem_OR::FlowItem_OR(BasicLogger *logger) : FlowItem(FlowItemType::OR, QString("OR"), logger, LayoutOwnershipMode::make_new) {
   AddInputPort(PortDataType::layout);
   AddInputPort(PortDataType::layout);
   AddOutputPort(PortDataType::layout);
-  titleBgColor = QColor(139, 55, 78);
+  titleBgColor = Config::Get()->colors.headerLayoutOperations;
   //bottomString = QString("KLayout");
 }
 
@@ -31,15 +32,15 @@ void CopyAndFlattenLayoutElement(Element *dst, Element *src) {
   //TODO: j -> i
   for (size_t j = 0; j < src->items.size(); ++j) {
 
-    Geometry_Polygon   *p_polygon = nullptr;
-    Geometry_Path      *p_path = nullptr;
-    Geometry_Text      *p_text = nullptr;
-    Geometry_Box       *p_box = nullptr;
-    Geometry_Reference *p_ref = nullptr;
+    Polygon   *p_polygon  = nullptr;
+    Path      *p_path     = nullptr;
+    Text      *p_text     = nullptr;
+    Rectangle *p_rect     = nullptr;
+    Reference *p_ref      = nullptr;
 
     switch (src->items[j]->type) {
     case GeometryType::polygon:
-      p_polygon = new Geometry_Polygon;
+      p_polygon = new Polygon;
       dst->items.push_back(p_polygon);
       p_polygon->type = GeometryType::polygon;
       p_polygon->layer = 1;
@@ -48,21 +49,21 @@ void CopyAndFlattenLayoutElement(Element *dst, Element *src) {
         p_polygon->properties.push_back(src->items[j]->properties[l]);
       for (size_t l = 0; l < src->items[j]->coords.size(); ++l)
         p_polygon->coords.push_back(src->items[j]->coords[l]);
-      p_polygon->dataType = static_cast<Geometry_Polygon *>(src->items[j])->dataType;
+      p_polygon->dataType = static_cast<Polygon *>(src->items[j])->dataType;
       break;
-    case GeometryType::box:
-      p_box = new Geometry_Box;
-      dst->items.push_back(p_box);
-      p_box->type = GeometryType::box;
-      p_box->layer = 1;
+    case GeometryType::rectangle:
+      p_rect = new Rectangle;
+      dst->items.push_back(p_rect);
+      p_rect->type = GeometryType::rectangle;
+      p_rect->layer = 1;
       for (size_t l = 0; l < src->items[j]->properties.size(); ++l)
-        p_box->properties.push_back(src->items[j]->properties[l]);
+        p_rect->properties.push_back(src->items[j]->properties[l]);
       for (size_t l = 0; l < src->items[j]->coords.size(); ++l)
-        p_box->coords.push_back(src->items[j]->coords[l]);
-      p_box->boxType = static_cast<Geometry_Box *>(src->items[j])->boxType;
+        p_rect->coords.push_back(src->items[j]->coords[l]);
+      p_rect->boxType = static_cast<Rectangle *>(src->items[j])->boxType;
       break;
     case GeometryType::path:
-      p_path = new Geometry_Path;
+      p_path = new Path;
       dst->items.push_back(p_path);
       p_path->type = GeometryType::path;
       p_path->layer = 1;
@@ -70,12 +71,12 @@ void CopyAndFlattenLayoutElement(Element *dst, Element *src) {
         p_path->properties.push_back(src->items[j]->properties[l]);
       for (size_t l = 0; l < src->items[j]->coords.size(); ++l)
         p_path->coords.push_back(src->items[j]->coords[l]);
-      p_path->dataType = static_cast<Geometry_Path *>(src->items[j])->dataType;
-      p_path->pathType = static_cast<Geometry_Path *>(src->items[j])->pathType;
-      p_path->width = static_cast<Geometry_Path *>(src->items[j])->width;
+      p_path->dataType = static_cast<Path *>(src->items[j])->dataType;
+      p_path->pathType = static_cast<Path *>(src->items[j])->pathType;
+      p_path->width = static_cast<Path *>(src->items[j])->width;
       break;
     case GeometryType::text:
-      p_text = new Geometry_Text;
+      p_text = new Text;
       dst->items.push_back(p_text);
       p_text->type = GeometryType::text;
       p_text->layer = 1;
@@ -83,16 +84,16 @@ void CopyAndFlattenLayoutElement(Element *dst, Element *src) {
         p_text->properties.push_back(src->items[j]->properties[l]);
       for (size_t l = 0; l < src->items[j]->coords.size(); ++l)
         p_text->coords.push_back(src->items[j]->coords[l]);
-      p_text->textType = static_cast<Geometry_Text *>(src->items[j])->textType;
-      p_text->pathType = static_cast<Geometry_Text *>(src->items[j])->pathType;
-      p_text->width = static_cast<Geometry_Text *>(src->items[j])->width;
-      p_text->flagsPresentation = static_cast<Geometry_Text *>(src->items[j])->flagsPresentation;
-      p_text->flagsTransformation = static_cast<Geometry_Text *>(src->items[j])->flagsTransformation;
-      p_text->magnification = static_cast<Geometry_Text *>(src->items[j])->magnification;
-      p_text->stringValue = static_cast<Geometry_Text *>(src->items[j])->stringValue;
+      p_text->textType = static_cast<Text *>(src->items[j])->textType;
+      p_text->pathType = static_cast<Text *>(src->items[j])->pathType;
+      p_text->width = static_cast<Text *>(src->items[j])->width;
+      p_text->flagsPresentation = static_cast<Text *>(src->items[j])->flagsPresentation;
+      p_text->flagsTransformation = static_cast<Text *>(src->items[j])->flagsTransformation;
+      p_text->magnification = static_cast<Text *>(src->items[j])->magnification;
+      p_text->stringValue = static_cast<Text *>(src->items[j])->stringValue;
       break;
     case GeometryType::reference:
-      CopyAndFlattenLayoutElement(dst, static_cast<Geometry_Reference *>(src->items[j])->referenceTo);
+      CopyAndFlattenLayoutElement(dst, static_cast<Reference *>(src->items[j])->referenceTo);
       break;
     }
   }
@@ -165,11 +166,11 @@ bool FlowItem_OR::ExecuteEventHandler() {
     }
   }
 
-  Geometry_Polygon   *p_polygon = nullptr;
-  Geometry_Path      *p_path    = nullptr;
-  Geometry_Text      *p_text    = nullptr;
-  Geometry_Box       *p_box     = nullptr;
-  Geometry_Reference *p_ref     = nullptr;
+  Polygon   *p_polygon = nullptr;
+  Path      *p_path    = nullptr;
+  Text      *p_text    = nullptr;
+  Box       *p_box     = nullptr;
+  Reference *p_ref     = nullptr;
   
   for (size_t i = 0; i < inputPorts[1]->GetLayout()->libraries[0]->elements.size(); ++i) {
     Element *p_element = new Element;
@@ -181,7 +182,7 @@ bool FlowItem_OR::ExecuteEventHandler() {
     for (size_t j = 0; j < inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items.size(); ++j) {
       switch (inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j]->type) {
         case GeometryType::polygon:
-          p_polygon = new Geometry_Polygon;
+          p_polygon = new Polygon;
           p_element->items.push_back(p_polygon);
           p_polygon->type = GeometryType::polygon;
           p_polygon->layer = 1;
@@ -189,10 +190,10 @@ bool FlowItem_OR::ExecuteEventHandler() {
             p_polygon->properties.push_back(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j]->properties[l]);
           for (size_t l = 0; l < inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j]->coords.size(); ++l)
             p_polygon->coords.push_back(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j]->coords[l]);
-          p_polygon->dataType = static_cast<Geometry_Polygon *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->dataType;
+          p_polygon->dataType = static_cast<Polygon *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->dataType;
           break;
         case GeometryType::box:
-          p_box = new Geometry_Box;
+          p_box = new Box;
           p_element->items.push_back(p_box);
           p_box->type = GeometryType::box;
           p_box->layer = 1;
@@ -200,10 +201,10 @@ bool FlowItem_OR::ExecuteEventHandler() {
             p_box->properties.push_back(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j]->properties[l]);
           for (size_t l = 0; l < inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j]->coords.size(); ++l)
             p_box->coords.push_back(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j]->coords[l]);
-          p_box->boxType = static_cast<Geometry_Box *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->boxType;
+          p_box->boxType = static_cast<Box *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->boxType;
           break;
         case GeometryType::path:
-          p_path = new Geometry_Path;
+          p_path = new Path;
           p_element->items.push_back(p_path);
           p_path->type = GeometryType::path;
           p_path->layer = 1;
@@ -211,12 +212,12 @@ bool FlowItem_OR::ExecuteEventHandler() {
             p_path->properties.push_back(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j]->properties[l]);
           for (size_t l = 0; l < inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j]->coords.size(); ++l)
             p_path->coords.push_back(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j]->coords[l]);
-          p_path->dataType = static_cast<Geometry_Path *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->dataType;
-          p_path->pathType = static_cast<Geometry_Path *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->pathType;
-          p_path->width = static_cast<Geometry_Path *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->width;
+          p_path->dataType = static_cast<Path *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->dataType;
+          p_path->pathType = static_cast<Path *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->pathType;
+          p_path->width = static_cast<Path *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->width;
           break;
         case GeometryType::text:
-          p_text = new Geometry_Text;
+          p_text = new Text;
           p_element->items.push_back(p_text);
           p_text->type = GeometryType::text;
           p_text->layer = 1;
@@ -224,16 +225,16 @@ bool FlowItem_OR::ExecuteEventHandler() {
             p_text->properties.push_back(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j]->properties[l]);
           for (size_t l = 0; l < inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j]->coords.size(); ++l)
             p_text->coords.push_back(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j]->coords[l]);
-          p_text->textType = static_cast<Geometry_Text *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->textType;
-          p_text->pathType = static_cast<Geometry_Text *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->pathType;
-          p_text->width = static_cast<Geometry_Text *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->width;
-          p_text->flagsPresentation = static_cast<Geometry_Text *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->flagsPresentation;
-          p_text->flagsTransformation = static_cast<Geometry_Text *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->flagsTransformation;
-          p_text->magnification = static_cast<Geometry_Text *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->magnification;
-          p_text->stringValue = static_cast<Geometry_Text *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->stringValue;
+          p_text->textType = static_cast<Text *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->textType;
+          p_text->pathType = static_cast<Text *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->pathType;
+          p_text->width = static_cast<Text *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->width;
+          p_text->flagsPresentation = static_cast<Text *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->flagsPresentation;
+          p_text->flagsTransformation = static_cast<Text *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->flagsTransformation;
+          p_text->magnification = static_cast<Text *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->magnification;
+          p_text->stringValue = static_cast<Text *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->stringValue;
           break;
         case GeometryType::reference:
-          p_ref = new Geometry_Reference;
+          p_ref = new Reference;
           p_element->items.push_back(p_ref);
           p_ref->type = GeometryType::reference;
           p_ref->layer = 1;
@@ -241,10 +242,10 @@ bool FlowItem_OR::ExecuteEventHandler() {
             p_ref->properties.push_back(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j]->properties[l]);
           for (size_t l = 0; l < inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j]->coords.size(); ++l)
             p_ref->coords.push_back(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j]->coords[l]);
-          p_ref->name = static_cast<Geometry_Reference *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->name;
-          p_ref->referenceTo = static_cast<Geometry_Reference *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->referenceTo;
-          p_ref->transformationFlags = static_cast<Geometry_Reference *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->transformationFlags;
-          p_ref->magnification = static_cast<Geometry_Reference *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->magnification;
+          p_ref->name = static_cast<Reference *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->name;
+          p_ref->referenceTo = static_cast<Reference *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->referenceTo;
+          p_ref->transformationFlags = static_cast<Reference *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->transformationFlags;
+          p_ref->magnification = static_cast<Reference *>(inputPorts[1]->GetLayout()->libraries[0]->elements[i]->items[j])->magnification;
           break;
       }
 

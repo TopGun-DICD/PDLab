@@ -5,12 +5,13 @@
 #include "../Logger.hpp"
 #include "FlowItemPort.hpp"
 #include "FlowItemConnection.hpp"
+#include "../Config.hpp"
 
 FlowItem_AND::FlowItem_AND(BasicLogger *logger) : FlowItem(FlowItemType::AND, QString("AND"), logger, LayoutOwnershipMode::make_copy) {
   AddInputPort(PortDataType::layout);
   AddInputPort(PortDataType::layout);
   AddOutputPort(PortDataType::layout);
-  titleBgColor = QColor(139, 55, 78);
+  titleBgColor = Config::Get()->colors.headerImportExport;
   //bottomString = QString("KLayout");
 }
 

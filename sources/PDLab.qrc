@@ -17,6 +17,8 @@
 	</qresource>
 	<qresource prefix="/flowitembuttons">
 		<file alias="run.png">../resources/flowbtn-runto2.png</file>
+		<file alias="reset_active.png">../resources/flowbtn-reset-active2.png</file>
+		<file alias="reset_inactive.png">../resources/flowbtn-reset-inactive2.png</file>
 		<file alias="settings.png">../resources/flowbtn-settings2.png</file>
 		<file alias="view.png">../resources/flowbtn-view.png</file>
 	</qresource>

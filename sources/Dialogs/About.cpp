@@ -7,7 +7,7 @@
 #include <QFont>
 #include <QTextEdit>
 
-#include "../Common.hpp"
+#include "../Config.hpp"
 
 const QString htmlText(
   "<b>Physical Design Laborator (PDLab)</b> is an open-source software written in C++ and built with Qt5.14.1.<br/><br/>"
@@ -43,7 +43,7 @@ Dlg_About::Dlg_About(QWidget *parent) : QDialog(parent) {
   f.setWeight(QFont::Bold);
   p_labelName->setFont(f);
   p_textLayout->addWidget(p_labelName);
-  QLabel *p_labelVersion = new QLabel(QString("PDLab version %1").arg(VERSION_STRING));
+  QLabel *p_labelVersion = new QLabel(QString("PDLab version %1").arg(Config::Get()->versionString));
   p_textLayout->addWidget(p_labelVersion);
   QLabel *p_buildTime = new QLabel(QString("Built on %1 %2").arg(__DATE__).arg(__TIME__));
   p_textLayout->addWidget(p_buildTime);

@@ -14,11 +14,12 @@
 #include "FlowItemPort.hpp"
 #include "FlowItemConnection.hpp"
 #include "../Helper.hpp"
+#include "../Config.hpp"
 
 FlowItem_Extract::FlowItem_Extract(BasicLogger *logger) : FlowItem(FlowItemType::extract, QString("EXTRACT"), logger, LayoutOwnershipMode::make_copy) {
   AddInputPort(PortDataType::layout);
   AddOutputPort(PortDataType::layout);
-  titleBgColor = QColor(246, 168, 0);
+  titleBgColor = Config::Get()->colors.headerLayerOperations;
 
   layersInfo.layers.clear();
   layersInfo.selected.clear();
@@ -70,7 +71,7 @@ bool FlowItem_Extract::ExecuteEventHandler() {
       Geometry *p_geometry = p_element->items[j];
       bool leaveItem = false;
       if (p_geometry->type == GeometryType::reference) {
-        Geometry_Reference *p_ref = static_cast<Geometry_Reference *>(p_geometry);
+        Reference *p_ref = static_cast<Reference *>(p_geometry);
         for(size_t l = 0; l < p_ref->referenceTo->items.size(); ++l)
           for (int k = 0; k < layersInfo.selected.size(); ++k) {
             if (p_ref->referenceTo->items[l]->layer == layersInfo.selected[k]) {

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\sources\Config.cpp" />
     <ClCompile Include="..\..\sources\ConsoleWidget.cpp" />
     <ClCompile Include="..\..\sources\Dialogs\About.cpp" />
     <ClCompile Include="..\..\sources\Dialogs\Export.cpp" />
@@ -62,7 +63,7 @@
     <ClCompile Include="..\..\sources\UserFlowItemsManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\sources\Common.hpp" />
+    <ClInclude Include="..\..\sources\Config.hpp" />
     <ClInclude Include="..\..\sources\ConsoleWidget.hpp" />
     <ClInclude Include="..\..\sources\Dialogs\About.hpp" />
     <ClInclude Include="..\..\sources\Dialogs\Export.hpp" />

@@ -5,6 +5,8 @@
 #include <QDrag>
 #include <QPainter>
 
+#include "Config.hpp"
+
 CategoryButton::CategoryButton(const QString& text, QWidget* parent, QTreeWidgetItem* item) : QPushButton(text, parent), p_item(item) {
   connect(this, SIGNAL(pressed()), this, SLOT(ButtonPressed()));
 }
@@ -76,7 +78,7 @@ void FlowItemsListWidget::FillSection_LayoutIO(QPainter &painter, QPixmap &px, Q
 
   // I/O : Import
   p_item = new QListWidgetItem;
-  px.fill(QColor(255, 0, 0));
+  px.fill(Config::Get()->colors.headerImportExport);
   tw = fm.horizontalAdvance(tr("IMPORT"));
   painter.drawText(50 - tw / 2, 10 + th / 2, tr("IMPORT"));
   p_item->setIcon(px);
@@ -100,7 +102,7 @@ void FlowItemsListWidget::FillSection_LayoutIO(QPainter &painter, QPixmap &px, Q
 
   // I/O : Export
   p_item = new QListWidgetItem;
-  px.fill(QColor(255, 0, 0));
+  px.fill(Config::Get()->colors.headerImportExport);
   tw = fm.horizontalAdvance(tr("EXPORT"));
   painter.drawText(50 - tw / 2, 10 + th / 2, tr("EXPORT"));
   p_item->setIcon(px);
@@ -141,7 +143,7 @@ void FlowItemsListWidget::FillSection_LayerOperations(QPainter &painter, QPixmap
 
   // Layer Operations : Map
   p_item = new QListWidgetItem;
-  px.fill(QColor(246, 168, 0));
+  px.fill(Config::Get()->colors.headerLayerOperations);
   tw = fm.horizontalAdvance(tr("MAP"));
   painter.drawText(50 - tw / 2, 10 + th / 2, tr("MAP"));
   p_item->setIcon(px);
@@ -152,7 +154,7 @@ void FlowItemsListWidget::FillSection_LayerOperations(QPainter &painter, QPixmap
 
   // Layer Operations : Extract
   p_item = new QListWidgetItem;
-  px.fill(QColor(246, 168, 0));
+  px.fill(Config::Get()->colors.headerLayerOperations);
   tw = fm.horizontalAdvance(tr("EXTRACT"));
   painter.drawText(50 - tw / 2, 10 + th / 2, tr("EXTRACT"));
   p_item->setIcon(px);
@@ -206,7 +208,7 @@ void FlowItemsListWidget::FillSection_LayoutOperations(QPainter &painter, QPixma
 
   // Layout Operations : OR
   p_item = new QListWidgetItem;
-  px.fill(QColor(139, 55, 78));
+  px.fill(Config::Get()->colors.headerLayoutOperations);
   tw = fm.horizontalAdvance(tr("OR"));
   painter.drawText(50 - tw / 2, 10 + th / 2, tr("OR"));
   p_item->setIcon(px);

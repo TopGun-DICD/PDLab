@@ -12,13 +12,13 @@ struct Units {
 };
 
 struct Coord {
-  __int32 x,
+  int32_t x,
           y;
 };
 
 // Used in GDSII
 struct Property {
-  __int16     index;
+  int16_t     index;
   std::string value;
 };
 
@@ -27,7 +27,7 @@ enum class GeometryType {
   polygon,
   path,
   text,
-  box,
+  rectangle,
   reference,
 };
 
@@ -37,45 +37,47 @@ enum class FileFormat {
   GDSII_ASCII,
   MSK,
   OASIS,
+  DXF,
+  CIF
 };
 
 struct Geometry {
   GeometryType            type;
-  __int16                 layer;
+  int16_t                 layer;
   std::vector<Property>   properties;
   std::vector<Coord>      coords;
 };
 
-struct Geometry_Polygon : public Geometry {
-  __int16                 dataType;
+struct Polygon : public Geometry {
+  int16_t                 dataType;
 };
 
-struct Geometry_Path : public Geometry {
-  __int16                 dataType,
+struct Path : public Geometry {
+  int16_t                 dataType,
                           pathType;
-  __int32                 width;
+  int32_t                 width;
 };
 
-struct Geometry_Text : public Geometry {
-  __int16                 textType,
+struct Text : public Geometry {
+  int16_t                 textType,
                           flagsPresentation,
                           pathType,
                           flagsTransformation;
   double                  magnification;
-  __int32                 width;
+  int32_t                 width;
   std::string             stringValue;
 };
 
-struct Geometry_Box : public Geometry {
-  __int16                 boxType;
+struct Rectangle : public Geometry {
+  int16_t                 boxType;
 };
 
 struct Element;
 
-struct Geometry_Reference : public Geometry {
+struct Reference : public Geometry {
   std::string             name;
   Element                *referenceTo;
-  __int16                 transformationFlags;
+  int16_t                 transformationFlags;
   double                  magnification;
 };
 
@@ -88,7 +90,7 @@ struct Element {
 };
 
 struct Layer {
-  __int16                 layer;
+  int16_t                 layer;
   std::string             name;
   std::vector<Geometry *> items;
 };

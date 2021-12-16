@@ -16,12 +16,13 @@
 #include "FlowItemPort.hpp"
 #include "FlowItemConnection.hpp"
 #include "LayoutLoader.hpp"
+#include "../Config.hpp"
 
 const QString flowItemName("EDIT");
 
 FlowItem_Edit::FlowItem_Edit(BasicLogger *logger) : FlowItem(FlowItemType::editdata, flowItemName, logger, LayoutOwnershipMode::make_new) {
   AddOutputPort(PortDataType::layout);
-  titleBgColor = QColor(255, 0, 0);
+  titleBgColor = Config::Get()->colors.headerImportExport;
   bottomString = QString("KLayout");
 }
 

@@ -79,6 +79,10 @@ LayoutLoader *LayoutLoader::GetInstance() {
   return p_instance;
 }
 
+LayoutReaderOptions& LayoutLoader::GetOptions() {
+  return options;
+}
+
 Layout *LayoutLoader::CreateLayoutFromFile(QString fileName) {
   if (!layoutLibrary.isLoaded()) {
     p_logger->Error("PDLab_DLL_Layout.dll is not loaded but 'CreateLayoutFromFile' function called.");

@@ -5,7 +5,7 @@
 
 #include "FlowItem.hpp"
 #include "FlowItemConnection.hpp"
-#include "../Common.hpp"
+#include "../Config.hpp"
 
 FlowItemPort::FlowItemPort(FlowItem *parent, PortDirection dir, PortDataType data) : QGraphicsPathItem(parent), p_layout(nullptr), p_owner(parent), direction(dir), dataType(data) {
   QPainterPath p;
@@ -58,32 +58,28 @@ void FlowItemPort::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
 
   switch (dataType) {
     case PortDataType::layout:
-      painter->setPen(QPen(PIN_COLOR_LAYOUT_CONNECTED));
       if (connections.empty())
-        painter->setBrush(PIN_COLOR_LAYOUT_EMPTY);
+        painter->setBrush(Config::Get()->colors.portLayoutEmpty);
       else
-        painter->setBrush(PIN_COLOR_LAYOUT_CONNECTED);
+        painter->setBrush(Config::Get()->colors.portLayoutConnected);
       break;
     case PortDataType::lef:
-      painter->setPen(QPen(PIN_COLOR_LEF_CONNECTED));
       if (connections.empty())
-        painter->setBrush(PIN_COLOR_LEF_EMPTY);
+        painter->setBrush(Config::Get()->colors.portLefEmpty);
       else
-        painter->setBrush(PIN_COLOR_LEF_CONNECTED);
+        painter->setBrush(Config::Get()->colors.portLefConnected);
       break;
     case PortDataType::def:
-      painter->setPen(QPen(PIN_COLOR_DEF_CONNECTED));
       if (connections.empty())
-        painter->setBrush(PIN_COLOR_DEF_EMPTY);
+        painter->setBrush(Config::Get()->colors.portDefEmpty);
       else
-        painter->setBrush(PIN_COLOR_DEF_CONNECTED);
+        painter->setBrush(Config::Get()->colors.portDefConnected);
       break;
     case PortDataType::verilog:
-      painter->setPen(QPen(PIN_COLOR_VERILOG_CONNECTED));
       if (connections.empty())
-        painter->setBrush(PIN_COLOR_VERILOG_EMPTY);
+        painter->setBrush(Config::Get()->colors.portVerilogEmpty);
       else
-        painter->setBrush(PIN_COLOR_VERILOG_CONNECTED);
+        painter->setBrush(Config::Get()->colors.portVerilogConnected);
       break;
   }
 

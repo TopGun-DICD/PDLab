@@ -12,7 +12,7 @@
 #include "Logger.hpp"
 #include "FlowItems/FlowItem.hpp"
 #include "Dialogs/About.hpp"
-#include "Common.hpp"
+#include "Config.hpp"
 #include "FlowItems/LayoutLoader.hpp"
 #include "Helper.hpp"
 #include "FlowItems/FlowItemConnection.hpp"
@@ -21,7 +21,7 @@
 
 MainWindow::MainWindow(Logger *logger) : QMainWindow(nullptr), p_logger(logger) {
   setAttribute(Qt::WA_DeleteOnClose);
-  setWindowTitle(QString("Physical Design Lab - %1 [New Flow]").arg(VERSION_STRING));
+  setWindowTitle(QString("Physical Design Lab - %1 [New Flow]").arg(Config::Get()->versionString));
   resize(QSize(1200, 800));
 
   InitMainUI();
@@ -165,7 +165,7 @@ void MainWindow::InitMainUI() {
   p_dockConsole->setWidget(p_console);
 
   p_logger->EnableFileLogging(LogFormat::text);
-  p_logger->Log(QString("--- Physical Design Lab %1 ---").arg(VERSION_STRING));
+  p_logger->Log(QString("--- Physical Design Lab %1 ---").arg(Config::Get()->versionString));
   QDateTime dt = QDateTime::currentDateTime();
   p_logger->Log(QString("Log started on %2 %1").arg(dt.time().toString()).arg(dt.date().toString()));
 

@@ -13,10 +13,11 @@
 #include "../Dialogs/Import.hpp"
 #include "LayoutLoader.hpp"
 #include "../Helper.hpp"
+#include "../Config.hpp"
 
 FlowItem_Import::FlowItem_Import(BasicLogger *logger) : FlowItem(FlowItemType::importdata, QString("IMPORT"), logger, LayoutOwnershipMode::make_new) {
   AddOutputPort(PortDataType::layout);
-  titleBgColor = QColor(255, 0, 0);
+  titleBgColor = Config::Get()->colors.headerImportExport;
 }
 
 FlowItem_Import::~FlowItem_Import() {
@@ -30,6 +31,9 @@ bool FlowItem_Import::DropEventHandler() {
     return false;
 
   fileName = dlg.p_fileLayout->text();
+
+  LayoutLoader::GetInstance()->GetOptions().convertPolysToRects = dlg.p_cbConvertBoundaries->isChecked();
+  LayoutLoader::GetInstance()->GetOptions().layersToRead.clear();
 
   QFileInfo fi(fileName);
   topString = "???";
@@ -46,25 +50,36 @@ bool FlowItem_Import::DropEventHandler() {
   if (!dlg.p_fileMapping->text().isEmpty())
     techFileName = dlg.p_fileMapping->text();
 
-  /*
-  if (!dlg.p_maskLayers->text().isEmpty()) {
-    if (dlg.p_maskLayers->text().trimmed() == "*")
-      return true;
-    QStringList sl = dlg.p_maskLayers->text().split(',', QString::SkipEmptyParts);
-    for (int i = 0; i < sl.size(); ++i) {
-      int pos = sl[i].indexOf("-");
-      if (pos == -1)
-        layersToExtract.push_back(sl[i].trimmed());
-      else {
-        QStringList sl2 = sl[i].split('-', QString::SkipEmptyParts);
-        int n1 = sl2[0].toInt();
-        int n2 = sl2[1].toInt();
-        for (int j = n1; j <= n2; ++j)
-          layersToExtract.push_back(QString::number(j));
+  selectedLayers = "*";
+  if (dlg.p_maskLayers->text().isEmpty())
+    return true;
+
+  if (dlg.p_maskLayers->text().trimmed() == "*")
+    return true;
+
+  QStringList sl = dlg.p_maskLayers->text().split(',', QString::SkipEmptyParts);
+  for (int i = 0; i < sl.size(); ++i) {
+    int pos = sl[i].indexOf("-");
+    if (pos == -1)
+      LayoutLoader::GetInstance()->GetOptions().layersToRead.push_back(sl[i].trimmed().toInt());
+    else {
+      QStringList sl2 = sl[i].split('-', QString::SkipEmptyParts);
+      int n1 = sl2[0].toInt();
+      int n2 = sl2[1].toInt();
+      if (n1 > n2) {
+        n1 += n2;
+        n2 = n1 - n2;
+        n1 -= n2;
       }
+      for (int j = n1; j <= n2; ++j)
+        LayoutLoader::GetInstance()->GetOptions().layersToRead.push_back(j);
     }
-  }
-  */
+  }  
+
+  selectedLayers.clear();
+  for (int i = 0; i < LayoutLoader::GetInstance()->GetOptions().layersToRead.size() - 1; ++i)
+    selectedLayers += QString::number(LayoutLoader::GetInstance()->GetOptions().layersToRead[i]) + ", ";
+  selectedLayers += QString::number(LayoutLoader::GetInstance()->GetOptions().layersToRead.back());
 
   return true;
 }
@@ -75,12 +90,12 @@ bool FlowItem_Import::ExecuteEventHandler() {
   std::clock_t timeB = std::clock();
   LayoutLoader::GetInstance()->ReadLayoutFromFile(fileName, p_resultLayout);
   std::clock_t timeC = std::clock();
-  if (!p_resultLayout) {
+  if (p_resultLayout->libraries.empty()) {
     p_logger->Error(QString("Failed to read layout from '%1'").arg(fileName));
     return false;
   }
   p_logger->Log(QString("Input file '%1' (GDSII format) readed successfully.").arg(fileName));
-  p_logger->Log(QString("Layout read in %2 ms.").arg(timeC - timeB));
+  p_logger->Log(QString("Layout read in %1 ms.").arg(timeC - timeB));
 
   if (!techFileName.isEmpty()) {
     QFile techFile;
@@ -146,7 +161,6 @@ bool FlowItem_Import::OpenResultsEventHandler() {
 bool FlowItem_Import::ResetEventHandler() {
   p_logger->Log("'IMPORT-RESET' was called");
 
-  
   return true;
 }
 
@@ -161,6 +175,9 @@ bool FlowItem_Import::ShowPropertesEventHandler() {
     return false;
 
   fileName = dlg.p_fileLayout->text();
+
+  LayoutLoader::GetInstance()->GetOptions().convertPolysToRects = dlg.p_cbConvertBoundaries->isChecked();
+  LayoutLoader::GetInstance()->GetOptions().layersToRead.clear();
 
   QFileInfo fi(fileName);
   topString = "???";
@@ -177,12 +194,41 @@ bool FlowItem_Import::ShowPropertesEventHandler() {
   if (!dlg.p_fileMapping->text().isEmpty())
     techFileName = dlg.p_fileMapping->text();
 
+  selectedLayers = "*";
+  if (dlg.p_maskLayers->text().isEmpty())
+    return true;
+
+  if (dlg.p_maskLayers->text().trimmed() == "*")
+    return true;
+
+  QStringList sl = dlg.p_maskLayers->text().split(',', QString::SkipEmptyParts);
+  for (int i = 0; i < sl.size(); ++i) {
+    int pos = sl[i].indexOf("-");
+    if (pos == -1)
+      LayoutLoader::GetInstance()->GetOptions().layersToRead.push_back(sl[i].trimmed().toInt());
+    else {
+      QStringList sl2 = sl[i].split('-', QString::SkipEmptyParts);
+      int n1 = sl2[0].toInt();
+      int n2 = sl2[1].toInt();
+      if (n1 > n2) {
+        n1 += n2;
+        n2 = n1 - n2;
+        n1 -= n2;
+      }      
+      for (int j = n1; j <= n2; ++j)
+        LayoutLoader::GetInstance()->GetOptions().layersToRead.push_back(j);
+    }
+  }
+
+  selectedLayers.clear();
+  for (int i = 0; i < LayoutLoader::GetInstance()->GetOptions().layersToRead.size() - 1; ++i)
+    selectedLayers += QString::number(LayoutLoader::GetInstance()->GetOptions().layersToRead[i]) + ", ";
+  selectedLayers += QString::number(LayoutLoader::GetInstance()->GetOptions().layersToRead.back());
+
   return true;
 
-
-  return true;
 }
 
 QString FlowItem_Import::GetInfoString() {
-  return QString("File name: %1\nFile type: %2 (based on extension)\nFile size: %3").arg(fileShortName).arg(topString).arg(fileSize);
+  return QString("File name: %1\nFile type: %2 (based on extension)\nFile size: %3\nLayers: %4").arg(fileShortName).arg(topString).arg(fileSize).arg(selectedLayers);
 }
