@@ -129,13 +129,13 @@ public:
 
 enum class FileFormat {
   undefined,
-  GDSII_bin,
-  GDSII_ascii,
-  MSK,
   CIF,
   DXF,
+  GDSII_ascii,
+  GDSII_bin,
+  MAG,
+  MSK,
   OASIS,
-  OpenAccess,
 };
 
 struct Layout {

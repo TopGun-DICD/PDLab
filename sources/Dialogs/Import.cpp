@@ -48,10 +48,10 @@ Dlg_Import::Dlg_Import(QWidget *parent) : QDialog(parent) {
   p_layers2Ignore->setText("none");
   layout->addRow(new QLabel("Layers to ignore", this), p_layers2Ignore);
   p_cbConvertBoundaries = new QCheckBox("Convert boundaries (polygons) to boxes (rectangles) if possible", this);
-  p_cbConvertBoundaries->setEnabled(false);
+  //p_cbConvertBoundaries->setEnabled(false);
   layout->addRow(nullptr, p_cbConvertBoundaries);
   p_cbIgnoreZeroWidthPath = new QCheckBox("Ignore zero-width paths", this);
-  p_cbIgnoreZeroWidthPath->setEnabled(false);
+  //p_cbIgnoreZeroWidthPath->setEnabled(false);
   layout->addRow(nullptr, p_cbIgnoreZeroWidthPath);
   groupBox->setLayout(layout);
   p_vLayout->addWidget(groupBox);

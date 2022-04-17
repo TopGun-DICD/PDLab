@@ -52,3 +52,6 @@ bin/PDLab.ilk
 bin/examples/australia_shoreline.gds
 bin/examples/4004.gds
 bin/examples/SDFFRS_X2.gds
+bin/examples/4004.gds.txt
+bin/examples/australia_shoreline.gds.txt
+bin/examples/SDFFRS_X2.gds.txt

@@ -135,6 +135,7 @@ bool FlowItem::OnHandleEvent_Execute() {
             p_resultLayout = nullptr;
           }
           p_resultLayout = new Layout;
+          p_resultLayout->fileFormat = FileFormat::undefined;
           timeA = std::clock();
           LayoutLoader::GetInstance()->CopyLayout(inputPorts[0]->GetLayout(), p_resultLayout);
           timeB = std::clock();
