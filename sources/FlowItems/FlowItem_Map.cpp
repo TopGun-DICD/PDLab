@@ -18,13 +18,17 @@ FlowItem_Map::~FlowItem_Map() {
 }
 
 bool FlowItem_Map::DropEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log("'MAP-DROP' was called");
-  
+#endif
+
   return true;
 }
 
 bool FlowItem_Map::ExecuteEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log("'MAP-EXECUTE' was called");
+#endif
 
   Dlg_Map dlg(nullptr, p_resultLayout);
   
@@ -32,19 +36,25 @@ bool FlowItem_Map::ExecuteEventHandler() {
 }
 
 bool FlowItem_Map::OpenResultsEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log("'MAP-OPENRESULTS' was called");
+#endif
 
   return true;
 }
 
 bool FlowItem_Map::ResetEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log("'MAP-RESET' was called");
+#endif
 
   return true;
 }
 
 bool FlowItem_Map::ShowPropertesEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log("'MAP-PROPERTIES' was called");
+#endif
 
   return true;
 }

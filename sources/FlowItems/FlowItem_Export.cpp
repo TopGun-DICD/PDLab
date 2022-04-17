@@ -28,7 +28,9 @@ FlowItem_Export::~FlowItem_Export() {
 
 
 bool FlowItem_Export::DropEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log("'EXPORT-DROP' was called");
+#endif
 
   Dlg_Export dlg(nullptr);
   if (!dlg.exec())
@@ -52,7 +54,9 @@ bool FlowItem_Export::DropEventHandler() {
 }
 
 bool FlowItem_Export::ExecuteEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log("'EXPORT-EXECUTE' was called");
+#endif
 
   std::clock_t timeB = std::clock();
   bool retCode = LayoutLoader::GetInstance()->WriteLayout(p_resultLayout, fileName.toStdWString(), FileFormat::GDSII_bin);
@@ -69,19 +73,25 @@ bool FlowItem_Export::ExecuteEventHandler() {
 }
 
 bool FlowItem_Export::OpenResultsEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log("'EXPORT-OPENRESULTS' was called");
+#endif
 
   return true;
 }
 
 bool FlowItem_Export::ResetEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log("'EXPORT-RESET' was called");
+#endif
 
   return true;
 }
 
 bool FlowItem_Export::ShowPropertesEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log("'EXPORT-PROPERTIES' was called");
+#endif
 
   return true;
 }

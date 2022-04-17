@@ -43,6 +43,7 @@
     <ClCompile Include="..\..\sources\FlowSceneEventFilter.cpp" />
     <ClCompile Include="..\..\sources\FlowWidget.cpp" />
     <ClCompile Include="..\..\sources\Helper.cpp" />
+    <ClCompile Include="..\..\sources\LayoutViewer\LayoutView.cpp" />
     <ClCompile Include="..\..\sources\LayoutViewer\LayoutViewer.cpp" />
     <ClCompile Include="..\..\sources\Logger.cpp" />
     <ClCompile Include="..\..\sources\LogTextWidget.cpp" />
@@ -55,6 +56,7 @@
     <ClCompile Include="..\..\sources\moc\moc_FlowSceneEventFilter.cpp" />
     <ClCompile Include="..\..\sources\moc\moc_FlowWidget.cpp" />
     <ClCompile Include="..\..\sources\moc\moc_Import.cpp" />
+    <ClCompile Include="..\..\sources\moc\moc_LayoutView.cpp" />
     <ClCompile Include="..\..\sources\moc\moc_LayoutViewer.cpp" />
     <ClCompile Include="..\..\sources\moc\moc_LogTextWidget.cpp" />
     <ClCompile Include="..\..\sources\moc\moc_LuaCodeEditor.cpp" />
@@ -87,6 +89,7 @@
     <ClInclude Include="..\..\sources\FlowSceneEventFilter.hpp" />
     <ClInclude Include="..\..\sources\FlowWidget.hpp" />
     <ClInclude Include="..\..\sources\Helper.hpp" />
+    <ClInclude Include="..\..\sources\LayoutViewer\LayoutView.hpp" />
     <ClInclude Include="..\..\sources\LayoutViewer\LayoutViewer.hpp" />
     <ClInclude Include="..\..\sources\Logger.hpp" />
     <ClInclude Include="..\..\sources\LogTextWidget.hpp" />

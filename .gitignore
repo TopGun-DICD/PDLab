@@ -49,3 +49,6 @@ bin/Qt5Core.dll
 bin/Qt5Gui.dll
 bin/Qt5Widgets.dll
 bin/PDLab.ilk
+bin/examples/australia_shoreline.gds
+bin/examples/4004.gds
+bin/examples/SDFFRS_X2.gds

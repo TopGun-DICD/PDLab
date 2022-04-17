@@ -103,7 +103,15 @@ UserFlowItemsManager::UserFlowItemsManager(BasicLogger *logger) {
   QStringList dllnames = directory.entryList(QStringList() << "*.dll", QDir::Files);
   int totalDlls = 0;
   
-  logger->Log(QString("\nStarting 'modules' directory files processing (found %1 libraries in 'modules' directory.)...").arg(dllnames.length()));
+  if (dllnames.empty()) {
+    logger->Log(QString("\nNo user defined modules found in %1. Nothing ro process.\n").arg(directory.dirName()));
+    return;
+  }
+
+  if(dllnames.length() == 1)
+    logger->Log(QString("\nStarting file processing in '%1' directory (found 1 library)...").arg(directory.dirName()));
+  else
+    logger->Log(QString("\nStarting files processing in '%1' directory (found %2 libraries)...").arg(directory.dirName()).arg(dllnames.length()));
 
   foreach(QString dllname, dllnames) {
     ++totalDlls;
@@ -120,7 +128,12 @@ UserFlowItemsManager::UserFlowItemsManager(BasicLogger *logger) {
     userFlowItems.push_back(p_ufii);
   }
 
-  logger->Log(QString("Files in 'modules' directory were processed. %1 file(s) found in 'modules' directory, %2 file(s) accepted.\n").arg(totalDlls).arg(userFlowItems.size()));
+  logger->Log(QString("Files in 'modules' directory were processed. %1 file(s) found in 'modules' directory, %2 file(s) accepted:").arg(totalDlls).arg(userFlowItems.size()));
+  totalDlls = 0;
+  foreach(UserFlowItemInfo* item, userFlowItems) {
+    logger->Log(QString("[%1] > Author: '%2' Caption: '%3' Info: '%4'").arg(++totalDlls).arg(item->authorInfo).arg(item->caption).arg(item->flowItemInfo));
+  }
+  logger->Log(QString("\n"));
 }
 
 UserFlowItemsManager::~UserFlowItemsManager() {

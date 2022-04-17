@@ -44,7 +44,7 @@ void Dlg_Extract::accept() {
 
   if (p_maskEdit) {
     p_layersInfo->mask = p_maskEdit->text();
-    //TODO: Проверить текст на валидность
+    //TODO: Check this text to validity
   }
   if (p_selectedLayers) {
     int selectedItemsCounter = 0;

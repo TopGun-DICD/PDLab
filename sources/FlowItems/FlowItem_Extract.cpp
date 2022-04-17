@@ -30,13 +30,17 @@ FlowItem_Extract::~FlowItem_Extract() {
 }
 
 bool FlowItem_Extract::DropEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log("'EXTRACT-DROP' was called");
+#endif
 
   return true;
 }
 
 bool FlowItem_Extract::ExecuteEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log("'EXTRACT-EXECUTE' was called");
+#endif
 
   // This check is performed by FlowItem::OnHandleEvent_Execute
   //if (!inputPorts[0]->IsConnected()) {
@@ -63,18 +67,18 @@ bool FlowItem_Extract::ExecuteEventHandler() {
   if (dlg.exec() == QDialog::Rejected)
     return false;
 
-  //TODO: ¬ыставить make_none и не удал€ть элементы, а вручную формировать только нужные - думаю, это будет быстрее
+  //TODO: Set flag to make_none do not remove elements automatically, but do it manually only for necessary - I think it will be faster
   Element *p_element = nullptr;
   for (int i = 0; i < p_resultLayout->libraries[0]->elements.size(); ++i) {
     p_element = p_resultLayout->libraries[0]->elements[i];
-    for (int j = 0; j < p_element->items.size(); ++j) {
-      Geometry *p_geometry = p_element->items[j];
+    for (int j = 0; j < p_element->geometries.size(); ++j) {
+      Geometry *p_geometry = p_element->geometries[j];
       bool leaveItem = false;
       if (p_geometry->type == GeometryType::reference) {
         Reference *p_ref = static_cast<Reference *>(p_geometry);
-        for(size_t l = 0; l < p_ref->referenceTo->items.size(); ++l)
+        for(size_t l = 0; l < p_ref->referenceTo->geometries.size(); ++l)
           for (int k = 0; k < layersInfo.selected.size(); ++k) {
-            if (p_ref->referenceTo->items[l]->layer == layersInfo.selected[k]) {
+            if (p_ref->referenceTo->geometries[l]->layer == layersInfo.selected[k]) {
               leaveItem = true;
               break;
             }
@@ -91,10 +95,10 @@ bool FlowItem_Extract::ExecuteEventHandler() {
         continue;
       delete p_geometry;
       p_geometry = nullptr;
-      p_element->items.erase(p_element->items.begin() + j);
+      p_element->geometries.erase(p_element->geometries.begin() + j);
       --j;
     }
-    if (!p_element->items.empty())
+    if (!p_element->geometries.empty())
       continue;
     delete p_element;
     p_resultLayout->libraries[0]->elements.erase(p_resultLayout->libraries[0]->elements.begin() + i);
@@ -119,7 +123,9 @@ bool FlowItem_Extract::ExecuteEventHandler() {
 }
 
 bool FlowItem_Extract::OpenResultsEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log("'EXTRACT-OPENRESULTS' was called");
+#endif
 
   Helper::GetInstance()->ShowLayout(p_resultLayout);
 
@@ -127,7 +133,9 @@ bool FlowItem_Extract::OpenResultsEventHandler() {
 }
 
 bool FlowItem_Extract::ResetEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log("'EXTRACT-RESET' was called");
+#endif
 
   layersInfo.layers.clear();
   layersInfo.selected.clear();
@@ -137,7 +145,9 @@ bool FlowItem_Extract::ResetEventHandler() {
 }
 
 bool FlowItem_Extract::ShowPropertesEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log("'EXTRACT-PROPERTIES' was called");
+#endif
 
   /*if (p_resultLayout) {
     if (!p_resultLayout->libraries.empty()) {

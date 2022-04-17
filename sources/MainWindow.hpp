@@ -28,21 +28,23 @@ private:
                            *p_dockConsole,
                            *p_dockLayout;
   // Actions
-  QAction    *p_actFileNew,
-             *p_actFileOpen,
-             *p_actFileSave,
-             *p_actFileSaveAs,
-             *p_actFileExit,
-             *p_actViewFlowItems,
-             *p_actViewConsole,
-             *p_actViewLayout,
-             *p_actFlowRun,
-             *p_actFlowRunTo,
-             *p_actFlowStop,
-             *p_actFlowReset,
-             *p_actHelpAbout;
+  QAction                  *p_actFileNew,
+                           *p_actFileOpen,
+                           *p_actFileSave,
+                           *p_actFileSaveAs,
+                           *p_actFileExit,
+                           *p_actViewFlowItems,
+                           *p_actViewConsole,
+                           *p_actViewLayout,
+                           *p_actFlowRun,
+                           *p_actFlowRunTo,
+                           *p_actFlowStop,
+                           *p_actFlowReset,
+                           *p_actHelpAbout;
   // Status bar
-  QStatusBar *p_statusBar;
+  QStatusBar               *p_statusBar;
+  // Index for Flow tabs
+  int                       flowPageIndex;
 public:
   MainWindow(Logger *logger);
  ~MainWindow();
@@ -65,4 +67,6 @@ private slots:
   void OnMenu_Help_About();
 public:
   void ShowLayout(Layout *layout);
+private:
+  void AddFlowTab();
 };

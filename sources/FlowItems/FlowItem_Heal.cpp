@@ -18,30 +18,40 @@ FlowItem_Heal::~FlowItem_Heal() {
 }
 
 bool FlowItem_Heal::DropEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log("'HEAL-DROP' was called");
-  
+#endif
+
   return true;
 }
 
 bool FlowItem_Heal::ExecuteEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log("'HEAL-EXECUTE' was called");
+#endif
 
   return true;
 }
 
 bool FlowItem_Heal::OpenResultsEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log("'HEAL-OPENRESULTS' was called");
+#endif
   return true;
 }
 
 bool FlowItem_Heal::ResetEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log("'HEAL-RESET' was called");
+#endif
 
   return true;
 }
 
 bool FlowItem_Heal::ShowPropertesEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log("'HEAL-PROPERTIES' was called");
+#endif
 
   return true;
 }

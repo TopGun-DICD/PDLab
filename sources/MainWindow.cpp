@@ -19,7 +19,9 @@
 #include "FlowItems/FlowItemPort.hpp"
 
 
-MainWindow::MainWindow(Logger *logger) : QMainWindow(nullptr), p_logger(logger) {
+MainWindow::MainWindow(Logger *logger) 
+  : QMainWindow(nullptr), p_logger(logger), p_console(nullptr), p_itemsListWidget(nullptr), p_userItemsListWidget(nullptr), p_activeFlowWidget(nullptr),
+    p_userFlowsManager(nullptr), p_layoutViewer(nullptr), flowPageIndex(0) {
   setAttribute(Qt::WA_DeleteOnClose);
   setWindowTitle(QString("Physical Design Lab - %1 [New Flow]").arg(Config::Get()->versionString));
   resize(QSize(1200, 800));
@@ -202,7 +204,7 @@ void MainWindow::InitMainUI() {
   // Central tab widget
   QTabWidget* p_tabFlows = new QTabWidget(this);
   p_activeFlowWidget = new FlowWidget(this, p_logger, p_userFlowsManager);
-  p_tabFlows->addTab(p_activeFlowWidget, QPixmap(":/pages/flow.png"), tr("New flow"));
+  p_tabFlows->addTab(p_activeFlowWidget, QPixmap(":/pages/flow.png"), tr("New flow 1"));
   setCentralWidget(p_tabFlows);
 }
 
@@ -288,7 +290,7 @@ void MainWindow::OnMenu_Flow_Reset() {
 
   p_dockLayout->hide();
   p_layoutViewer->AssignLayout(nullptr);
-  p_layoutViewer->update();
+  p_layoutViewer->UpdateLayout();
 }
 
 void MainWindow::OnMenu_Help_About() {
@@ -305,6 +307,9 @@ void MainWindow::ShowLayout(Layout *layout) {
   if (p_dockLayout->isHidden())
     p_dockLayout->show();
   
-  p_layoutViewer->update();
+  p_layoutViewer->UpdateLayout();
 }
 
+void MainWindow::AddFlowTab() {
+
+}

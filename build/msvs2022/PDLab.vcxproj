@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\sources\Config.cpp" />
+    <ClCompile Include="..\..\sources\ConsoleWidget.cpp" />
+    <ClCompile Include="..\..\sources\Dialogs\About.cpp" />
+    <ClCompile Include="..\..\sources\Dialogs\Export.cpp" />
+    <ClCompile Include="..\..\sources\Dialogs\Extract.cpp" />
+    <ClCompile Include="..\..\sources\Dialogs\Import.cpp" />
+    <ClCompile Include="..\..\sources\Dialogs\Map.cpp" />
+    <ClCompile Include="..\..\sources\FlowItemsListWidget.cpp" />
+    <ClCompile Include="..\..\sources\FlowItems\FlowItem.cpp" />
+    <ClCompile Include="..\..\sources\FlowItems\FlowItemConnection.cpp" />
+    <ClCompile Include="..\..\sources\FlowItems\FlowItemPort.cpp" />
+    <ClCompile Include="..\..\sources\FlowItems\FlowItem_AND.cpp" />
+    <ClCompile Include="..\..\sources\FlowItems\FlowItem_Edit.cpp" />
+    <ClCompile Include="..\..\sources\FlowItems\FlowItem_Export.cpp" />
+    <ClCompile Include="..\..\sources\FlowItems\FlowItem_Extract.cpp" />
+    <ClCompile Include="..\..\sources\FlowItems\FlowItem_Heal.cpp" />
+    <ClCompile Include="..\..\sources\FlowItems\FlowItem_Import.cpp" />
+    <ClCompile Include="..\..\sources\FlowItems\FlowItem_Map.cpp" />
+    <ClCompile Include="..\..\sources\FlowItems\FlowItem_OR.cpp" />
+    <ClCompile Include="..\..\sources\FlowItems\FlowItem_User.cpp" />
+    <ClCompile Include="..\..\sources\FlowItems\LayoutLoader.cpp" />
+    <ClCompile Include="..\..\sources\FlowSceneEventFilter.cpp" />
+    <ClCompile Include="..\..\sources\FlowWidget.cpp" />
+    <ClCompile Include="..\..\sources\Helper.cpp" />
+    <ClCompile Include="..\..\sources\LayoutViewer\LayoutView.cpp" />
+    <ClCompile Include="..\..\sources\LayoutViewer\LayoutViewer.cpp" />
+    <ClCompile Include="..\..\sources\Logger.cpp" />
+    <ClCompile Include="..\..\sources\LogTextWidget.cpp" />
+    <ClCompile Include="..\..\sources\LuaCodeEditor.cpp" />
+    <ClCompile Include="..\..\sources\main.cpp" />
+    <ClCompile Include="..\..\sources\MainWindow.cpp" />
+    <ClCompile Include="..\..\sources\moc\moc_Export.cpp" />
+    <ClCompile Include="..\..\sources\moc\moc_Extract.cpp" />
+    <ClCompile Include="..\..\sources\moc\moc_FlowItemsListWidget.cpp" />
+    <ClCompile Include="..\..\sources\moc\moc_FlowSceneEventFilter.cpp" />
+    <ClCompile Include="..\..\sources\moc\moc_FlowWidget.cpp" />
+    <ClCompile Include="..\..\sources\moc\moc_Import.cpp" />
+    <ClCompile Include="..\..\sources\moc\moc_LayoutView.cpp" />
+    <ClCompile Include="..\..\sources\moc\moc_LayoutViewer.cpp" />
+    <ClCompile Include="..\..\sources\moc\moc_LogTextWidget.cpp" />
+    <ClCompile Include="..\..\sources\moc\moc_LuaCodeEditor.cpp" />
+    <ClCompile Include="..\..\sources\moc\moc_MainWindow.cpp" />
+    <ClCompile Include="..\..\sources\moc\moc_Map.cpp" />
+    <ClCompile Include="..\..\sources\UserFlowItemsManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\sources\Config.hpp" />
+    <ClInclude Include="..\..\sources\ConsoleWidget.hpp" />
+    <ClInclude Include="..\..\sources\Dialogs\About.hpp" />
+    <ClInclude Include="..\..\sources\Dialogs\Export.hpp" />
+    <ClInclude Include="..\..\sources\Dialogs\Extract.hpp" />
+    <ClInclude Include="..\..\sources\Dialogs\Import.hpp" />
+    <ClInclude Include="..\..\sources\Dialogs\Map.hpp" />
+    <ClInclude Include="..\..\sources\FlowItemsListWidget.hpp" />
+    <ClInclude Include="..\..\sources\FlowItems\FlowItem.hpp" />
+    <ClInclude Include="..\..\sources\FlowItems\FlowItemConnection.hpp" />
+    <ClInclude Include="..\..\sources\FlowItems\FlowItemPort.hpp" />
+    <ClInclude Include="..\..\sources\FlowItems\FlowItem_AND.hpp" />
+    <ClInclude Include="..\..\sources\FlowItems\FlowItem_Edit.hpp" />
+    <ClInclude Include="..\..\sources\FlowItems\FlowItem_Export.hpp" />
+    <ClInclude Include="..\..\sources\FlowItems\FlowItem_Extract.hpp" />
+    <ClInclude Include="..\..\sources\FlowItems\FlowItem_Heal.hpp" />
+    <ClInclude Include="..\..\sources\FlowItems\FlowItem_Import.hpp" />
+    <ClInclude Include="..\..\sources\FlowItems\FlowItem_Map.hpp" />
+    <ClInclude Include="..\..\sources\FlowItems\FlowItem_OR.hpp" />
+    <ClInclude Include="..\..\sources\FlowItems\FlowItem_User.hpp" />
+    <ClInclude Include="..\..\sources\FlowItems\LayoutLoader.hpp" />
+    <ClInclude Include="..\..\sources\FlowSceneEventFilter.hpp" />
+    <ClInclude Include="..\..\sources\FlowWidget.hpp" />
+    <ClInclude Include="..\..\sources\Helper.hpp" />
+    <ClInclude Include="..\..\sources\LayoutViewer\LayoutView.hpp" />
+    <ClInclude Include="..\..\sources\LayoutViewer\LayoutViewer.hpp" />
+    <ClInclude Include="..\..\sources\Logger.hpp" />
+    <ClInclude Include="..\..\sources\LogTextWidget.hpp" />
+    <ClInclude Include="..\..\sources\LuaCodeEditor.hpp" />
+    <ClInclude Include="..\..\sources\MainWindow.hpp" />
+    <ClInclude Include="..\..\sources\Types.hpp" />
+    <ClInclude Include="..\..\sources\UserFlowItemsManager.hpp" />
+    <ClInclude Include="Resource.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{e46378a4-fc8c-4ebf-9ce1-53e440b26dff}</ProjectGuid>
+    <RootNamespace>PDLab</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;C:\Users\Дмитрий Булах\source\repos\PDLab\bin\development\headers;$(IncludePath)</IncludePath>
+    <LibraryPath>$(QTDIR)\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>..\..\bin\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;C:\Users\Дмитрий Булах\source\repos\PDLab\bin\development\headers;$(IncludePath)</IncludePath>
+    <LibraryPath>$(QTDIR)\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>..\..\bin\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>Qt5Cored.lib;Qt5Guid.lib;Qt5Widgetsd.lib;libGLESv2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;libGLESv2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

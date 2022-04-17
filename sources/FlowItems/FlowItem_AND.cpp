@@ -19,30 +19,40 @@ FlowItem_AND::~FlowItem_AND() {
 }
 
 bool FlowItem_AND::DropEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log("'AND-DROP' was called");
+#endif
   
   return true;
 }
 
 bool FlowItem_AND::ExecuteEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log("'AND-EXECUTE' was called");
+#endif
 
   return true;
 }
 
 bool FlowItem_AND::OpenResultsEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log("'AND-OPENRESULTS' was called");
+#endif
   return true;
 }
 
 bool FlowItem_AND::ResetEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log("'AND-RESET' was called");
+#endif
 
   return true;
 }
 
 bool FlowItem_AND::ShowPropertesEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log("'AND-PROPERTIES' was called");
+#endif
 
   return true;
 }

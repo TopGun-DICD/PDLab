@@ -11,6 +11,8 @@
 // ? 4 - Verlog, LEF, DEF, separate inputs and outputs
 // ? 5 - 
 
+//#define DEBUG_PRINT
+
 struct ColorConfig {
   // Common
   QColor  bgFlowItem;
@@ -38,7 +40,7 @@ class Config {
 private:
   static Config  *p_instance;
 private:
-  Config() : versionString("v0.0.3.13") {}
+  Config() : versionString("v0.0.3.15") {}
 public:
   static void     Init();
   static Config  *Get();

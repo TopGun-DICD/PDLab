@@ -168,6 +168,12 @@
     <ClCompile Include="..\..\sources\Config.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\sources\LayoutViewer\LayoutView.cpp">
+      <Filter>Source Files\LayoutViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sources\moc\moc_LayoutView.cpp">
+      <Filter>Source Files\moc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\sources\MainWindow.hpp">
@@ -265,6 +271,9 @@
     </ClInclude>
     <ClInclude Include="..\..\sources\Config.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sources\LayoutViewer\LayoutView.hpp">
+      <Filter>Header Files\LayoutViewer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

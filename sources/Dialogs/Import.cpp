@@ -2,6 +2,8 @@
 
 #include <QVBoxLayout>
 #include <QBoxLayout>
+#include <QGroupBox>
+#include <QFormLayout>
 #include <QLabel>
 #include <QPushButton>
 #include <QDialogButtonBox>
@@ -37,29 +39,23 @@ Dlg_Import::Dlg_Import(QWidget *parent) : QDialog(parent) {
   p_hLayout->addWidget(p_btnOpenMapping, 0, Qt::AlignRight);
   p_vLayout->addLayout(p_hLayout);
 
-  QWidget *horizontalLineWidget = new QWidget;
-  horizontalLineWidget->setFixedHeight(2);
-  horizontalLineWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-  horizontalLineWidget->setStyleSheet(QString("background-color: #c0c0c0;"));
-  p_vLayout->addWidget(horizontalLineWidget);
-
-  p_hLayout = new QHBoxLayout;
-  p_hLayout->setContentsMargins(10, 10, 10, 0);
-  p_hLayout->addWidget(new QLabel("Layers mask", this));
-  p_maskLayers = new QLineEdit(this);
-  p_maskLayers->setText("*");
-  //p_maskLayers->setEnabled(false);
-  p_hLayout->addWidget(p_maskLayers, 1);
-  p_vLayout->addLayout(p_hLayout);
-
-  p_hLayout = new QHBoxLayout;
-  p_hLayout->setContentsMargins(10, 0, 10, 10);
+  QGroupBox* groupBox = new QGroupBox(tr("Read options"));
+  QFormLayout* layout = new QFormLayout;
+  p_layers2Read = new QLineEdit(this);
+  p_layers2Read->setText("*");
+  layout->addRow(new QLabel("Layers to read", this), p_layers2Read);
+  p_layers2Ignore = new QLineEdit(this);
+  p_layers2Ignore->setText("none");
+  layout->addRow(new QLabel("Layers to ignore", this), p_layers2Ignore);
   p_cbConvertBoundaries = new QCheckBox("Convert boundaries (polygons) to boxes (rectangles) if possible", this);
-  p_cbConvertBoundaries->setEnabled(true);
-  p_hLayout->addWidget(p_cbConvertBoundaries);
-  p_vLayout->addLayout(p_hLayout);
+  p_cbConvertBoundaries->setEnabled(false);
+  layout->addRow(nullptr, p_cbConvertBoundaries);
+  p_cbIgnoreZeroWidthPath = new QCheckBox("Ignore zero-width paths", this);
+  p_cbIgnoreZeroWidthPath->setEnabled(false);
+  layout->addRow(nullptr, p_cbIgnoreZeroWidthPath);
+  groupBox->setLayout(layout);
+  p_vLayout->addWidget(groupBox);
 
-  
   QDialogButtonBox *p_buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
   connect(p_buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
   connect(p_buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
@@ -85,14 +81,14 @@ void Dlg_Import::accept() {
 }
 
 void Dlg_Import::OnOpenLayoutClick() {
-  QString fileName = QFileDialog::getOpenFileName(nullptr, QString("Open Layout File"), ".", QString("GDSII Binary Files (*.gds *.gdsii);;Microwind Files(*.msk)"));
+  QString fileName = QFileDialog::getOpenFileName(nullptr, QString("Open Layout File"), "./examples/", QString("GDSII Binary Files (*.gds *.gdsii);;Microwind Files(*.msk)"));
   if (fileName.isEmpty())
     return;
   p_fileLayout->setText(fileName);
 }
 
 void Dlg_Import::OnOpenMappingClick() {
-  QString fileName = QFileDialog::getOpenFileName(nullptr, QString("Open Tech File"), ".", QString("Cadence Tech Files (*.tf)"));
+  QString fileName = QFileDialog::getOpenFileName(nullptr, QString("Open Tech File"), "./examples/", QString("Cadence Tech Files (*.tf)"));
   if (fileName.isEmpty())
     return;
   p_fileMapping->setText(fileName);

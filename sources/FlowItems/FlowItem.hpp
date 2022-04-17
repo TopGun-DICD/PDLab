@@ -50,6 +50,7 @@ public:
   FlowItemType GetItemType() { return itemType; }
   FlowItemStatus GetStatus() { return itemStatus; }
 private:
+  void RecalcInputPortsPositions();
   QVariant itemChange(GraphicsItemChange change, const QVariant &value);
   void mousePressEvent(QGraphicsSceneMouseEvent *event);
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

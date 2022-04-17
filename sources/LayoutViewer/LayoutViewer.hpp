@@ -1,28 +1,14 @@
 #pragma once
 
-#include <QOpenGLWidget>
-#include <QOpenGLFunctions>
+#include "LayoutView.hpp"
 
-#include <Layout.hpp>
-
-const Coord zeroOffset = { 0, 0 };
-
-class LayoutViewer : public QOpenGLWidget, protected QOpenGLFunctions {
+class LayoutViewer : public QWidget {
   Q_OBJECT
 private:
-  Layout *p_layout;
-  int     H, W, xPlus, yPlus;
-  double  k, kX, kY;
+  LayoutView* p_view;
 public:
-  LayoutViewer(QWidget *parent);
+  LayoutViewer(QWidget* parent);
 public:
-  void AssignLayout(Layout *layout);
-protected:
-  void paintEvent(QPaintEvent *event);
-  //void initializeGL();
-  //void resizeEvent(QResizeEvent *event);
-  //void paintGL();
-private:
-  void PrepareCoefficients();
-  void DrawLayoutElement(QPainter &painter, Element *element, Coord offset = zeroOffset);
+  void AssignLayout(Layout* layout);
+  void UpdateLayout();
 };

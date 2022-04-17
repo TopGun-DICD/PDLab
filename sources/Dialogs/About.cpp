@@ -10,13 +10,13 @@
 #include "../Config.hpp"
 
 const QString htmlText(
-  "<b>Physical Design Laborator (PDLab)</b> is an open-source software written in C++ and built with Qt5.14.1.<br/><br/>"
+  "<b>Physical Design Laboratory (PDLab)</b> is an open-source software written in C++ and built with Qt5.14.1.<br/><br/>"
   "Persons who are involved in development:"
   "<ul>"
   "<li><b>Dmitry Bulakh</b>     - developer <br/> National Research University of Electronic Technology, dept. of IC design</li>"
-  "<li><b>Andrey Korshunov</b>  - consultant<br/> National Research University of Electronic Technology, dept. of IC design</li>"
   "<li><b>Sergey Morozov</b>    - consultant<br/> Zelenograd Innovation-Technology Center, dept. of photomasks design and manufacturing</li>"
-  "<li><b>Sergei Ilin</b>       - consultant<br/> Molecular Electronics Research Institute, lab. of libraries characterization</li>"
+  "<li><b>Andrey Korshunov</b>  - consultant<br/> National Research University of Electronic Technology, dept. of IC design</li>"
+  "<!--li><b>Sergei Ilin</b>       - consultant<br/> Molecular Electronics Research Institute, lab. of libraries characterization</li-->"
   "</ul>"
 );
 

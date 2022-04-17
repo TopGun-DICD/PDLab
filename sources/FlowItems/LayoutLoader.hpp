@@ -3,12 +3,9 @@
 #include <Layout.hpp>
 #include <QLibrary>
 
-#include "../Logger.hpp"
+#include <vector>
 
-struct LayoutReaderOptions {
-  std::vector<int>      layersToRead;
-  bool                  convertPolysToRects;
-};
+#include "../Logger.hpp"
 
 struct LayoutLoader {
   static LayoutLoader  *p_instance;

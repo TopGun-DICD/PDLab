@@ -9,8 +9,10 @@ class Dlg_Import : public QDialog {
 public:
   QLineEdit  *p_fileLayout,
              *p_fileMapping,
-             *p_maskLayers;
-  QCheckBox  *p_cbConvertBoundaries;
+             *p_layers2Read,
+             *p_layers2Ignore;
+  QCheckBox  *p_cbConvertBoundaries,
+             *p_cbIgnoreZeroWidthPath;
 public:
   Dlg_Import(QWidget *parent);
 public:

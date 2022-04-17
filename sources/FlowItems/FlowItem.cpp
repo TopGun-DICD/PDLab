@@ -230,14 +230,10 @@ bool FlowItem::OnHandleEvent_Reset() {
 void FlowItem::AddInputPort(PortDataType dataType) {
   FlowItemPort *p_port = new FlowItemPort(this, PortDirection::input, dataType);
   inputPorts.push_back(p_port);
-  p_port->setPos(QPointF(p_port->pos().x(), p_port->pos().y() - ITEM_HEIGHT / 2 - PORT_RADIUS));
+  QPointF portPosition(p_port->pos().x(), p_port->pos().y() - ITEM_HEIGHT / 2 - PORT_RADIUS);
+  p_port->setPos(portPosition);
 
-  int x = pos().x() - static_cast<qreal>(inputPorts.size() - 1) / 2.0 * static_cast<qreal>(PORT_MARGIN);
-
-  foreach(QGraphicsItem *port, inputPorts) {
-    port->setPos(QPointF(x, p_port->pos().y()));
-    x += PORT_MARGIN;
-  }
+  RecalcInputPortsPositions();
 }
 
 void FlowItem::AddOutputPort(PortDataType dataType) {
@@ -265,7 +261,17 @@ void FlowItem::Disconnect() {
       p_connection = nullptr;
     }
     port->connections.clear();
-  }  
+  }
+}
+
+void FlowItem::RecalcInputPortsPositions() {
+  QPointF myPosition = pos();
+  int x = /*myPosition.x()*/0.0 - static_cast<qreal>(inputPorts.size() - 1) / 2.0 * static_cast<qreal>(PORT_MARGIN);
+
+  foreach(QGraphicsItem * port, inputPorts) {
+    port->setPos(QPointF(x, port->pos().y()));
+    x += PORT_MARGIN;
+  }
 }
 
 QVariant FlowItem::itemChange(GraphicsItemChange change, const QVariant &value) {

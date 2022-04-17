@@ -1,11 +1,9 @@
 #include "LayoutLoader.hpp"
 
-#include <ctime>
-
 LayoutLoader *LayoutLoader::p_instance = nullptr;
 
-LayoutLoader::LayoutLoader(BasicLogger *logger) : p_logger(logger), func_CreateLayout(nullptr), func_ReadLayout(nullptr), func_ClearLayout(nullptr), func_CopyLayout(nullptr), func_FreeLayout(nullptr) {
-  std::clock_t timeA = std::clock();
+LayoutLoader::LayoutLoader(BasicLogger *logger) 
+  : p_logger(logger), func_CreateLayout(nullptr), func_ReadLayout(nullptr), func_ClearLayout(nullptr), func_CopyLayout(nullptr), func_WriteLayout(nullptr), func_FreeLayout(nullptr) {
 #if defined _DEBUG
   layoutLibrary.setFileName("PDLab_DLL_Layoutd.dll");
 #else
@@ -62,8 +60,7 @@ LayoutLoader::~LayoutLoader() {
 }
 
 void LayoutLoader::Init(BasicLogger *logger) {
-  if (p_instance)
-  {
+  if (p_instance) {
     logger->Warning("Layout loader was already initialized!!!");
     return;
   }
@@ -79,7 +76,7 @@ LayoutLoader *LayoutLoader::GetInstance() {
   return p_instance;
 }
 
-LayoutReaderOptions& LayoutLoader::GetOptions() {
+LayoutReaderOptions &LayoutLoader::GetOptions() {
   return options;
 }
 
@@ -104,7 +101,28 @@ void LayoutLoader::ReadLayoutFromFile(QString fileName, Layout *layout) {
     p_logger->Error("func_ReadLayout is NULL but 'CreateLayoutFromFile' function called.");
     return;
   }
-  func_ReadLayout(fileName.toStdWString(), layout);
+  
+  func_ReadLayout(fileName.toStdWString(), layout, &options);
+
+  // Postprocess layout if necessary
+
+  if (!options.layersToRead.empty()) {
+    // TODO: Remove unwanted layers
+    for (size_t i = 0; i < layout->libraries.size(); ++i)
+      //TODO: If no items left in observed element, remove the element
+      for (size_t j = 0; j < layout->libraries[i]->elements.size(); ++j)
+        //TODO: Fix this! vvv int -> size_t, but how to remove element with index 0?!
+        for (int k = 0; k < layout->libraries[i]->elements[j]->geometries.size(); ++k)
+          for (size_t l = 0; l < options.layersToRead.size(); ++l)
+            if (layout->libraries[i]->elements[j]->geometries[k]->layer != options.layersToRead[l]) {
+              layout->libraries[i]->elements[j]->geometries.erase(layout->libraries[i]->elements[j]->geometries.begin() + k);
+              --k;
+              break;
+            }
+  }
+  if (this->options.convertPolysToRects) {
+    // TODO: Convert polygonst to rects if possible
+  }
 }
 
 void LayoutLoader::ClearLayout(Layout *layout) {

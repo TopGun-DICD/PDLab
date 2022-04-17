@@ -33,8 +33,10 @@ FlowItem_Edit::~FlowItem_Edit() {
 }
 
 bool FlowItem_Edit::DropEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log(QString("'%1-DROP' was called").arg(flowItemName));
-  
+#endif
+
   QTemporaryFile tempFile;
   if (!tempFile.open()) {
     p_logger->Error(QString("'%1-DROP' : Can't create temp file for layout"));
@@ -63,7 +65,9 @@ bool FlowItem_Edit::DropEventHandler() {
 }
 
 bool FlowItem_Edit::ExecuteEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log(QString("'%1-EXECUTE' was called").arg(flowItemName));
+#endif
 
   
 
@@ -71,19 +75,25 @@ bool FlowItem_Edit::ExecuteEventHandler() {
 }
 
 bool FlowItem_Edit::OpenResultsEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log(QString("'%1-OPENRESULTS' was called").arg(flowItemName));
+#endif
   return true;
 }
 
 bool FlowItem_Edit::ResetEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log(QString("'%1-RESET' was called").arg(flowItemName));
+#endif
   itemStatus = FlowItemStatus::unknown;
 
   return true;
 }
 
 bool FlowItem_Edit::ShowPropertesEventHandler() {
+#if defined(DEBUG_PRINT)
   p_logger->Log(QString("'%1-PROPERTIES' was called").arg(flowItemName));
+#endif
 
   return true;
 }
