@@ -122,14 +122,7 @@ bool FlowItem::OnHandleEvent_Execute() {
               return false;
             }
           }
-          //if (!inputPorts[0]->GetLayout()) {
-          //  p_logger->Error(QString("Flow item '%1' has nullptr layout at the input").arg(this->titleString));
-          //  return false;
-          //}
-          //if (inputPorts[0]->GetLayout()->libraries.empty()) {
-          //  p_logger->Error(QString("Flow item '%1' has empty layout at the input").arg(titleString));
-          //  return false;
-          //}
+
           if (p_resultLayout) {
             delete p_resultLayout;
             p_resultLayout = nullptr;
@@ -164,14 +157,7 @@ bool FlowItem::OnHandleEvent_Execute() {
               return false;
             }
           }
-          //if (!inputPorts[0]->GetLayout()) {
-          //  p_logger->Error(QString("Flow item '%1' has nullptr layout at the input").arg(this->titleString));
-          //  return false;
-          //}
-          //if (inputPorts[0]->GetLayout()->libraries.empty()) {
-          //  p_logger->Error(QString("Flow item '%1' has empty layout at the input").arg(titleString));
-          //  return false;
-          //}
+
           p_resultLayout = inputPorts[0]->GetLayout();
           break;
         case LayoutOwnershipMode::make_new:
@@ -243,7 +229,7 @@ void FlowItem::AddOutputPort(PortDataType dataType) {
     return;
   }
   FlowItemPort *p_port = new FlowItemPort(this, PortDirection::output, dataType);
-  outputPorts.push_back(p_port);
+  outputPorts.push_back(p_port);                                                               
   p_port->setPos(QPointF(p_port->pos().x(), p_port->pos().y() + ITEM_HEIGHT / 2 + PORT_RADIUS));  
 }
 

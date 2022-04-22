@@ -10,7 +10,8 @@
 #include <QFileDialog>
 #include <QFileInfo>
 
-Dlg_Import::Dlg_Import(QWidget *parent) : QDialog(parent) {
+Dlg_Import::Dlg_Import(QWidget *parent) 
+  : QDialog(parent), p_fileLayout(nullptr), p_fileMapping(nullptr), p_layers2Read(nullptr), p_layers2Ignore(nullptr), p_cells2Read(nullptr), p_cbConvertBoundaries(nullptr), p_cbIgnoreZeroWidthPath(nullptr) {
   setWindowTitle(tr("Import Layout"));
 
   QVBoxLayout *p_vLayout = new QVBoxLayout(this);
@@ -53,6 +54,10 @@ Dlg_Import::Dlg_Import(QWidget *parent) : QDialog(parent) {
   p_cbIgnoreZeroWidthPath = new QCheckBox("Ignore zero-width paths", this);
   //p_cbIgnoreZeroWidthPath->setEnabled(false);
   layout->addRow(nullptr, p_cbIgnoreZeroWidthPath);
+  p_cells2Read = new QLineEdit(this);
+  p_cells2Read->setText("*");
+  p_cells2Read->setEnabled(false);
+  layout->addRow(new QLabel("Cells to read", this), p_cells2Read);
   groupBox->setLayout(layout);
   p_vLayout->addWidget(groupBox);
 

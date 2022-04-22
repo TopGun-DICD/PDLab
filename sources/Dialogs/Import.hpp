@@ -10,7 +10,8 @@ public:
   QLineEdit  *p_fileLayout,
              *p_fileMapping,
              *p_layers2Read,
-             *p_layers2Ignore;
+             *p_layers2Ignore,
+             *p_cells2Read;
   QCheckBox  *p_cbConvertBoundaries,
              *p_cbIgnoreZeroWidthPath;
 public:

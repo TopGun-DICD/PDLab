@@ -55,3 +55,12 @@ bin/examples/SDFFRS_X2.gds
 bin/examples/4004.gds.txt
 bin/examples/australia_shoreline.gds.txt
 bin/examples/SDFFRS_X2.gds.txt
+bin/PDLab_DLL_Layoutd.lib
+bin/PDLab_DLL_Layoutd.pdb
+bin/examples/PASSIVE.gds
+bin/examples/test.gds
+bin/examples/test.gds.png
+bin/examples/test.gds.txt
+bin/examples/test2.gds
+bin/examples/test2.gds.png
+bin/examples/test2.gds.txt

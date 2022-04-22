@@ -103,6 +103,7 @@ public:
 
 struct Layer {
   int16_t                 layer;
+  int16_t                 dataType;
   std::string             name;
   std::vector<Geometry *> geometries;
 };

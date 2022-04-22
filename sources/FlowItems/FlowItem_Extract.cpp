@@ -10,11 +10,11 @@
 
 #include <ctime>
 
+#include "../Helper.hpp"
+#include "../Config.hpp"
 #include "../Logger.hpp"
 #include "FlowItemPort.hpp"
 #include "FlowItemConnection.hpp"
-#include "../Helper.hpp"
-#include "../Config.hpp"
 
 FlowItem_Extract::FlowItem_Extract(BasicLogger *logger) : FlowItem(FlowItemType::extract, QString("EXTRACT"), logger, LayoutOwnershipMode::make_copy) {
   AddInputPort(PortDataType::layout);
@@ -56,7 +56,7 @@ bool FlowItem_Extract::ExecuteEventHandler() {
   //layersInfo.layers.clear();
   for (int i = 0; i < p_resultLayout->libraries[0]->layers.size(); ++i) {
     LayerInfo li;
-    li.id = QString::number(p_resultLayout->libraries[0]->layers[i].layer);
+    li.id = QString::number(p_resultLayout->libraries[0]->layers[i].layer) + " (" + QString::number(p_resultLayout->libraries[0]->layers[i].dataType) + ")";
     if (!p_resultLayout->libraries[0]->layers[i].name.empty())
       li.name = QString(" [ %1 ]").arg(p_resultLayout->libraries[0]->layers[i].name.c_str());
     li.selected = false;
