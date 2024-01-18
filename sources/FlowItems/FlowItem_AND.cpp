@@ -49,7 +49,7 @@ bool FlowItem_AND::ResetEventHandler() {
   return true;
 }
 
-bool FlowItem_AND::ShowPropertesEventHandler() {
+bool FlowItem_AND::ShowPropertiesEventHandler() {
 #if defined(DEBUG_PRINT)
   p_logger->Log("'AND-PROPERTIES' was called");
 #endif

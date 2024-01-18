@@ -24,7 +24,7 @@ Dlg_Extract::Dlg_Extract(QWidget *parent, LayersInfo *li) : QDialog(parent), p_m
     p_selectedLayers = new QListWidget(this);
     QListWidgetItem *p_item = nullptr;
     for (int i = 0; i < p_layersInfo->layers.size(); ++i) {
-      p_item = new QListWidgetItem(p_layersInfo->layers[i].id + p_layersInfo->layers[i].name);
+      p_item = new QListWidgetItem(p_layersInfo->layers[i].name);
       p_item->setFlags(p_item->flags() | Qt::ItemIsUserCheckable);
       p_item->setCheckState(p_layersInfo->layers[i].selected ? Qt::Checked : Qt::Unchecked);
       p_selectedLayers->addItem(p_item);
@@ -53,7 +53,7 @@ void Dlg_Extract::accept() {
       p_layersInfo->layers[i].selected = false;
       if (p_selectedLayers->item(i)->checkState() == Qt::Checked) {
         p_layersInfo->layers[i].selected = true;
-        p_layersInfo->selected.push_back(p_layersInfo->layers[i].id.toInt());
+        p_layersInfo->selected.push_back(p_layersInfo->layers[i].id);
         ++selectedItemsCounter;
       }
     }

@@ -2,15 +2,6 @@
 
 #include <QTextStream>
 
-void BasicLogger::Log(const QString &text) {
-}
-
-void BasicLogger::Warning(const QString &text) {
-}
-
-void BasicLogger::Error(const QString &text) {
-}
-
 Logger::Logger() : logFormat(LogFormat::none) {}
 
 Logger::~Logger() {}

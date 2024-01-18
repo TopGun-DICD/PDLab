@@ -7,6 +7,8 @@
 #include "Logger.hpp"
 #include "Config.hpp"
 
+//TODO: Lock application : https://evileg.com/en/post/147/
+
 #if defined(_WIN32)
 int __stdcall WinMain(HINSTANCE, HINSTANCE, char*, int) {
   int     argc = 0;

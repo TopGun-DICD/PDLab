@@ -26,6 +26,9 @@ ColorConfig::ColorConfig() {
   portVerilogConnected.setNamedColor("#691C1C");
 }
 
+Config::Config() : versionString("v0.0.3.15"), layoutEditorPath("C:\\Program Files (x86)\\KLayout\\klayout_app.exe") {
+}
+
 void Config::Init() {
   if (p_instance != nullptr)
     return;

@@ -12,7 +12,7 @@ public:
   virtual bool ExecuteEventHandler()override final;
   virtual bool OpenResultsEventHandler() override final;
   virtual bool ResetEventHandler() override final;
-  virtual bool ShowPropertesEventHandler() override final;
+  virtual bool ShowPropertiesEventHandler() override final;
   QString GetInfoString() override final;
   QString GetItemTypeAsString() override final { return "Edit"; };
 };

@@ -132,6 +132,7 @@ void MainWindow::InitMenubar() {
 
 void MainWindow::InitToolbar() {
   QToolBar* p_toolBar = new QToolBar(this);
+  p_toolBar->setIconSize(QSize(32, 32));
 
   p_toolBar->addAction(p_actViewFlowItems);
   p_toolBar->addAction(p_actViewConsole);

@@ -8,6 +8,7 @@
 #include "FlowItems/FlowItemPort.hpp"
 #include "FlowItems/FlowItem.hpp"
 #include "Logger.hpp"
+#include "Config.hpp"
 
 FlowSceneEventFilter::FlowSceneEventFilter(QWidget *parent, BasicLogger *logger) : QObject(parent), p_parentView(static_cast<QGraphicsView *>(parent)), p_scene(nullptr), p_connection(nullptr), p_logger(logger), zIndex(0.0) {
 }
@@ -150,9 +151,11 @@ bool FlowSceneEventFilter::OnMouseRelease(QObject *object, QGraphicsSceneMouseEv
       p_connection->GetPortB()->AssignLayout(p_connection->GetPortA()->GetLayout());
     }
 
+#if defined(DEBUG_PRINT)
     p_logger->Log(QString("Two blocks are connected: '%1' and '%2'").arg(p_connection->GetPortA()->GetOwner()->GetItemTypeAsString(),
                                                                          p_connection->GetPortB()->GetOwner()->GetItemTypeAsString()));
-    
+#endif
+
     p_connection = nullptr;
     return true;
   }

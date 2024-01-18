@@ -88,7 +88,7 @@ bool FlowItem_Import::ResetEventHandler() {
   return true;
 }
 
-bool FlowItem_Import::ShowPropertesEventHandler() {
+bool FlowItem_Import::ShowPropertiesEventHandler() {
 #if defined(DEBUG_PRINT)
   p_logger->Log("'IMPORT-PROPERTIES' was called");
 #endif
@@ -109,6 +109,7 @@ bool FlowItem_Import::ShowPropertesEventHandler() {
   if (!dlg.exec())
     return false;
 
+  OnHandleEvent_Reset();
   return InitDataFromDialogCall(dlg);
 }
 

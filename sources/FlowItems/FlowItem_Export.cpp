@@ -46,7 +46,7 @@ bool FlowItem_Export::DropEventHandler() {
   if (fileSuffix == "msk")
     topString = "MSK";
   fileShortName = fi.fileName();
-  //fileSize = fi.size();
+  fileSize = fi.size();
 
   bottomString = fi.fileName();
 
@@ -88,7 +88,7 @@ bool FlowItem_Export::ResetEventHandler() {
   return true;
 }
 
-bool FlowItem_Export::ShowPropertesEventHandler() {
+bool FlowItem_Export::ShowPropertiesEventHandler() {
 #if defined(DEBUG_PRINT)
   p_logger->Log("'EXPORT-PROPERTIES' was called");
 #endif

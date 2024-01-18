@@ -8,6 +8,7 @@
 #include <QProcess>
 #include <QTemporaryFile>
 #include <QDateTime>
+#include <QProcess>
 
 #include <ctime>
 #include <fstream>
@@ -59,7 +60,7 @@ bool FlowItem_Edit::DropEventHandler() {
   dst.close();
 
   QFileInfo fi(tempLayoutFileName);
-  bottomString = fi.fileName();
+  bottomString = QString("[New layout]");
 
   return true;
 }
@@ -69,9 +70,23 @@ bool FlowItem_Edit::ExecuteEventHandler() {
   p_logger->Log(QString("'%1-EXECUTE' was called").arg(flowItemName));
 #endif
 
-  
+  /*
+  QStringList arguments;
+  arguments << "-e"  << tempLayoutFileName;
+
+  QProcess process;
+  process.start(Config::Get()->layoutEditorPath, arguments);
+  process.waitForFinished();
+
+  QFileInfo fiDst(tempLayoutFileName);
+  QFileInfo fiSrc(tempLayoutFileName);
+
+  if (fiSrc == fiDst)
+    return false;
 
   return true;
+  //*/
+  return false;
 }
 
 bool FlowItem_Edit::OpenResultsEventHandler() {
@@ -85,12 +100,38 @@ bool FlowItem_Edit::ResetEventHandler() {
 #if defined(DEBUG_PRINT)
   p_logger->Log(QString("'%1-RESET' was called").arg(flowItemName));
 #endif
-  itemStatus = FlowItemStatus::unknown;
+
+  // Code from destructor
+  if (!tempLayoutFileName.isEmpty())
+    if (QFile::exists(tempLayoutFileName))
+      QFile::remove(tempLayoutFileName);
+
+  // Code from drop event handler
+  QTemporaryFile tempFile;
+  if (!tempFile.open()) {
+    p_logger->Error(QString("'%1-DROP' : Can't create temp file for layout"));
+    return false;
+  }
+  tempFile.close();
+
+  tempFile.setAutoRemove(false);
+  tempLayoutFileName = tempFile.fileName();
+  p_logger->Log(QString("Temp file name : %1").arg(tempLayoutFileName));
+  if (!QFile::exists("templates/Empty.bin.gds")) {
+    p_logger->Error(QString("'%1-DROP' : Can't find template layout").arg(flowItemName));
+    return false;
+  }
+
+  std::ifstream src("templates/Empty.bin.gds", std::ios::binary);
+  std::ofstream dst(tempLayoutFileName.toStdWString(), std::ios::binary);
+  dst << src.rdbuf();
+  src.close();
+  dst.close();
 
   return true;
 }
 
-bool FlowItem_Edit::ShowPropertesEventHandler() {
+bool FlowItem_Edit::ShowPropertiesEventHandler() {
 #if defined(DEBUG_PRINT)
   p_logger->Log(QString("'%1-PROPERTIES' was called").arg(flowItemName));
 #endif

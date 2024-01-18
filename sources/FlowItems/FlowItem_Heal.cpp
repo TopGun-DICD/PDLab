@@ -48,7 +48,7 @@ bool FlowItem_Heal::ResetEventHandler() {
   return true;
 }
 
-bool FlowItem_Heal::ShowPropertesEventHandler() {
+bool FlowItem_Heal::ShowPropertiesEventHandler() {
 #if defined(DEBUG_PRINT)
   p_logger->Log("'HEAL-PROPERTIES' was called");
 #endif

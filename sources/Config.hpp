@@ -40,7 +40,7 @@ class Config {
 private:
   static Config  *p_instance;
 private:
-  Config() : versionString("v0.0.3.15") {}
+  Config();
 public:
   static void     Init();
   static Config  *Get();
@@ -48,4 +48,5 @@ public:
 public:
   ColorConfig     colors;
   QString         versionString;
+  QString         layoutEditorPath;
 };

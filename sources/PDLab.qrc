@@ -24,6 +24,9 @@
 	</qresource>
 	<qresource prefix="/dialogs">
 		<file alias="logo.png">../resources/logo.png</file>
+		<file alias="mode-crop.png">../resources/icon-mode-crop.png</file>
+		<file alias="mode-allin.png">../resources/icon-mode-allin.png</file>
+		<file alias="mode-touched.png">../resources/icon-mode-touched.png</file>
 	</qresource>
 	<qresource prefix="/other">
 		<file alias="appicon.png">../resources/Photomask-small.png</file>

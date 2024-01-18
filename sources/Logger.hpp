@@ -7,9 +7,9 @@
 
 class BasicLogger {
 public:
-  virtual void Log(const QString &text);
-  virtual void Warning(const QString &text);
-  virtual void Error(const QString &text);
+  virtual void Log(const QString &text) = 0;
+  virtual void Warning(const QString &text) = 0;
+  virtual void Error(const QString &text) = 0;
 };
 
 class Logger : public BasicLogger {

@@ -34,7 +34,7 @@ public:
   virtual bool ExecuteEventHandler() = 0;
   virtual bool OpenResultsEventHandler() = 0;
   virtual bool ResetEventHandler() = 0;
-  virtual bool ShowPropertesEventHandler() = 0;
+  virtual bool ShowPropertiesEventHandler() = 0;
 
   virtual QString GetInfoString() = 0;
   virtual QString GetItemTypeAsString() = 0;
@@ -49,6 +49,7 @@ public:
   int type() const { return QGraphicsItem::UserType + 1; }
   FlowItemType GetItemType() { return itemType; }
   FlowItemStatus GetStatus() { return itemStatus; }
+  const Layout* GetLayout() const { return p_resultLayout;  }
 private:
   void RecalcInputPortsPositions();
   QVariant itemChange(GraphicsItemChange change, const QVariant &value);

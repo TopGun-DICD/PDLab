@@ -88,16 +88,16 @@ void FlowItemsListWidget::FillSection_LayoutIO(QPainter &painter, QPixmap &px, Q
   // End of I/O : Import
 
   // I/O : Edit
-  /*
+  //*
   p_item = new QListWidgetItem;
-  px.fill(QColor(255, 0, 0));
+  px.fill(Config::Get()->colors.headerImportExport);
   tw = fm.horizontalAdvance(tr("EDIT"));
   painter.drawText(50 - tw / 2, 10 + th / 2, tr("EDIT"));
   p_item->setIcon(px);
   p_item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled);
   p_lstIO->addItem(p_item);
   p_lstIO->setItemWidget(p_item, new CustomListItem(FlowItemType::editdata, px, tr("Edit")));
-  */
+  //*/
   // End of I/O : Edit
 
   // I/O : Export

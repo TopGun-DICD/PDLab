@@ -292,7 +292,7 @@ bool FlowItem_OR::ResetEventHandler() {
   return true;
 }
 
-bool FlowItem_OR::ShowPropertesEventHandler() {
+bool FlowItem_OR::ShowPropertiesEventHandler() {
 #if defined(DEBUG_PRINT)
   p_logger->Log("'OR-PROPERTIES' was called");
 #endif

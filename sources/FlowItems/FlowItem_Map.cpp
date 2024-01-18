@@ -51,7 +51,7 @@ bool FlowItem_Map::ResetEventHandler() {
   return true;
 }
 
-bool FlowItem_Map::ShowPropertesEventHandler() {
+bool FlowItem_Map::ShowPropertiesEventHandler() {
 #if defined(DEBUG_PRINT)
   p_logger->Log("'MAP-PROPERTIES' was called");
 #endif

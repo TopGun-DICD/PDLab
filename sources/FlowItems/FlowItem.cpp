@@ -305,7 +305,7 @@ void FlowItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     }
     // Check if "Properties" button was clicked
     if (itemPoint.x() >= pointBtnOptions.x() && itemPoint.x() <= pointBtnOptions.x() + 16 && itemPoint.y() >= pointBtnOptions.y() && itemPoint.y() <= pointBtnOptions.y() + 16) {
-      if (ShowPropertesEventHandler())
+      if (ShowPropertiesEventHandler())
         OnHandleEvent_Reset();
       event->ignore();
       return;

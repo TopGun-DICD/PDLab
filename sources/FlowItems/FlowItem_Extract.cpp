@@ -56,9 +56,11 @@ bool FlowItem_Extract::ExecuteEventHandler() {
   //layersInfo.layers.clear();
   for (int i = 0; i < p_resultLayout->libraries[0]->layers.size(); ++i) {
     LayerInfo li;
-    li.id = QString::number(p_resultLayout->libraries[0]->layers[i].layer) + " (" + QString::number(p_resultLayout->libraries[0]->layers[i].dataType) + ")";
+    li.id = p_resultLayout->libraries[0]->layers[i].layer;
+    li.dataType = p_resultLayout->libraries[0]->layers[i].dataType;
+    li.name = QString::number(p_resultLayout->libraries[0]->layers[i].layer) + " (" + QString::number(p_resultLayout->libraries[0]->layers[i].dataType) + ")";
     if (!p_resultLayout->libraries[0]->layers[i].name.empty())
-      li.name = QString(" [ %1 ]").arg(p_resultLayout->libraries[0]->layers[i].name.c_str());
+      li.alias = QString(" [ %1 ]").arg(p_resultLayout->libraries[0]->layers[i].name.c_str());
     li.selected = false;
     layersInfo.layers.push_back(li);
   } 
@@ -144,7 +146,7 @@ bool FlowItem_Extract::ResetEventHandler() {
   return true;
 }
 
-bool FlowItem_Extract::ShowPropertesEventHandler() {
+bool FlowItem_Extract::ShowPropertiesEventHandler() {
 #if defined(DEBUG_PRINT)
   p_logger->Log("'EXTRACT-PROPERTIES' was called");
 #endif
