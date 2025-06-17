@@ -3,7 +3,7 @@
 #include <QToolBar>
 #include <QLayout>
 
-LayoutViewer::LayoutViewer(QWidget* parent) : QWidget(parent) {
+LayoutViewer::LayoutViewer(QWidget *parent) : QWidget(parent) {
   QToolBar *toolbar = new QToolBar();
   toolbar->addAction("foo");
   toolbar->addAction("bar");
@@ -18,7 +18,7 @@ LayoutViewer::LayoutViewer(QWidget* parent) : QWidget(parent) {
   setLayout(layout);
 }
 
-void LayoutViewer::AssignLayout(Layout* layout) {
+void LayoutViewer::AssignLayout(Layout *layout) {
   if(p_view)
     p_view->AssignLayout(layout);
 }

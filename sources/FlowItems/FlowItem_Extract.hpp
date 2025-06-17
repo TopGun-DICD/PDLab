@@ -4,6 +4,7 @@
 
 class FlowItem_Extract : public FlowItem {
   LayersInfo  layersInfo;
+  bool        firstTimeCalled;
 public:
   FlowItem_Extract(BasicLogger *logger);
   virtual ~FlowItem_Extract();

@@ -5,10 +5,10 @@
 class LayoutViewer : public QWidget {
   Q_OBJECT
 private:
-  LayoutView* p_view;
+  LayoutView *p_view;
 public:
-  LayoutViewer(QWidget* parent);
+  LayoutViewer(QWidget *parent);
 public:
-  void AssignLayout(Layout* layout);
+  void AssignLayout(Layout *layout);
   void UpdateLayout();
 };

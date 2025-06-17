@@ -10,16 +10,16 @@ const Coord zeroOffset = { 0, 0 };
 class LayoutView : public QOpenGLWidget, protected QOpenGLFunctions {
   Q_OBJECT
 private:
-  Layout* p_layout;
+  Layout *p_layout;
   int     H, W, xPlus, yPlus;
   double  k, kX, kY;
 public:
-  LayoutView(QWidget* parent);
+  LayoutView(QWidget *parent);
 public:
-  void AssignLayout(Layout* layout);
+  void AssignLayout(Layout *layout);
 protected:
-  void paintEvent(QPaintEvent* event);
+  void paintEvent(QPaintEvent *event);
 private:
   void PrepareCoefficients();
-  void DrawLayoutElement(QPainter& painter, Element* element, Coord offset = zeroOffset);
+  void DrawLayoutElement(QPainter &painter, Element *element, Coord offset = zeroOffset);
 };

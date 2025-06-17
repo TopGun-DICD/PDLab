@@ -16,7 +16,7 @@
 #include "FlowItemPort.hpp"
 #include "FlowItemConnection.hpp"
 
-FlowItem_Extract::FlowItem_Extract(BasicLogger *logger) : FlowItem(FlowItemType::extract, QString("EXTRACT"), logger, LayoutOwnershipMode::make_copy) {
+FlowItem_Extract::FlowItem_Extract(BasicLogger *logger) : FlowItem(FlowItemType::extract, QString("EXTRACT"), logger, LayoutOwnershipMode::make_copy), firstTimeCalled(true) {
   AddInputPort(PortDataType::layout);
   AddOutputPort(PortDataType::layout);
   titleBgColor = Config::Get()->colors.headerLayerOperations;
@@ -142,6 +142,7 @@ bool FlowItem_Extract::ResetEventHandler() {
   layersInfo.layers.clear();
   layersInfo.selected.clear();
   layersInfo.mask = "*";
+  firstTimeCalled = true;
 
   return true;
 }
@@ -150,28 +151,46 @@ bool FlowItem_Extract::ShowPropertiesEventHandler() {
 #if defined(DEBUG_PRINT)
   p_logger->Log("'EXTRACT-PROPERTIES' was called");
 #endif
+  
+  //
+  if (inputPorts[0]->connections.isEmpty()) {
+    p_logger->Error("'EXTRACT-PROPERTIES' : Can't show properties for unconnected item");
+    return false;
+  }
+  if (!inputPorts[0]->connections[0]->GetPortA()->GetLayout()) {
+    p_logger->Error("'EXTRACT-PROPERTIES' : Can't show properties for unread layout");
+    return false;
+  }
 
-  /*if (p_resultLayout) {
-    if (!p_resultLayout->libraries.empty()) {
-      for (int i = 0; i < p_resultLayout->libraries[0]->layers.size(); ++i) {
-        LayerInfo li;
-        li.id = QString::number(p_resultLayout->libraries[0]->layers[i].layer);
-        if (!p_resultLayout->libraries[0]->layers[i].name.empty())
-          li.name = QString(" [ %1 ]").arg(p_resultLayout->libraries[0]->layers[i].name.c_str());
-        li.selected = false;
-        layersInfo.layers.push_back(li);
-      }
+  if (firstTimeCalled) {
+    for (int i = 0; i < inputPorts[0]->connections[0]->GetPortA()->GetLayout()->libraries[0]->layers.size(); ++i) {
+      LayerInfo li;
+      li.id = inputPorts[0]->connections[0]->GetPortA()->GetLayout()->libraries[0]->layers[i].layer;
+      li.dataType = inputPorts[0]->connections[0]->GetPortA()->GetLayout()->libraries[0]->layers[i].dataType;
+      li.name = QString::number(inputPorts[0]->connections[0]->GetPortA()->GetLayout()->libraries[0]->layers[i].layer) + " (" + QString::number(inputPorts[0]->connections[0]->GetPortA()->GetLayout()->libraries[0]->layers[i].dataType) + ")";
+      if (!inputPorts[0]->connections[0]->GetPortA()->GetLayout()->libraries[0]->layers[i].name.empty())
+        li.alias = QString(" [ %1 ]").arg(inputPorts[0]->connections[0]->GetPortA()->GetLayout()->libraries[0]->layers[i].name.c_str());
+      li.selected = false;
+      layersInfo.layers.push_back(li);
     }
   }
 
   Dlg_Extract dlg(nullptr, &layersInfo);
   if (dlg.exec() == QDialog::Rejected)
-    return false;*/
+    return false;
 
+  firstTimeCalled = false;
 
   return true;
 }
 
 QString FlowItem_Extract::GetInfoString() {
-  return QString("Extract info string");
+  
+  if(firstTimeCalled)
+    return QString("Layers extraction info hasn't been specified yet");
+
+  QString infoString("Extracting layers:\n");
+  for (int i = 0; i < layersInfo.selected.size(); ++i)
+    infoString += QString("  %1\n").arg(layersInfo.selected[i]);
+  return infoString;
 }

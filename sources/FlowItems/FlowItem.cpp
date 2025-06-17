@@ -111,7 +111,7 @@ bool FlowItem::OnHandleEvent_Execute() {
           foreach (FlowItemPort *port, inputPorts) {
             if (port->IsConnected())
               continue;
-            p_logger->Error(QString("Flow item '%1' has one of the inputs which is not connected").arg(this->titleString));
+            p_logger->Error(QString("Flow item '%1' has at least one of the inputs which is not connected").arg(this->titleString));
             return false;
           }
           for (int i = 0; i < inputPorts.size(); ++i) {
@@ -214,6 +214,17 @@ bool FlowItem::OnHandleEvent_Reset() {
   return retCode;
 }
 
+bool FlowItem::OnHandleEvent_ResetNextItems() {
+  if(!outputPorts.empty())
+    foreach(FlowItemConnection * connection, outputPorts[0]->connections) {
+      if (connection->p_portB)
+        if (connection->p_portB->GetOwner())
+          if (connection->p_portB->GetOwner()->GetStatus() == FlowItemStatus::completed)
+            connection->p_portB->GetOwner()->OnHandleEvent_Reset();
+    }
+  return true;
+}
+
 void FlowItem::AddInputPort(PortDataType dataType) {
   FlowItemPort *p_port = new FlowItemPort(this, PortDirection::input, dataType);
   inputPorts.push_back(p_port);
@@ -306,7 +317,7 @@ void FlowItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     // Check if "Properties" button was clicked
     if (itemPoint.x() >= pointBtnOptions.x() && itemPoint.x() <= pointBtnOptions.x() + 16 && itemPoint.y() >= pointBtnOptions.y() && itemPoint.y() <= pointBtnOptions.y() + 16) {
       if (ShowPropertiesEventHandler())
-        OnHandleEvent_Reset();
+        OnHandleEvent_ResetNextItems();
       event->ignore();
       return;
     }

@@ -177,7 +177,7 @@ void FlowItemsListWidget::FillSection_LayoutOperations(QPainter &painter, QPixma
 
   // Category : Layout Operations
   QTreeWidgetItem *p_catLayoutOps = new QTreeWidgetItem;
-  CategoryButton* p_btnLayoutOps = new CategoryButton(tr("Layout Operations"), this, p_catLayoutOps);
+  CategoryButton* p_btnLayoutOps = new CategoryButton(tr("Logical Operations"), this, p_catLayoutOps);
   addTopLevelItem(p_catLayoutOps);
   setItemWidget(p_catLayoutOps, 0, p_btnLayoutOps);
 

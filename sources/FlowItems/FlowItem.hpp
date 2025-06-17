@@ -45,6 +45,7 @@ public:
 
   bool OnHandleEvent_Execute();
   bool OnHandleEvent_Reset();
+  bool OnHandleEvent_ResetNextItems();
 
   int type() const { return QGraphicsItem::UserType + 1; }
   FlowItemType GetItemType() { return itemType; }
